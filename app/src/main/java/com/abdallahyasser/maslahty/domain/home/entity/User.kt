@@ -1,0 +1,18 @@
+package com.abdallahyasser.maslahty.domain.home.entity
+
+import com.example.maslahty.domain.entities.UserType
+import java.util.Date
+
+data class User(
+    val id: String,
+    val nationalId: String,
+    val fullName: String,
+    val email: String,
+    val phoneNumber: String,
+    val userType: UserType,  // SELLER, BUYER, AUTHORITY
+    val profileImageUrl: String? = null,
+    val createdAt: Date,
+    val isVerified: Boolean = false,
+    val address: String = "",
+    val city: String = ""
+)
