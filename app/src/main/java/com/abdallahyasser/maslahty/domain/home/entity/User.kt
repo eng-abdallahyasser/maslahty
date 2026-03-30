@@ -1,6 +1,5 @@
 package com.abdallahyasser.maslahty.domain.home.entity
 
-import com.example.maslahty.domain.entities.UserType
 import java.util.Date
 
 data class User(
