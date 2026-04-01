@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.ui.theme
+package com.abdallahyasser.maslahty.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
