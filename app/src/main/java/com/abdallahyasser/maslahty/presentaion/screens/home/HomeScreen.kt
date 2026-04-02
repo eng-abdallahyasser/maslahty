@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view
+package com.abdallahyasser.maslahty.presentaion.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,9 +7,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(modifier: Modifier = Modifier, navController: NavHostController) {
 
     LazyColumn(
         modifier=modifier.fillMaxSize(),

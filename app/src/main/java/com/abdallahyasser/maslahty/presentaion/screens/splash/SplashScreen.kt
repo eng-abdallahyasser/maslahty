@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view
+package com.abdallahyasser.maslahty.presentaion.screens.splash
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -41,6 +41,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.DarkNavyLight
@@ -52,7 +54,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SplashScreen(
-    onSplashFinished: () -> Unit = {}
+    onSplashFinished: () -> Unit = {},
+    navController: NavHostController
 ) {
     // ---- Animations ----
     val iconScale = remember { Animatable(0f) }
@@ -339,5 +342,6 @@ fun SplashScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SplashScreenPreview() {
-    SplashScreen()
+    val navController = rememberNavController()
+    SplashScreen(navController=navController)
 }

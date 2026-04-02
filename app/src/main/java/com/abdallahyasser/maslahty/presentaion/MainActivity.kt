@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.abdallahyasser.maslahty.presentaion.view.HomeScreen
-import com.abdallahyasser.maslahty.presentaion.view.SplashScreen
+import androidx.navigation.compose.rememberNavController
+import com.abdallahyasser.maslahty.presentaion.navigation.NavGraph
+import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
+import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.MaslahtyTheme
 
@@ -22,6 +23,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // 1️⃣ إنشاء NavController
+            val navController = rememberNavController()
+
+            // 2️⃣ استدعاء NavGraph
+            NavGraph(navController = navController)
             MaslahtyTheme(dynamicColor = false) {
                 var showSplash by rememberSaveable { mutableStateOf(true) }
 
@@ -31,13 +37,14 @@ class MainActivity : ComponentActivity() {
                         color = DarkNavy
                     ) {
                         SplashScreen(
+                            navController=navController,
                             onSplashFinished = {
                                 showSplash = false
-                            }
+                            },
                         )
                     }
                 } else {
-                    HomeScreen()
+                    HomeScreen(navController=navController)
                 }
             }
         }
