@@ -8,14 +8,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.abdallahyasser.maslahty.presentaion.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.presentaion.view.HomeScreen
 import com.abdallahyasser.maslahty.presentaion.view.SplashScreen
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.MaslahtyTheme
+
+private enum class AppScreen {
+    Splash, Onboarding, Home
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,21 +27,36 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaslahtyTheme(dynamicColor = false) {
-                var showSplash by rememberSaveable { mutableStateOf(true) }
+                var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
 
-                if (showSplash) {
-                    Surface(
-                        modifier = Modifier.Companion.fillMaxSize(),
-                        color = DarkNavy
-                    ) {
-                        SplashScreen(
-                            onSplashFinished = {
-                                showSplash = false
+                when (currentScreen) {
+                    AppScreen.Splash -> {
+                        Surface(
+                            modifier = Modifier.Companion.fillMaxSize(),
+                            color = DarkNavy
+                        ) {
+                            SplashScreen(
+                                onSplashFinished = {
+                                    currentScreen = AppScreen.Onboarding
+                                }
+                            )
+                        }
+                    }
+
+                    AppScreen.Onboarding -> {
+                        OnboardingScreen(
+                            onFinished = {
+                                currentScreen = AppScreen.Home
+                            },
+                            onSkip = {
+                                currentScreen = AppScreen.Home
                             }
                         )
                     }
-                } else {
-                    HomeScreen()
+
+                    AppScreen.Home -> {
+                        HomeScreen()
+                    }
                 }
             }
         }

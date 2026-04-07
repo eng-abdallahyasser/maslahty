@@ -161,8 +161,8 @@ fun SplashScreen(
                 .background(
                     brush = Brush.radialGradient(
                         colors = listOf(
-                            Color(0x000A1931),
-                            Color(0x660A1931)
+                            DarkNavy.copy(alpha = 0f),
+                            DarkNavy.copy(alpha = 0.4f)
                         ),
                         center = Offset(Float.POSITIVE_INFINITY / 2, Float.POSITIVE_INFINITY / 2),
                         radius = 900f
