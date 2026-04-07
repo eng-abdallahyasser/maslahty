@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view
+package com.abdallahyasser.maslahty.presentaion.view.SplashScreen
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing

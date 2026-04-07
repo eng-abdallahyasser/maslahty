@@ -11,9 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.abdallahyasser.maslahty.presentaion.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.presentaion.view.HomeScreen
-import com.abdallahyasser.maslahty.presentaion.view.SplashScreen
+import com.abdallahyasser.maslahty.presentaion.view.SplashScreen.SplashScreen
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.MaslahtyTheme
 
@@ -27,7 +28,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaslahtyTheme(dynamicColor = false) {
-                var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
+
+
+                LoginScreen()
+
+
+/*                var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
 
                 when (currentScreen) {
                     AppScreen.Splash -> {
@@ -55,9 +61,9 @@ class MainActivity : ComponentActivity() {
                     }
 
                     AppScreen.Home -> {
-                        HomeScreen()
+                        LoginScreen()
                     }
-                }
+                }*/
             }
         }
     }
