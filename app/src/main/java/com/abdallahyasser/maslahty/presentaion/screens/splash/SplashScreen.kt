@@ -54,8 +54,8 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SplashScreen(
+    navController: NavHostController,
     onSplashFinished: () -> Unit = {},
-    navController: NavHostController
 ) {
     // ---- Animations ----
     val iconScale = remember { Animatable(0f) }

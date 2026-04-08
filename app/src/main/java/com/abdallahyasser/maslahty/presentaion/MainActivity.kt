@@ -13,10 +13,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.abdallahyasser.maslahty.presentaion.navigation.NavGraph
-import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
-import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.theme.DarkNavy
-import com.abdallahyasser.maslahty.theme.MaslahtyTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,25 +24,6 @@ class MainActivity : ComponentActivity() {
 
             // 2️⃣ استدعاء NavGraph
             NavGraph(navController = navController)
-            MaslahtyTheme(dynamicColor = false) {
-                var showSplash by rememberSaveable { mutableStateOf(true) }
-
-                if (showSplash) {
-                    Surface(
-                        modifier = Modifier.Companion.fillMaxSize(),
-                        color = DarkNavy
-                    ) {
-                        SplashScreen(
-                            navController=navController,
-                            onSplashFinished = {
-                                showSplash = false
-                            },
-                        )
-                    }
-                } else {
-                    HomeScreen(navController=navController)
-                }
-            }
         }
     }
 }
