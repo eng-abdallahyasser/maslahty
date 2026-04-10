@@ -13,18 +13,5 @@ sealed class Screen(val route: String){
     object ImageUploadScreen : Screen("image_upload/{vehicleId}") {
         fun createRoute(vehicleId: String) = "image_upload/$vehicleId"
     }
-    object PricingScreen : Screen("pricing/{vehicleId}") {
-        fun createRoute(vehicleId: String) = "pricing/$vehicleId"
-    }
-    object TransferRequestScreen : Screen("transfer_request/{vehicleId}") {
-        fun createRoute(vehicleId: String) = "transfer_request/$vehicleId"
-    }
-    object RequestsManagementScreen : Screen("requests_management")
-    object ApprovalScreen : Screen("approval/{requestId}") {
-        fun createRoute(requestId: String) = "approval/$requestId"
-    }
-    object RequestDetailsScreen : Screen("request_details/{requestId}") {
-        fun createRoute(requestId: String) = "request_details/$requestId"
-    }
 
 }
