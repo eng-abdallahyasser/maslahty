@@ -31,6 +31,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            // 1️⃣ إنشاء NavController
+            val navController = rememberNavController()
+
+            // 2️⃣ استدعاء NavGraph
+            NavGraph(navController = navController)
             MaslahtyTheme(dynamicColor = false) {
                 var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
 
