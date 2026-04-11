@@ -24,23 +24,14 @@ import com.abdallahyasser.maslahty.presentaion.view.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.MaslahtyTheme
 
-// Add this enum:
-enum class AppScreen {
-    Splash,
-    Onboarding,
-    auth
-}
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             MaslahtyTheme(dynamicColor = false) {
-
-              //  SignUpScreen()
-
-
-
                 var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
 
                 when (currentScreen) {
@@ -95,3 +86,9 @@ fun NavigationHost() {
         }
     }
     }
+
+enum class AppScreen {
+    Splash,
+    Onboarding,
+    auth
+}
