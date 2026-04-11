@@ -1,11 +1,9 @@
-package com.abdallahyasser.maslahty.presentaion.onboarding
+package com.abdallahyasser.maslahty.presentaion.view.onboarding
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -22,10 +20,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -42,11 +36,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -54,21 +44,15 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abdallahyasser.maslahty.R
-import com.abdallahyasser.maslahty.theme.BorderColor
 import com.abdallahyasser.maslahty.theme.CardBackground
 import com.abdallahyasser.maslahty.theme.DarkNavyLight
-import com.abdallahyasser.maslahty.theme.FeatureCardBg
 import com.abdallahyasser.maslahty.theme.GoldenDark
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
 import com.abdallahyasser.maslahty.theme.HeaderGradientStart
-import com.abdallahyasser.maslahty.theme.IconBrown
 import com.abdallahyasser.maslahty.theme.IndicatorInactive
 import com.abdallahyasser.maslahty.theme.IndicatorInactiveDot
 import com.abdallahyasser.maslahty.theme.PageBackground
-import com.abdallahyasser.maslahty.theme.SkeletonDark
-import com.abdallahyasser.maslahty.theme.SkeletonLight
-import com.abdallahyasser.maslahty.theme.SuccessGreen
 import com.abdallahyasser.maslahty.theme.TextDark
 import com.abdallahyasser.maslahty.theme.TextGray
 import com.abdallahyasser.maslahty.theme.TextGrayAlpha

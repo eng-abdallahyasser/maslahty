@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.onboarding
+package com.abdallahyasser.maslahty.presentaion.view.onboarding
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
