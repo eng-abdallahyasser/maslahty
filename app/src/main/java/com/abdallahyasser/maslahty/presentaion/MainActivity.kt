@@ -13,10 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.abdallahyasser.maslahty.presentaion.view.HomeScreen
+import com.abdallahyasser.maslahty.presentaion.navigation.NavGraph
+import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
 import com.abdallahyasser.maslahty.presentaion.view.SplashScreen.SplashScreen
 import com.abdallahyasser.maslahty.presentaion.view.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.view.auth.SignUpScreen
@@ -35,7 +37,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             // 2️⃣ استدعاء NavGraph
-            NavGraph(navController = navController)
+//            NavGraph(navController = navController)
             MaslahtyTheme(dynamicColor = false) {
                 var currentScreen by rememberSaveable { mutableStateOf(AppScreen.Splash) }
 
@@ -87,7 +89,7 @@ fun NavigationHost() {
             SignUpScreen(navController=navController)
         }
         composable("Home") {
-            HomeScreen()
+            HomeScreen(navController=navController)
         }
     }
     }
