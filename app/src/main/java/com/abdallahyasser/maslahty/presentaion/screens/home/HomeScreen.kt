@@ -27,10 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.navigation.Screen
 import com.abdallahyasser.maslahty.presentaion.screens.home.HomeViewModel
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -104,7 +104,7 @@ fun HomeScreen(navController: NavHostController) {
                         // Logout
                         IconButton(
                             onClick = {
-                                navController.navigate(Screen.LoginScreen.route) {
+                                navController.navigate(Route.Login) {
                                     popUpTo(0) { inclusive = true }
                                 }
                             },
@@ -170,7 +170,8 @@ fun HomeScreen(navController: NavHostController) {
                     icon = Icons.Default.Sell,
                     gradient = listOf(appColors.gold, Color(0xFFEFBA66)),
                     textColor = Color(0xFF0D1B3E),
-                    onClick = { navController.navigate(Screen.VehicleDetailsScreen.route) },
+                    onClick = { //Todo :create navigation here
+                          }  ,
                     badgeText = "بائع"
                 )
 
@@ -181,7 +182,8 @@ fun HomeScreen(navController: NavHostController) {
                     icon = Icons.AutoMirrored.Filled.Assignment,
                     gradient = listOf(appColors.navy, appColors.gradientEnd),
                     textColor = Color.White,
-                    onClick = { navController.navigate(Screen.MyRequestsScreen.route) },
+                    onClick = { //Todo :create navigation here
+                         },
                     badgeText = "مشتري / بائع"
                 )
 
