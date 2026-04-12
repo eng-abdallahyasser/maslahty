@@ -24,46 +24,47 @@ fun NavGraph(navController: NavHostController) {
 
     {
         composable(Screen.SplashScreen.route) {
-                SplashScreen(navController = navController)
+            SplashScreen(navController = navController) {
+                navController.navigate("home")
+            }
         }
         composable(Screen.LoginScreen.route) {
             LoginScreen(navController = navController)
         }
-            composable(
-                Screen.OTP.route,
-                arguments = listOf(navArgument("phoneNumber")
-                { type = NavType.StringType }
-                )
-                ) { backStackEntry ->
-                val phoneNumber = backStackEntry.arguments?.getString("phoneNumber").orEmpty()
-                OTPVerificationScreen(
-                    navController = navController,
-                    phoneNumber = phoneNumber
-                )
-            }
-        composable (Screen.RegistrationScreen.route)
-        {
-          RegistrationScreen(navController=navController )
-        }
-        composable (Screen.HomeScreen.route){
-            HomeScreen(navController=navController)
-        }
-        composable(Screen.VehicleDetailsScreen.route) {
-            VehicleDetailsScreen(navController = navController)
-        }
-
         composable(
-            route = Screen.ImageUploadScreen.route,
-            arguments = listOf(navArgument("vehicleId") { type = NavType.StringType })
+            Screen.OTP.route,
+            arguments = listOf(
+                navArgument("phoneNumber")
+                { type = NavType.StringType }
+            )
         ) { backStackEntry ->
-            val vehicleId = backStackEntry.arguments?.getString("vehicleId").orEmpty()
-            ImageUploadScreen(navController = navController, vehicleId = vehicleId)
+            val phoneNumber = backStackEntry.arguments?.getString("phoneNumber").orEmpty()
+            OTPVerificationScreen(
+                navController = navController,
+                phoneNumber = phoneNumber
+            )
         }
+        composable(Screen.RegistrationScreen.route)
+        {
+            RegistrationScreen(navController = navController)
+        }
+        composable(Screen.HomeScreen.route) {
+            HomeScreen(navController = navController)
+        }
+//        composable(Screen.VehicleDetailsScreen.route) {
+//            VehicleDetailsScreen(navController = navController)
+//        }
+
+//        composable(
+//            route = Screen.ImageUploadScreen.route,
+//            arguments = listOf(navArgument("vehicleId") { type = NavType.StringType })
+//        ) { backStackEntry ->
+//            val vehicleId = backStackEntry.arguments?.getString("vehicleId").orEmpty()
+//            ImageUploadScreen(navController = navController, vehicleId = vehicleId)
+//        }
 
 
-
-
-            }
     }
+}
 
 

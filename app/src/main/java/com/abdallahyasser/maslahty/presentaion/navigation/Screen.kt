@@ -10,6 +10,8 @@ sealed class Screen(val route: String){
     object RegistrationScreen: Screen("registration")
     object HomeScreen: Screen("home")
     object VehicleDetailsScreen : Screen("vehicle_details")
+    object MyRequestsScreen : Screen("my_Requests")
+
     object ImageUploadScreen : Screen("image_upload/{vehicleId}") {
         fun createRoute(vehicleId: String) = "image_upload/$vehicleId"
     }
