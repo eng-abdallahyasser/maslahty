@@ -2,7 +2,6 @@ package com.abdallahyasser.maslahty.presentaion.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
@@ -10,7 +9,10 @@ import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.presentaion.screens.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.OTPVerificationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.RegistrationScreen
+import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
 import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
