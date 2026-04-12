@@ -9,8 +9,10 @@ import androidx.navigation.navArgument
 import com.abdallahyasser.maslahty.presentaion.screens.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.OTPVerificationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.RegistrationScreen
+import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.example.maslahty.presentation.screens.home.HomeScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
 
 @Composable
 fun NavGraph(navController: NavHostController) {
