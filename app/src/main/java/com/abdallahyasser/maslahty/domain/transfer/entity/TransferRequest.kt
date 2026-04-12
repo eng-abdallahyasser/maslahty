@@ -1,6 +1,4 @@
-package com.abdallahyasser.maslahty.domain.transfer.entity
-
-import java.util.Date
+package com.example.maslahty.domain.entities
 
 data class TransferRequest(
     val id: String,
@@ -11,8 +9,20 @@ data class TransferRequest(
     val status: TransferStatus,
     val sellerName: String,
     val buyerName: String,
-    val createdAt: Date,
-    val updatedAt: Date,
+    val createdAt: Long,
+    val updatedAt: Long,
     val notes: String = "",
     val priceWarning: PriceWarning? = null
 )
+
+enum class TransferStatus {
+    PENDING, APPROVED_BY_BUYER, REJECTED_BY_BUYER, COMPLETED, CANCELLED
+}
+
+data class PriceWarning(
+    val marketPrice: Double,
+    val difference: Double,
+    val percentage: Double,
+    val message: String
+)
+
