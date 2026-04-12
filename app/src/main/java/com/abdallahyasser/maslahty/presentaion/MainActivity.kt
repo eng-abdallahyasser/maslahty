@@ -1,5 +1,6 @@
 package com.abdallahyasser.maslahty.presentaion
 
+import NavGraph
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +13,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.abdallahyasser.maslahty.presentaion.navigation.NavGraph
 import com.abdallahyasser.maslahty.presentaion.screens.home.HomeScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
 import com.abdallahyasser.maslahty.theme.DarkNavy

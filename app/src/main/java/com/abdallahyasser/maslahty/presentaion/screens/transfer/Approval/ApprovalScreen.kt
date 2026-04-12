@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.transfer.Approval
+package com.abdallahyasser.maslahty.presentaion.Routes.transfer.Approval
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
