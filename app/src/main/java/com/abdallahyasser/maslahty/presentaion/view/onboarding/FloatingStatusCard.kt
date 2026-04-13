@@ -83,7 +83,7 @@ fun FloatingStatusCard(
             modifier = Modifier
                 .size(40.dp)
                 .background(
-                    color = SuccessGreen.copy(alpha = 0.2f),
+                    color = Color(0x3F16A34A),
                     shape = CircleShape
                 ),
             contentAlignment = Alignment.Center
