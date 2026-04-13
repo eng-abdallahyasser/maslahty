@@ -43,7 +43,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.theme.CardBackground
 import com.abdallahyasser.maslahty.theme.DarkNavyLight
 import com.abdallahyasser.maslahty.theme.GoldenDark
@@ -77,21 +79,24 @@ data class OnboardingPageData(
 @Composable
 fun OnboardingScreen(
     onFinished: () -> Unit = {},
-    onSkip: () -> Unit = {}
+    onSkip: () -> Unit = {},
+    navController: NavHostController
 ) {
     var currentPage by remember { mutableIntStateOf(0) }
 
     when (currentPage) {
         0 -> OnboardingPage1(
             onNextClick = { currentPage = 1 },
-            onSkipClick = onSkip
+            onSkipClick = { navController.navigate(Route.Login) }
         )
         1 -> OnboardingPage2(
             onNextClick = { currentPage = 2 },
             onBackClick = { currentPage = 0 }
         )
         2 -> OnboardingPage3(
-            onStartClick = onFinished,
+            onStartClick = {
+                navController.navigate(Route.Login)
+            },
             onBackClick = { currentPage = 1 },
             onSecondaryClick = onFinished
         )

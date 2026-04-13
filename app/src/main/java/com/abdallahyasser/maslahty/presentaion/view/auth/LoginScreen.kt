@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
@@ -88,7 +89,7 @@ Box(
         Spacer(Modifier.height(24.dp))
 
         Button(
-            onClick = { navController.navigate("Home") },
+            onClick = { navController.navigate(Route.Home) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
@@ -120,7 +121,7 @@ Box(
                 .padding(top = 16.dp)
                 .align(Alignment.CenterHorizontally)
                 .clickable() {
-                    navController.navigate("signup")
+                    navController.navigate(Route.Registration)
                 },
             color = GoldenYellow,
             fontSize = 14.sp,

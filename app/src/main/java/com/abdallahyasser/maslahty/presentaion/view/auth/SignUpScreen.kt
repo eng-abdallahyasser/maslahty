@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
@@ -235,7 +236,9 @@ fun SignUpBody(navController: NavController) {
             Spacer(Modifier.height(32.dp))
 
             Button(
-                onClick = { /* Action هنا */ },
+                onClick = {
+                   navController.navigate(Route.OTP(phoneNumber))
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp)

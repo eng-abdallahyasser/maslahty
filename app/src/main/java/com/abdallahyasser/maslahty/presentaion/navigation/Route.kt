@@ -3,8 +3,10 @@ package com.abdallahyasser.maslahty.presentaion.navigation
 import kotlinx.serialization.Serializable
 
 // بعمل "قائمة ثابتة" بكل الشاشات في التطبيق
+@Serializable
 sealed class Route {
     @Serializable object Splash
+    @Serializable object onBoarding
     @Serializable object Login
     @Serializable object Registration
     @Serializable object Home
