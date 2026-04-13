@@ -1,20 +1,21 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("plugin.serialization") version "2.0.0"
+    alias(libs.plugins.kotlin.serialization)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
     namespace = "com.abdallahyasser.maslahty"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version = release(36)
     }
 
     defaultConfig {
         applicationId = "com.abdallahyasser.maslahty"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -35,6 +36,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
     buildFeatures {
         compose = true
     }
@@ -49,10 +53,37 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.navigation.runtime.ktx)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.foundation)
+    // Standard Coroutines library for common logic
+    implementation(libs.kotlinx.coroutines.core)
+
+    // Android-specific Coroutines (gives you Dispatchers.Main and UI support)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Lifecycle Scopes (ViewModelScope, LifecycleScope) - Highly Recommended
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v270)
+    // ViewModel for Compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+// Optional: Lifecycle utilities for Compose (collectAsStateWithLifecycle)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+// Navigation Compose (if you need ViewModel scoped to a NavGraph)
+    implementation(libs.androidx.navigation)
+    // Retrofit core
+    implementation(libs.retrofit)
+
+    implementation(libs.converter.moshi)
+
+    implementation(libs.moshi.kotlin)
+
+    implementation (libs.threetenbp)
+
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.dagger.hilt.android.compiler)
+
+    implementation("androidx.compose.material:material-icons-extended")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,5 +92,4 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.androidx.navigation.compose.v280alpha08)
 }
