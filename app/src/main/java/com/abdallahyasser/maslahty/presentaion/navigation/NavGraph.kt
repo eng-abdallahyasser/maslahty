@@ -1,5 +1,6 @@
 package com.abdallahyasser.maslahty.presentaion.navigation
 
+import com.abdallahyasser.maslahty.presentaion.screens.vechicle.VehicleDetails.VehicleDetailsScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,8 +10,8 @@ import com.abdallahyasser.maslahty.presentaion.screens.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.OTPVerificationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.RegistrationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.Pricing.PricingScreen
+import com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload.ImageUploadScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
 
 @Composable
@@ -45,7 +46,9 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable<Route.VehicleDetails> {
-            VehicleDetailsScreen(navController = navController)
+            VehicleDetailsScreen(
+                navController = navController,
+            )
         }
 
         composable<Route.ImageUpload> { backStackEntry ->
@@ -54,6 +57,16 @@ fun NavGraph(navController: NavHostController) {
                 navController = navController,
                 vehicleId = args.vehicleId
             )
+        }
+
+        composable <Route.Pricing> {
+            backStackEntry ->
+            val args = backStackEntry.toRoute<Route.Pricing>()
+            PricingScreen(
+                navController = navController,
+                vehicleId = args.vehicleId
+            )
+
         }
     }
 }

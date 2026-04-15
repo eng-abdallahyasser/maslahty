@@ -16,4 +16,8 @@ sealed class Route {
 
     @Serializable
     data class ImageUpload(val vehicleId: String)
+    @Serializable
+    data class Pricing(val vehicleId: String)
+
+
 }

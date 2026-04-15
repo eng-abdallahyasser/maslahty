@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.data.models
+package com.abdallahyasser.maslahty.data.transfer.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

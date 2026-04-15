@@ -1,5 +1,7 @@
 package com.example.maslahty.domain.entities
 
+import java.util.Date
+
 data class TransferRequest(
     val id: String,
     val vehicleId: String,
@@ -9,8 +11,8 @@ data class TransferRequest(
     val status: TransferStatus,
     val sellerName: String,
     val buyerName: String,
-    val createdAt: Long,
-    val updatedAt: Long,
+    val createdAt: Date,
+    val updatedAt: Date,
     val notes: String = "",
     val priceWarning: PriceWarning? = null
 )

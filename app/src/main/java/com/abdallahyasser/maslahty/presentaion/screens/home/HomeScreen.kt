@@ -170,7 +170,9 @@ fun HomeScreen(navController: NavHostController) {
                     icon = Icons.Default.Sell,
                     gradient = listOf(appColors.gold, Color(0xFFEFBA66)),
                     textColor = Color(0xFF0D1B3E),
-                    onClick = { //Todo :create navigation here
+                    onClick = { navController.navigate(Route.VehicleDetails)
+
+
                           }  ,
                     badgeText = "بائع"
                 )

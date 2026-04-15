@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.room.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,5 +64,17 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.navigation:navigation-compose:2.8.0-alpha08")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    // GSON Converter (إذا قررت استخدامه لتحويل البيانات من الـ API)
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    // Kotlin Serialization Converter (الخيار الأفضل بما أنك تستخدمه في الـ Navigation)
+    implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+
+
+
 
 }

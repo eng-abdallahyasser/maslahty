@@ -28,25 +28,7 @@ class MainActivity : ComponentActivity() {
 
             // 2️⃣ استدعاء NavGraph
             NavGraph(navController = navController)
-            MaslahtyTheme(dynamicColor = false) {
-                var showSplash by rememberSaveable { mutableStateOf(true) }
 
-                if (showSplash) {
-                    Surface(
-                        modifier = Modifier.Companion.fillMaxSize(),
-                        color = DarkNavy
-                    ) {
-                        SplashScreen(
-                            navController=navController,
-                            onSplashFinished = {
-                                showSplash = false
-                            },
-                        )
-                    }
-                } else {
-                    HomeScreen(navController=navController)
-                }
-            }
         }
     }
 }

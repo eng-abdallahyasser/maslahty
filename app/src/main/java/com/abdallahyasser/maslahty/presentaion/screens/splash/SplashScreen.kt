@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.theme.DarkNavy
 import com.abdallahyasser.maslahty.theme.DarkNavyLight
 import com.abdallahyasser.maslahty.theme.GoldenYellow
@@ -144,6 +145,7 @@ fun SplashScreen(
         // Wait for loading then navigate to HomeScreen
         delay(3000)
         onSplashFinished()
+        navController.navigate(Route.Home)
     }
 
     Box(
