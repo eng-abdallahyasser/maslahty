@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.presentaion.screens.home.HomeViewModel
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import com.abdallahyasser.maslahty.presentaion.navigation.Route
 
 @Composable
@@ -186,6 +187,20 @@ fun HomeScreen(navController: NavHostController) {
                         // todo navigate to Manage requests screen
                     },
                     badgeText = "مشتري / بائع"
+                )
+                MainActionCard(
+                    title = "الاستعلام عن المخالفات",
+                    subtitle = "تحقق من المخالفات المرورية لمركباتك",
+                    icon = Icons.Default.GppBad,
+                    gradient = listOf(Color(0xFFDC2626), Color(0xFFEF4444)),
+                    textColor = Color.White,
+                    onClick = {
+
+                        // todo navigate to Manage requests screen
+
+                        navController.navigate(Route.ViolationsMenuScreen)
+                              },
+                    badgeText = "خدمة جديدة"
                 )
 
                 Spacer(Modifier.height(8.dp))
