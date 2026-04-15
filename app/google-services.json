@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "69357525827",
+    "project_id": "maslahty-9ffff",
+    "storage_bucket": "maslahty-9ffff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69357525827:android:88d58d3ef72282fe942df6",
+        "android_client_info": {
+          "package_name": "com.abdallahyasser.maslahty"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69357525827-m8o8ue70j5jla1su1dptvuguksm5r8rf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkTPIvAehWV7i3lUZFkq-1VP5jUoeUTlc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69357525827-m8o8ue70j5jla1su1dptvuguksm5r8rf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

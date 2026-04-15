@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -83,6 +84,8 @@ dependencies {
     ksp(libs.dagger.hilt.android.compiler)
 
     implementation("androidx.compose.material:material-icons-extended")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
