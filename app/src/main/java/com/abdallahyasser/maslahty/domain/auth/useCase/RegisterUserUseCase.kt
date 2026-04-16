@@ -9,4 +9,5 @@ class RegisterUserUseCase (private val repo: AuthRepository) {
     suspend operator fun invoke(user: User): Result<User> {
         return repo.registerUser(user)
     }
+    //todo : is this the only use case in the auth?????
 }

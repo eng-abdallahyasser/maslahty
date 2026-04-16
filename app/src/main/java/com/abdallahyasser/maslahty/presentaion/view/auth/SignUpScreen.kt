@@ -133,6 +133,10 @@ fun SignUpBody(navController: NavController) {
     var nationlaId by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+
+    //todo : where is the password ????
+    // why you don't use viewModel???
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
