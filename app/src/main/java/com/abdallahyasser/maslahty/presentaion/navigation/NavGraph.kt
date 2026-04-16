@@ -10,8 +10,9 @@ import com.abdallahyasser.maslahty.presentaion.screens.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.OTPVerificationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.RegistrationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.Pricing.PricingScreen
+import com.abdallahyasser.maslahty.presentaion.screens.transfer.TransferRequest.TransferRequestScreen
 import com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload.ImageUploadScreen
+import com.abdallahyasser.maslahty.presentaion.screens.vechicle.Pricing.PricingScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
 
 @Composable
@@ -21,7 +22,16 @@ fun NavGraph(navController: NavHostController) {
         startDestination = Route.Splash // بنمرر الـ Object نفسه
     ) {
         composable<Route.Splash> {
-            SplashScreen(navController = navController)
+            SplashScreen(
+                navController = navController,
+                onSplashFinished = {
+                    // التنقل بيحصل هنا لما الـ Splash تخلص
+                    navController.navigate(Route.Home) {
+                        // عشان المستخدم لما يرجع ملقيش الـ Splash تاني
+                        popUpTo(Route.Splash) { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable<Route.Login> {
@@ -67,6 +77,14 @@ fun NavGraph(navController: NavHostController) {
                 vehicleId = args.vehicleId
             )
 
+        }
+        composable <Route.TransferRequest>{
+            backStackEntry->
+            val  args = backStackEntry.toRoute<Route.TransferRequest>()
+            TransferRequestScreen(
+                navController = navController,
+                vehicleId = args.vehicleId
+            )
         }
     }
 }

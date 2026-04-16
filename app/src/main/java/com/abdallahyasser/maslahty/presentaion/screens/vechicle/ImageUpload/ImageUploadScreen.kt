@@ -152,6 +152,7 @@ fun ImageUploadScreen(
                         viewModel.onNextClicked(vehicleId) {
                             navController.navigate(Route.Pricing(vehicleId))
                         }
+
                     }
                 )
             }

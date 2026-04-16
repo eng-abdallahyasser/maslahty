@@ -145,7 +145,7 @@ fun SplashScreen(
         // Wait for loading then navigate to HomeScreen
         delay(3000)
         onSplashFinished()
-        navController.navigate(Route.Home)
+       // navController.navigate(Route.Home)
     }
 
     Box(

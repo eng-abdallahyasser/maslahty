@@ -13,9 +13,5 @@ sealed class VehicleState {
     )
 
 
-    data class PricingState(
-        val salePrice: String = "",
-        val marketPrice: Double = 0.0,
-        val priceWarning: String? = null
-    )
+
 }
