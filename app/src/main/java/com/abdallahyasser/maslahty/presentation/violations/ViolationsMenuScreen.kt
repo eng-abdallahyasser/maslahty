@@ -1,10 +1,11 @@
-package com.example.maslahty.presentation.screens.violations
+﻿package com.abdallahyasser.maslahty.presentation.violations
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,30 +20,29 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.ErrorMessage
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.GradientHeader
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.LoadingBox
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.viewmodels.ViolationsUiState
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
-
 import kotlinx.coroutines.delay
-import kotlin.collections.forEachIndexed
 
 @Composable
 fun ViolationsMenuScreen(
-    navController: NavHostController,
+    navController: NavController,
     viewModel: ViolationsViewModel
 ) {
     val appColors = LocalAppColors.current
@@ -56,7 +56,7 @@ fun ViolationsMenuScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(Color.White)
         ) {
             // ── GRADIENT HEADER ────────────────────────────
             GradientHeader(
@@ -158,9 +158,9 @@ fun ViolationsMenuScreen(
                                     VehicleCard(
                                         vehicle = vehicle,
                                         onClick = {
-//                                            navController.navigate(
-//                                                Screen.VehicleViolationsScreen.createRoute(vehicle.id)
-//                                            )
+                                            navController.navigate(
+                                                Route.VehicleViolationsScreen(vehicle.id)
+                                            )
                                         }
                                     )
                                 }
@@ -187,7 +187,7 @@ private fun VehicleCard(
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = appColors.cardBackground),
-        border = androidx.compose.foundation.BorderStroke(1.dp, appColors.cardBorder),
+        border = BorderStroke(1.dp, appColors.cardBorder),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -272,7 +272,7 @@ private fun VehicleCard(
 
 @Composable
 private fun DetailChip(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     text: String
 ) {
     val appColors = LocalAppColors.current

@@ -8,8 +8,8 @@ import androidx.navigation.toRoute
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
 import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
-import com.abdallahyasser.maslahty.presentaion.screens.violations.ViolationsMenuScreen
-import com.abdallahyasser.maslahty.presentaion.screens.violations.VehicleViolationsScreen
+import com.abdallahyasser.maslahty.presentation.violations.ViolationsMenuScreen
+import com.abdallahyasser.maslahty.presentation.violations.VehicleViolationsScreen
 import com.abdallahyasser.maslahty.presentaion.view.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.view.auth.OTPVerification
 import com.abdallahyasser.maslahty.presentaion.view.auth.SignUpScreen
@@ -17,8 +17,6 @@ import com.abdallahyasser.maslahty.presentaion.view.onboarding.OnboardingScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModelFactory
-import com.abdallahyasser.maslahty.data.repoImpl.ViolationRepositoryImpl
-import com.abdallahyasser.maslahty.data.repoImpl.VehicleRepositoryImpl
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 // Create dependencies singleton
