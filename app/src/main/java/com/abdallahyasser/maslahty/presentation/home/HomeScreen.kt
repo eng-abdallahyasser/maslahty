@@ -26,16 +26,16 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.abdallahyasser.maslahty.presentaion.screens.home.HomeViewModel
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
-import com.abdallahyasser.maslahty.presentation.home.HomeViewModel
-import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val appColors = LocalAppColors.current
     val homeViewModel: HomeViewModel = viewModel()
-    val uiState= homeViewModel.screenState.collectAsState()
+    val uiState=homeViewModel.screenState.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Column(
@@ -122,7 +122,6 @@ fun HomeScreen(navController: NavHostController) {
                     }
 
                     Spacer(Modifier.height(24.dp))
-
                     // Greeting
                     Text(
                         text = "مرحباً بك 👋",
@@ -143,21 +142,9 @@ fun HomeScreen(navController: NavHostController) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        _root_ide_package_.com.example.maslahty.presentation.screens.home.QuickStatChip(
-                            label = "مركباتي",
-                            value = "${uiState.value.vehiclesNumber}",
-                            modifier = Modifier.weight(1f)
-                        )
-                        _root_ide_package_.com.example.maslahty.presentation.screens.home.QuickStatChip(
-                            label = "طلبات نشطة",
-                            value = "${uiState.value.activeRequests}",
-                            modifier = Modifier.weight(1f)
-                        )
-                        _root_ide_package_.com.example.maslahty.presentation.screens.home.QuickStatChip(
-                            label = "مكتملة",
-                            value = "${uiState.value.completedRequests}",
-                            modifier = Modifier.weight(1f)
-                        )
+                        QuickStatChip(label = "مركباتي", value = "${uiState.value.vehiclesNumber}", modifier = Modifier.weight(1f))
+                        QuickStatChip(label = "طلبات نشطة", value = "${uiState.value.activeRequests}", modifier = Modifier.weight(1f))
+                        QuickStatChip(label = "مكتملة", value = "${uiState.value.completedRequests}", modifier = Modifier.weight(1f))
                     }
                 }
             }
@@ -175,20 +162,20 @@ fun HomeScreen(navController: NavHostController) {
                 )
 
                 // Primary action - Sell Vehicle
-                _root_ide_package_.com.example.maslahty.presentation.screens.home.MainActionCard(
+                MainActionCard(
                     title = "بيع مركبة",
                     subtitle = "ابدأ عملية نقل الملكية كبائع",
                     icon = Icons.Default.Sell,
                     gradient = listOf(appColors.gold, Color(0xFFEFBA66)),
                     textColor = Color(0xFF0D1B3E),
                     onClick = {
-                        // Todo navigate to sell vehicle screen
-                    },
+                    // Todo navigate to sell vehicle screen
+                         },
                     badgeText = "بائع"
                 )
 
                 // Secondary action - Manage requests
-                _root_ide_package_.com.example.maslahty.presentation.screens.home.MainActionCard(
+                MainActionCard(
                     title = "طلباتي",
                     subtitle = "عرض وإدارة طلبات نقل الملكية",
                     icon = Icons.AutoMirrored.Filled.Assignment,
@@ -198,6 +185,17 @@ fun HomeScreen(navController: NavHostController) {
                         // todo navigate to Manage requests screen
                     },
                     badgeText = "مشتري / بائع"
+                )
+                MainActionCard(
+                    title = "الاستعلام عن المخالفات",
+                    subtitle = "تحقق من المخالفات المرورية لمركباتك",
+                    icon = Icons.Default.GppBad,
+                    gradient = listOf(Color(0xFFDC2626), Color(0xFFEF4444)),
+                    textColor = Color.White,
+                    onClick = {
+                        navController.navigate(Route.ViolationsMenuScreen)
+                              },
+                    badgeText = "خدمة جديدة"
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -218,12 +216,7 @@ fun HomeScreen(navController: NavHostController) {
                     Triple(Icons.Default.NearMe, "إرسال للمشتري", "إشعار فوري بالرقم القومي"),
                     Triple(Icons.Default.Verified, "إتمام النقل", "موافقة المشتري وإتمام العملية"),
                 ).forEachIndexed { index, (icon, title, sub) ->
-                    _root_ide_package_.com.example.maslahty.presentation.screens.home.StepInfoRow(
-                        step = index + 1,
-                        icon = icon,
-                        title = title,
-                        subtitle = sub
-                    )
+                    StepInfoRow(step = index + 1, icon = icon, title = title, subtitle = sub)
                 }
             }
         }

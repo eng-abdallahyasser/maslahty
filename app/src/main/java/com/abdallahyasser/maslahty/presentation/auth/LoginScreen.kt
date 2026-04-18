@@ -16,10 +16,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.presentation.navigation.Route
@@ -55,8 +53,13 @@ fun LoginScreen(navController: NavController) {
 
 @Composable
 fun LoginBody(navController: NavController) {
-    var nationalId by remember { mutableStateOf("") }
-    var carName by remember { mutableStateOf("") }
+
+    val vm: AuthViewModel= viewModel(factory = AuthViewModelFactory())
+
+    val state = vm.authState.collectAsState().value
+
+
+
 Box(
     modifier = Modifier
         .fillMaxWidth()
@@ -69,18 +72,18 @@ Box(
         )
         // EditText الأول - الرقم القومي
         CustomEditText(
-            value = nationalId,
-            onValueChange = { nationalId = it },
+            value = state.nationalId,
+            onValueChange = { vm.updateNationalId(it) },
             label = "الرقم القومي",
             placeholder = "أدخل الرقم القومي...",
             imageVector = ImageVector.vectorResource(id = R.drawable.id),
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        // EditText الثاني - اسم السيارة
+
         CustomEditText(
-            value = carName,
-            onValueChange = { carName = it },
+            value = state.phoneNumber,
+            onValueChange = { vm.updatePhoneNumber(it) },
             label = "رقم الهاتف",
             placeholder = "أدخل رقم الهاتف...",
             imageVector = ImageVector.vectorResource(id = R.drawable.phone)
@@ -89,7 +92,10 @@ Box(
         Spacer(Modifier.height(24.dp))
 
         Button(
-            onClick = { navController.navigate(Route.Home) },
+            onClick = {
+                    navController.navigate(Route.Home)
+
+                      },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
@@ -104,6 +110,7 @@ Box(
             ),
             contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
         ) {
+
           Text(
                 text = "تسجيل الدخول",
                 fontSize = 16.sp,
@@ -112,8 +119,7 @@ Box(
                 modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
             )
 
-        }
-
+    }
 
         Text(
             text = "مستخدم جديد؟ إنشاء حساب ",
@@ -128,12 +134,11 @@ Box(
             fontWeight = FontWeight.Bold
         )
 
-
+    }
+}
 
 
     }
-}
-}
 
 @Composable
 fun LoginHeader() {
@@ -156,7 +161,7 @@ fun LoginHeader() {
                     end = Offset(800f, 800f)
                 )
             ),
-                contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center
     ) {
 
         val image = ImageVector.vectorResource(id = R.drawable.car_con)
