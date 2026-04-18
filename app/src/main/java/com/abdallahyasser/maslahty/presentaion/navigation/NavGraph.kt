@@ -15,23 +15,19 @@ import com.abdallahyasser.maslahty.presentaion.view.auth.SignUpScreen
 import com.abdallahyasser.maslahty.presentaion.view.onboarding.OnboardingScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
-import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
-import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
-import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
+import com.example.maslahty.presentation.viewmodels.ViolationsViewModelFactory
 import com.abdallahyasser.maslahty.data.repoImpl.ViolationRepositoryImpl
 import com.abdallahyasser.maslahty.data.repoImpl.VehicleRepositoryImpl
+import androidx.lifecycle.viewmodel.compose.viewModel
+
+// Create dependencies singleton
+object AppDependencies {
+    val violationsViewModelFactory = ViolationsViewModelFactory()
+}
+
 @Composable
 fun NavGraph(navController: NavHostController) {
-    val violationRepository = ViolationRepositoryImpl()
-    val vehicleRepository = VehicleRepositoryImpl()
-    val getUserVehiclesUseCase = GetUserVehiclesUseCase(vehicleRepository)
-    val getVehicleViolationsUseCase = GetVehicleViolationsUseCase(violationRepository)
-    val checkViolationsForTransferUseCase = CheckViolationsForTransferUseCase(violationRepository)
-    val violationsViewModel = ViolationsViewModel(
-        getUserVehiclesUseCase,
-        getVehicleViolationsUseCase,
-        checkViolationsForTransferUseCase
-    )
+    val violationsViewModel: ViolationsViewModel = viewModel(factory = AppDependencies.violationsViewModelFactory)
     NavHost(
         navController = navController,
         startDestination = Route.Splash

@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.theme.GoldenDark
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 
@@ -79,6 +80,7 @@ public fun Page3Footer(
                         .height(1.dp)
                         .align(Alignment.TopCenter)
                         .background(Color.White.copy(alpha = 0.3f))
+
                 )
 
                 Row(

@@ -28,7 +28,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.ErrorMessage
@@ -44,10 +43,10 @@ import kotlin.collections.forEachIndexed
 @Composable
 fun ViolationsMenuScreen(
     navController: NavHostController,
-    viewModel: ViolationsViewModel = hiltViewModel()
+    viewModel: ViolationsViewModel
 ) {
     val appColors = LocalAppColors.current
-    val vehiclesState by viewModel.vehiclesState.collectAsState()
+    val vehiclesState = viewModel.vehiclesState.collectAsState().value
 
     LaunchedEffect(Unit) {
         viewModel.loadUserVehicles()

@@ -43,7 +43,7 @@ fun HomeScreen(navController: NavHostController) {
             modifier = Modifier
                 .systemBarsPadding()
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
+                .background(Color.White)
                 .verticalScroll(rememberScrollState())
         ) {
             // ── TOP GRADIENT HEADER ────────────────────────────
@@ -123,7 +123,6 @@ fun HomeScreen(navController: NavHostController) {
                     }
 
                     Spacer(Modifier.height(24.dp))
-
                     // Greeting
                     Text(
                         text = "مرحباً بك 👋",
@@ -195,9 +194,6 @@ fun HomeScreen(navController: NavHostController) {
                     gradient = listOf(Color(0xFFDC2626), Color(0xFFEF4444)),
                     textColor = Color.White,
                     onClick = {
-
-                        // todo navigate to Manage requests screen
-
                         navController.navigate(Route.ViolationsMenuScreen)
                               },
                     badgeText = "خدمة جديدة"

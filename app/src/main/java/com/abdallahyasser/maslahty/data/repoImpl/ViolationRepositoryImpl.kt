@@ -10,6 +10,9 @@ class ViolationRepositoryImpl : ViolationRepository {
 
 	override suspend fun getVehicleViolations(vehicleId: String): Result<List<Violation>> {
 		return try {
+
+
+
 			val mockViolations = listOf(
 				Violation(
 					id = "V-001",
@@ -19,7 +22,7 @@ class ViolationRepositoryImpl : ViolationRepository {
 					date = Date(System.currentTimeMillis() - 30L * 24 * 60 * 60 * 1000),
 					amount = 500.0,
 					status = ViolationStatus.UNPAID,
-					location = "طريق الملك فهد"
+					location = "الكورنيش"
 				),
 				Violation(
 					id = "V-002",

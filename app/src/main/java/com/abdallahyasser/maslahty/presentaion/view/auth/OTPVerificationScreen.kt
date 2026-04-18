@@ -24,10 +24,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,10 +35,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abdallahyasser.maslahty.R
 
 
@@ -56,8 +54,9 @@ fun OTPVerification(
     onConfirm: (String) -> Unit = {},
     phoneNumber: String
 ) {
-    var otpValue by remember { mutableStateOf("") }
-    var timeRemaining by remember { mutableStateOf("01:59") }
+    val vm: AuthViewModel= viewModel(factory = AuthViewModelFactory())
+
+    val state = vm.authState.collectAsState()
 
     Column(
         modifier = modifier
@@ -146,11 +145,11 @@ fun OTPVerification(
 
             // OTP Input Fields
             BasicTextField(
-                value = otpValue,
+                value = state.value.otpValue,
                 onValueChange = { newValue ->
                     // Only allow digits and max 4 characters
                     if (newValue.all { it.isDigit() } && newValue.length <= 4) {
-                        otpValue = newValue
+                        vm.updateOtpValue(newValue)
                     }
                 },
                 modifier = Modifier
@@ -165,7 +164,7 @@ fun OTPVerification(
                         ) {
                             repeat(4) { index ->
                                 OTPInputBox(
-                                    value = if (index < otpValue.length) otpValue[index].toString() else "",
+                                    value = if (index < state.value.otpValue.length) state.value.otpValue[index].toString() else "",
                                     modifier = Modifier
                                         .size(70.dp)
                                         .padding(horizontal = 8.dp)
@@ -186,7 +185,7 @@ fun OTPVerification(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = timeRemaining,
+                    text = state.value.timeRemaining,
                     color = Color(0xFF1F2937),
                     fontSize = 14.sp
                 )
@@ -224,7 +223,7 @@ fun OTPVerification(
 
             // Confirm Button
             Button(
-                onClick = { onConfirm(otpValue) },
+                onClick = { onConfirm(state.value.otpValue) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
