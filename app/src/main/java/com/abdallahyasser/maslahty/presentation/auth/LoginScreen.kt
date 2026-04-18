@@ -32,6 +32,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModel
+import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModelFactory
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
@@ -54,7 +56,7 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun LoginBody(navController: NavController) {
 
-    val vm: AuthViewModel= viewModel(factory = AuthViewModelFactory())
+    val vm: AuthViewModel = viewModel(factory = AuthViewModelFactory())
 
     val state = vm.authState.collectAsState().value
 

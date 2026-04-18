@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.screens.home.HomeViewModel
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
-import com.abdallahyasser.maslahty.presentaion.navigation.Route
+import com.abdallahyasser.maslahty.presentation.home.HomeViewModel
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

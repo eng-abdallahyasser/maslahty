@@ -42,6 +42,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModel
+import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModelFactory
 
 
 @Composable
@@ -54,7 +56,7 @@ fun OTPVerification(
     onConfirm: (String) -> Unit = {},
     phoneNumber: String
 ) {
-    val vm: AuthViewModel= viewModel(factory = AuthViewModelFactory())
+    val vm: AuthViewModel = viewModel(factory = AuthViewModelFactory())
 
     val state = vm.authState.collectAsState()
 

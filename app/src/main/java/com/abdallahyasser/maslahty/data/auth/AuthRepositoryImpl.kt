@@ -34,11 +34,29 @@ class AuthRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun isLoggedIn(): Flow<Boolean> {
+    override fun isLoggedIn(): Boolean {
         TODO("Not yet implemented")
     }
 
     override suspend fun getCurrentUser(): Result<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun login(
+        phoneNumber: String,
+        password: String
+    ): Result<User> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun sendOtp(phoneNumber: String): Result<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun verifyOtp(
+        phoneNumber: String,
+        otp: String
+    ): Result<User> {
         TODO("Not yet implemented")
     }
 }

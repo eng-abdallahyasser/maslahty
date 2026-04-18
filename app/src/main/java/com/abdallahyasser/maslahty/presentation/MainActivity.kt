@@ -1,12 +1,11 @@
-package com.abdallahyasser.maslahty.presentaion
+package com.abdallahyasser.maslahty.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-
 import androidx.navigation.compose.rememberNavController
-import com.abdallahyasser.maslahty.presentaion.navigation.NavGraph
+import com.abdallahyasser.maslahty.presentation.navigation.NavGraph
 
 
 class MainActivity : ComponentActivity() {

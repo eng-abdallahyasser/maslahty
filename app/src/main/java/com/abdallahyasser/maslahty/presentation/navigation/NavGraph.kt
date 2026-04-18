@@ -5,19 +5,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
 import com.abdallahyasser.maslahty.presentation.violations.ViolationsMenuScreen
 import com.abdallahyasser.maslahty.presentation.violations.VehicleViolationsScreen
-import com.abdallahyasser.maslahty.presentaion.view.auth.LoginScreen
-import com.abdallahyasser.maslahty.presentaion.view.auth.OTPVerification
-import com.abdallahyasser.maslahty.presentaion.view.auth.SignUpScreen
-import com.abdallahyasser.maslahty.presentaion.view.onboarding.OnboardingScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.abdallahyasser.maslahty.presentation.auth.LoginScreen
+import com.abdallahyasser.maslahty.presentation.auth.OTPVerification
+import com.abdallahyasser.maslahty.presentation.auth.SignUpScreen
+import com.abdallahyasser.maslahty.presentation.onboarding.OnboardingScreen
+import com.abdallahyasser.maslahty.presentation.splash.SplashScreen
+import com.abdallahyasser.maslahty.presentation.transfer.imageUpload.ImageUploadScreen
+import com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails.VehicleDetailsScreen
 
 // Create dependencies singleton
 object AppDependencies {
