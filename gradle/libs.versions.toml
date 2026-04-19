@@ -22,6 +22,7 @@ moshiKotlin = "1.15.0"
 navigationCompose = "2.8.0"
 threetenbp = "1.6.9"
 firebaseFirestoreKtx = "26.1.2"
+firebaseFirestoreKtxVersion = "26.1.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -56,6 +57,7 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterMoshi" }
 threetenbp = { module = "org.threeten:threetenbp", version.ref = "threetenbp" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx"}
+google-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,5 +1,6 @@
 package com.abdallahyasser.maslahty.presentation.auth
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,16 +31,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModel
-import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModelFactory
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
 import com.abdallahyasser.maslahty.theme.HeaderGradientStart
+import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
@@ -56,91 +58,110 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun LoginBody(navController: NavController) {
 
-    val vm: AuthViewModel = viewModel(factory = AuthViewModelFactory())
+    val vm: AuthViewModel = hiltViewModel()
 
     val state = vm.authState.collectAsState().value
 
+    LaunchedEffect(Unit) {
+        vm.eventFlow.collectLatest { event ->
+            when (event) {
+                is AuthUiEvent.NavigateToHome -> {
+                    navController.navigate(Route.Home) {
+                        popUpTo(Route.Login) { inclusive = true }
+                    }
+                }
+                is AuthUiEvent.ShowSnackbar -> {
+                    Toast.makeText(
+                        navController.context,
+                        event.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
 
 
-Box(
-    modifier = Modifier
-        .fillMaxWidth()
-        .padding(32.dp)
-) {
-    Column() {
-        Text(
-            text = "تسجيل الدخول",
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        // EditText الأول - الرقم القومي
-        CustomEditText(
-            value = state.nationalId,
-            onValueChange = { vm.updateNationalId(it) },
-            label = "الرقم القومي",
-            placeholder = "أدخل الرقم القومي...",
-            imageVector = ImageVector.vectorResource(id = R.drawable.id),
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
 
-
-        CustomEditText(
-            value = state.phoneNumber,
-            onValueChange = { vm.updatePhoneNumber(it) },
-            label = "رقم الهاتف",
-            placeholder = "أدخل رقم الهاتف...",
-            imageVector = ImageVector.vectorResource(id = R.drawable.phone)
-        )
-
-        Spacer(Modifier.height(24.dp))
-
-        Button(
-            onClick = {
-                    navController.navigate(Route.Home)
-
-                      },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp)
-                .shadow(
-                    elevation = 4.dp,
-                    shape = RoundedCornerShape(16.dp)
-                ),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = GoldenYellow,
-                contentColor = HeaderGradientStart
-            ),
-            contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
-        ) {
-
-          Text(
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(32.dp)
+    ) {
+        Column() {
+            Text(
                 text = "تسجيل الدخول",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            // EditText الأول - الرقم القومي
+            CustomEditText(
+                value = state.nationalId,
+                onValueChange = { vm.updateNationalId(it) },
+                label = "الرقم القومي",
+                placeholder = "أدخل الرقم القومي...",
+                imageVector = ImageVector.vectorResource(id = R.drawable.id),
+                modifier = Modifier.padding(bottom = 16.dp)
             )
 
-    }
 
-        Text(
-            text = "مستخدم جديد؟ إنشاء حساب ",
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .align(Alignment.CenterHorizontally)
-                .clickable() {
-                    navController.navigate(Route.Registration)
+            CustomEditText(
+                value = state.phoneNumber,
+                onValueChange = { vm.updatePhoneNumber(it) },
+                label = "رقم الهاتف",
+                placeholder = "أدخل رقم الهاتف...",
+                imageVector = ImageVector.vectorResource(id = R.drawable.phone)
+            )
+
+            Spacer(Modifier.height(24.dp))
+
+            Button(
+                onClick = {
+                    vm.login(state.phoneNumber, state.nationalId)
                 },
-            color = GoldenYellow,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
-        )
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .shadow(
+                        elevation = 4.dp,
+                        shape = RoundedCornerShape(16.dp)
+                    ),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = GoldenYellow,
+                    contentColor = HeaderGradientStart
+                ),
+                contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
+            ) {
+
+                Text(
+                    text = "تسجيل الدخول",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
+                )
+
+            }
+
+            Text(
+                text = "مستخدم جديد؟ إنشاء حساب ",
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .clickable() {
+                        navController.navigate(Route.Registration)
+                    },
+                color = GoldenYellow,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+        }
+
 
     }
+
 }
-
-
-    }
 
 @Composable
 fun LoginHeader() {

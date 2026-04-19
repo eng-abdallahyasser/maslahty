@@ -6,17 +6,22 @@ import com.abdallahyasser.maslahty.domain.auth.entity.User
 import com.abdallahyasser.maslahty.domain.auth.useCase.RegisterUserUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.getCurrentUserUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.isLoggedInUseCase
-import com.abdallahyasser.maslahty.domain.auth.useCase.loginUseCase
+import com.abdallahyasser.maslahty.domain.auth.useCase.LoginUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.sendOtpUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
+import com.abdallahyasser.maslahty.presentation.auth.AuthUiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
-class AuthViewModel(
-    private val loginUseCase: loginUseCase,
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase,
     private val registerUseCase: RegisterUserUseCase,
     private val logoutUseCase: logoutUseCase,
     private val getCurrentUserUseCase: getCurrentUserUseCase,
@@ -24,6 +29,9 @@ class AuthViewModel(
     private val verifyOtpUseCase: verifyOtpUseCase,
     private val isLoggedInUseCase: isLoggedInUseCase
 ) : ViewModel() {
+
+    private val _eventFlow = MutableSharedFlow<AuthUiEvent>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     private val _authState = MutableStateFlow(AuthState())
     val authState: StateFlow<AuthState> = _authState.asStateFlow()
@@ -75,7 +83,9 @@ class AuthViewModel(
                         phoneNumber = user.phoneNumber
                     )
                 }
+                _eventFlow.emit(AuthUiEvent.NavigateToHome)
             } else {
+                _eventFlow.emit(AuthUiEvent.ShowSnackbar(result.exceptionOrNull()?.message ?: "Login failed"))
                 _authState.value = _authState.value.copy(
                     isLoading = false,
                     success = false,

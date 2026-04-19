@@ -11,4 +11,5 @@ data class AuthState(
     val fullName : String= "",
     val phoneNumber: String= "",
     val email: String= "",
+    val password: String= ""
     )

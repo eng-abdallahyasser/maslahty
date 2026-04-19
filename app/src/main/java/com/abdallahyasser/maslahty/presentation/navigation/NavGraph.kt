@@ -29,7 +29,7 @@ fun NavGraph(navController: NavHostController) {
     val violationsViewModel: ViolationsViewModel = viewModel(factory = AppDependencies.violationsViewModelFactory)
     NavHost(
         navController = navController,
-        startDestination = Route.Splash
+        startDestination = Route.Login
     ) {
         composable<Route.Splash> {
             SplashScreen(navController = navController)

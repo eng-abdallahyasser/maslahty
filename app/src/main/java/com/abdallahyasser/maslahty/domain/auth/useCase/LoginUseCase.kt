@@ -1,9 +1,9 @@
 package com.abdallahyasser.maslahty.domain.auth.useCase
 
+import com.abdallahyasser.maslahty.data.auth.AuthRepositoryImpl
 import com.abdallahyasser.maslahty.domain.auth.entity.User
-import com.abdallahyasser.maslahty.domain.auth.repo.AuthRepository
 
-class loginUseCase(private val authRepository: AuthRepository){
+class LoginUseCase(private val authRepository: AuthRepositoryImpl){
 
     suspend operator fun invoke(username: String, password: String): Result<User> {
         return authRepository.login(username, password)
