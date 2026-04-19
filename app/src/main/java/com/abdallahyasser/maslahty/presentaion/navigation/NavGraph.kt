@@ -4,20 +4,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.imageUpload.ImageUploadScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails.VehicleDetailsScreen
-import com.abdallahyasser.maslahty.presentaion.screens.violations.ViolationsMenuScreen
-import com.abdallahyasser.maslahty.presentaion.screens.violations.VehicleViolationsScreen
-import com.abdallahyasser.maslahty.presentaion.view.auth.LoginScreen
-import com.abdallahyasser.maslahty.presentaion.view.auth.OTPVerification
-import com.abdallahyasser.maslahty.presentaion.view.auth.SignUpScreen
-import com.abdallahyasser.maslahty.presentaion.view.onboarding.OnboardingScreen
-import com.example.maslahty.presentation.screens.home.HomeScreen
+import com.abdallahyasser.maslahty.presentaion.auth.LoginScreen
+import com.abdallahyasser.maslahty.presentaion.auth.OTPVerification
+import com.abdallahyasser.maslahty.presentaion.auth.SignUpScreen
+import com.abdallahyasser.maslahty.presentaion.onboarding.OnboardingScreen
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
 import com.example.maslahty.presentation.viewmodels.ViolationsViewModelFactory
-import com.abdallahyasser.maslahty.data.repoImpl.ViolationRepositoryImpl
-import com.abdallahyasser.maslahty.data.repoImpl.VehicleRepositoryImpl
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 // Create dependencies singleton
@@ -33,7 +25,9 @@ fun NavGraph(navController: NavHostController) {
         startDestination = Route.Splash
     ) {
         composable<Route.Splash> {
-            SplashScreen(navController = navController)
+            _root_ide_package_.com.abdallahyasser.maslahty.presentaion.splash.SplashScreen(
+                navController = navController
+            )
         }
         composable<Route.onBoarding> {
             OnboardingScreen(navController = navController)
@@ -52,17 +46,24 @@ fun NavGraph(navController: NavHostController) {
             SignUpScreen(navController = navController)
         }
         composable<Route.Home> {
-            HomeScreen(navController = navController)
+            _root_ide_package_.com.example.maslahty.presentation.screens.home.HomeScreen(
+                navController = navController
+            )
         }
         composable<Route.VehicleDetails> {
-            VehicleDetailsScreen(navController = navController)
+            _root_ide_package_.com.abdallahyasser.maslahty.presentaion.transfer.vehicleDetails.VehicleDetailsScreen(
+                navController = navController
+            )
         }
         composable<Route.ViolationsMenuScreen> {
-            ViolationsMenuScreen(navController = navController, viewModel = violationsViewModel)
+            _root_ide_package_.com.abdallahyasser.maslahty.presentaion.violations.ViolationsMenuScreen(
+                navController = navController,
+                viewModel = violationsViewModel
+            )
         }
         composable<Route.VehicleViolationsScreen> { backStackEntry ->
             val args = backStackEntry.toRoute<Route.VehicleViolationsScreen>()
-            VehicleViolationsScreen(
+            _root_ide_package_.com.abdallahyasser.maslahty.presentaion.violations.VehicleViolationsScreen(
                 navController = navController,
                 vehicleId = args.vehicleId,
                 viewModel = violationsViewModel
@@ -70,7 +71,7 @@ fun NavGraph(navController: NavHostController) {
         }
         composable<Route.ImageUpload> { backStackEntry ->
             val args = backStackEntry.toRoute<Route.ImageUpload>()
-            ImageUploadScreen(
+            _root_ide_package_.com.abdallahyasser.maslahty.presentaion.transfer.imageUpload.ImageUploadScreen(
                 navController = navController,
                 vehicleId = args.vehicleId
             )
