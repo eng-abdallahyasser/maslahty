@@ -1,6 +1,6 @@
 package com.example.maslahty.domain.repositories
 
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.Result
 import com.example.maslahty.domain.entities.Violation
 
 interface ViolationRepository {

@@ -41,9 +41,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abdallahyasser.maslahty.R
-import com.abdallahyasser.maslahty.presentaion.view.auth.AuthViewModel
 
 
 @Composable

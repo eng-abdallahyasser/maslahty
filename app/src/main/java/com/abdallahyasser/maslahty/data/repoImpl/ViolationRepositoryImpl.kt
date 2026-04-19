@@ -1,6 +1,6 @@
 package com.abdallahyasser.maslahty.data.repoImpl
 
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.Result
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.entities.ViolationStatus
 import com.example.maslahty.domain.repositories.ViolationRepository

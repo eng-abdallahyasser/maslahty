@@ -1,4 +1,4 @@
-package com.example.maslahty.presentation.screens.home
+package com.abdallahyasser.maslahty.presentation.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
-import com.abdallahyasser.maslahty.presentation.home.HomeViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.common
+package com.abdallahyasser.maslahty.domain.common
 
 sealed class Result<out T> {
     data class Success<T>(val data: T) : Result<T>()

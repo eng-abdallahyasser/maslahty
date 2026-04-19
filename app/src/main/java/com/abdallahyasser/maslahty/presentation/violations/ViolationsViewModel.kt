@@ -1,10 +1,10 @@
-package com.example.maslahty.presentation.viewmodels
+package com.abdallahyasser.maslahty.presentation.violations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.Result
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase

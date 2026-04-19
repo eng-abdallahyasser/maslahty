@@ -7,9 +7,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.abdallahyasser.maslahty.presentation.violations.ViolationsMenuScreen
 import com.abdallahyasser.maslahty.presentation.violations.VehicleViolationsScreen
-import com.example.maslahty.presentation.screens.home.HomeScreen
-import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
-import com.example.maslahty.presentation.viewmodels.ViolationsViewModelFactory
+import com.abdallahyasser.maslahty.presentation.home.HomeScreen
+import com.abdallahyasser.maslahty.presentation.violations.ViolationsViewModel
+import com.abdallahyasser.maslahty.presentation.violations.ViolationsViewModelFactory
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.abdallahyasser.maslahty.presentation.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentation.auth.OTPVerification

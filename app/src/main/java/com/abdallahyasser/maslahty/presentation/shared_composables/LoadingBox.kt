@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view.CustomComponent
+package com.abdallahyasser.maslahty.presentation.shared_composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

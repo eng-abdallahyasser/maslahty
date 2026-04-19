@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view.auth
+package com.abdallahyasser.maslahty.presentation.auth
 
 data class AuthState(
     val isLoading: Boolean = false,

@@ -1,4 +1,4 @@
-package com.example.maslahty.presentation.viewmodels
+package com.abdallahyasser.maslahty.presentation.violations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +19,9 @@ class ViolationsViewModelFactory : ViewModelProvider.Factory {
             return ViolationsViewModel(
                 getUserVehiclesUseCase = GetUserVehiclesUseCase(vehicleRepository),
                 getVehicleViolationsUseCase = GetVehicleViolationsUseCase(violationRepository),
-                checkViolationsForTransferUseCase = CheckViolationsForTransferUseCase(violationRepository)
+                checkViolationsForTransferUseCase = CheckViolationsForTransferUseCase(
+                    violationRepository
+                )
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

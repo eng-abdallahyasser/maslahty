@@ -1,7 +1,7 @@
 package com.example.maslahty.domain.repositories
 
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.Result
 
 interface VehicleRepository {
     suspend fun getVehicleByPlate(licensePlate: String): Result<Vehicle>

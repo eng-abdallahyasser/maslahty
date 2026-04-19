@@ -32,15 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.ErrorMessage
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.GradientHeader
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.LoadingBox
+import com.abdallahyasser.maslahty.presentation.shared_composables.ErrorMessage
+import com.abdallahyasser.maslahty.presentation.shared_composables.GradientHeader
+import com.abdallahyasser.maslahty.presentation.shared_composables.LoadingBox
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.entities.ViolationStatus
 
-import com.example.maslahty.presentation.viewmodels.ViolationsUiState
-import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Locale

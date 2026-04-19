@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.view.auth
+package com.abdallahyasser.maslahty.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,6 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.LoginUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.sendOtpUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
-import com.abdallahyasser.maslahty.presentation.auth.AuthUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -31,13 +31,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.ErrorMessage
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.GradientHeader
-import com.abdallahyasser.maslahty.presentaion.view.CustomComponent.LoadingBox
+import com.abdallahyasser.maslahty.presentation.shared_composables.ErrorMessage
+import com.abdallahyasser.maslahty.presentation.shared_composables.GradientHeader
+import com.abdallahyasser.maslahty.presentation.shared_composables.LoadingBox
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
-import com.example.maslahty.presentation.viewmodels.ViolationsUiState
-import com.example.maslahty.presentation.viewmodels.ViolationsViewModel
 import kotlinx.coroutines.delay
 
 @Composable

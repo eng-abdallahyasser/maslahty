@@ -1,7 +1,7 @@
 package com.example.maslahty.domain.usecases.vehicle
 
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.Result
 
 import com.example.maslahty.domain.repositories.VehicleRepository
 

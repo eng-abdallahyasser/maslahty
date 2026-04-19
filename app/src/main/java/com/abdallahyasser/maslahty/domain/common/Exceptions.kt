@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.common
+package com.abdallahyasser.maslahty.domain.common
 
 class ValidationException(message: String) : Exception(message)
 class NetworkException(message: String) : Exception(message)
