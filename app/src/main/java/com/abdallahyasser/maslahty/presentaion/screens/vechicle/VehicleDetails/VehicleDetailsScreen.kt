@@ -13,8 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.BlurredEdgeTreatment
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -302,10 +300,23 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                             state.newOwnerNationalId.length != 14 -> {
                                 viewModel.setError ("الرقم القومي يجب أن يكون 14 رقم")
                             }
+                            state.chassisNumber.isBlank() -> {
+                                viewModel.setError("أدخل رقم الشاسيه")
+                            }
+                            state.engineNumber.isBlank() -> {
+                                viewModel.setError("أدخل رقم الموتور")
+                            }
                             else -> {
-                                navController.navigate(Route.ImageUpload(state.licensePlate))
+                                // ✅ حفظ البيانات أولاً في TransferDraftStore
+                                viewModel.saveVehicleDataAndNavigate(
+                                    licensePlate = state.licensePlate,
+                                    onNavigate = {
+                                        navController.navigate(Route.ImageUpload(state.licensePlate))
+                                    }
+                                )
                             }
                         }
+
                     },
                     modifier = Modifier.fillMaxWidth()
                 )

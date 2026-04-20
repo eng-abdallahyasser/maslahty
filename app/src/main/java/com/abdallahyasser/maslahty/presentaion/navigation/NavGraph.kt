@@ -10,7 +10,7 @@ import com.abdallahyasser.maslahty.presentaion.screens.auth.LoginScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.OTPVerificationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.auth.RegistrationScreen
 import com.abdallahyasser.maslahty.presentaion.screens.splash.SplashScreen
-import com.abdallahyasser.maslahty.presentaion.screens.transfer.TransferRequest.TransferRequestScreen
+import com.abdallahyasser.maslahty.presentaion.screens.vechicle.TransferRequest.TransferRequestScreen
 import com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentaion.screens.vechicle.Pricing.PricingScreen
 import com.example.maslahty.presentation.screens.home.HomeScreen

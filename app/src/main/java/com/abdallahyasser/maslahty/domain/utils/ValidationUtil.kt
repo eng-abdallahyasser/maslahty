@@ -2,7 +2,7 @@ package com.example.maslahty.domain.utils
 
 object ValidationUtil {
     fun isValidNationalId(nationalId: String): Boolean {
-        return nationalId.matches(Regex("^[0-9]{10}$"))
+        return nationalId.matches(Regex("^[0-9]{14}$"))
     }
 
     fun isValidPhoneNumber(phoneNumber: String): Boolean {

@@ -6,7 +6,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.Date
-
+import kotlin.compareTo
+import kotlin.text.get
 
 
 // TODO: Implement the ViewModel for handling image upload
@@ -22,20 +23,18 @@ class ImageUploadViewModel: ViewModel() {
 
     fun onNextClicked(vehicleId: String, onNavigate: () -> Unit) {
         val state = _uiState.value
-        // محاولة الحصول على الـ draft أو عمل واحد جديد لو null
         val draft = TransferDraftStore.drafts[vehicleId]
 
         when {
             state.uploadedCount < 4 -> {
                 _uiState.update { it.copy(error = "كل الصور الأربع إلزامية قبل المتابعة") }
             }
-            // لو مفيش draft، ممكن نكريت واحد جديد (للتجربة) بدل ما نطلع إيرور
             draft == null -> {
-                // هنجرب نصلح ده هنا عشان الـ UI ميعلقش
-                _uiState.update { it.copy(error = "خطأ: بيانات المركبة غير موجودة في الـ DraftStore") }
+                // ❌ بدل ما تطلع Error، الآن يجب تكون البيانات موجودة
+                _uiState.update { it.copy(error = "لم يتم العثور على بيانات المركبة. الرجاء المحاولة من جديد") }
             }
             else -> {
-                // الكود بيكمل عادي لو الـ draft موجود
+                // ✅ حفظ الصور في البيانات
                 TransferDraftStore.drafts[vehicleId] = draft.copy(
                     vehicle = draft.vehicle.copy(
                         licenseImageUrl = state.licenseImageUrl,
@@ -49,5 +48,6 @@ class ImageUploadViewModel: ViewModel() {
             }
         }
     }
+
 
 }

@@ -3,7 +3,7 @@ package com.abdallahyasser.maslahty.domain.vehicle.entity
 import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
 import java.util.Date
 
-data class Vehicle(
+data class      Vehicle(
     val id: String,
     val ownerId: String,
     val licensePlate: String,
