@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -55,7 +56,6 @@ fun OTPVerification(
     phoneNumber: String
 ) {
     val vm: AuthViewModel = hiltViewModel()
-
     val state = vm.authState.collectAsState()
 
     Column(
@@ -232,12 +232,18 @@ fun OTPVerification(
                 ),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text(
-                    text = "تأكيد",
-                    color = Color.Black,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Normal
-                )
+                if (state.value.isLoading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                    )
+                } else {
+                    Text(
+                        text = "تأكيد",
+                        color = Color.Black,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
             }
         }
     }
