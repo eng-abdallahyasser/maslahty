@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +26,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -63,18 +65,9 @@ fun LoginBody(navController: NavController) {
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
-            when (event) {
-                is AuthUiEvent.NavigateToHome -> {
-                    navController.navigate(Route.Home) {
-                        popUpTo(Route.Login) { inclusive = true }
-                    }
-                }
-                is AuthUiEvent.ShowSnackbar -> {
-                    Toast.makeText(
-                        navController.context,
-                        event.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
+            if (event is AuthUiEvent.NavigateToHome) {
+                navController.navigate(Route.Home) {
+                    popUpTo(Route.Login) { inclusive = true }
                 }
             }
         }
@@ -110,6 +103,16 @@ fun LoginBody(navController: NavController) {
                 placeholder = "أدخل رقم الهاتف...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone)
             )
+            Spacer(Modifier.height(16.dp))
+
+            if (state.error != null) {
+                Box() {
+                    Text(
+                        state.error,
+                        color = Color.Red,
+                    )
+                }
+            }
 
             Spacer(Modifier.height(24.dp))
 
@@ -131,14 +134,20 @@ fun LoginBody(navController: NavController) {
                 ),
                 contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
             ) {
+                if (state.isLoading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                    )
+                } else {
 
-                Text(
-                    text = "تسجيل الدخول",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
-                )
+                    Text(
+                        text = "تسجيل الدخول",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
+                    )
+                }
 
             }
 

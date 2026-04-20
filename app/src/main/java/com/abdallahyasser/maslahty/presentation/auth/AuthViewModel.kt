@@ -94,7 +94,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun register(username: String, email: String, password: String) {
+    fun register() {
         viewModelScope.launch {
             // Set loading state
             _authState.value = _authState.value.copy(isLoading = true, error = null)
@@ -102,11 +102,11 @@ class AuthViewModel @Inject constructor(
             // Create user object
             val user = User(
                 id = "",
-                fullName = username,
-                nationalId = "",
-                email = email,
-                phoneNumber = username,
-                password= password
+                fullName = _authState.value.fullName,
+                nationalId = _authState.value.nationalId,
+                email = _authState.value.email,
+                phoneNumber = _authState.value.phoneNumber,
+                password= _authState.value.password
             )
 
             // Call use case
@@ -126,6 +126,7 @@ class AuthViewModel @Inject constructor(
                         phoneNumber = registeredUser.phoneNumber
                     )
                 }
+                _eventFlow.emit(AuthUiEvent.NavigateToVerifyOTP)
             } else {
                 _authState.value = _authState.value.copy(
                     isLoading = false,

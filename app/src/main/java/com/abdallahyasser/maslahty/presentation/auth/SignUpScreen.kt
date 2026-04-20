@@ -19,9 +19,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,10 +38,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.presentation.navigation.Route
@@ -46,6 +51,7 @@ import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditTex
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
 import com.abdallahyasser.maslahty.theme.HeaderGradientStart
+import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
@@ -55,12 +61,12 @@ fun SignUpScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .verticalScroll(scrollState) // This makes it scrollable
-             ) {
-            SignUpHeader()
-            SignUpBody(navController)
+    ) {
+        SignUpHeader()
+        SignUpBody(navController)
 
 
-        }
+    }
 
 }
 
@@ -88,75 +94,81 @@ fun SignUpHeader() {
         contentAlignment = Alignment.Center
     ) {
 
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.signup),
-                contentDescription = "App Icon",
+        Image(
+            imageVector = ImageVector.vectorResource(id = R.drawable.signup),
+            contentDescription = "App Icon",
+            modifier = Modifier
+                .size(150.dp)
+                .align(Alignment.Center)
+
+
+        )
+        Column(
+            modifier = Modifier
+                .padding(bottom = 32.dp)
+                .align(Alignment.BottomCenter),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "إنشاء حساب جديد",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .size(150.dp)
-                    .align(Alignment.Center)
+            )
+
+            Text(
+                text = "ادخل بياناتك الشخصية",
+                color = Color.White,
+                fontSize = 18.sp,
+                modifier = Modifier
 
 
             )
-            Column(
-                modifier = Modifier
-                    .padding(bottom = 32.dp)
-                    .align(Alignment.BottomCenter)
-                   ,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "إنشاء حساب جديد",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                )
-
-                Text(
-                    text = "ادخل بياناتك الشخصية",
-                    color = Color.White,
-                    fontSize = 18.sp,
-                    modifier = Modifier
-
-
-                )
-            }
+        }
     }
 }
 
 
-
-
 @Composable
 fun SignUpBody(navController: NavController) {
-    var fullName by remember { mutableStateOf("") }
-    var nationlaId by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    //Todo: where is Password @desha
 
-    // todo :where is viewModel @desha
+
+    val vm: AuthViewModel = hiltViewModel()
+    val state = vm.authState.collectAsState()
+
+
+
+    LaunchedEffect(Unit) {
+        vm.eventFlow.collectLatest { event ->
+            if (event is AuthUiEvent.NavigateToVerifyOTP) {
+                navController.navigate(Route.OTP(state.value.phoneNumber))
+
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(32.dp)
     ) {
         Column() {
-          Row() {
-              Icon(
-                  imageVector = ImageVector.vectorResource(id = R.drawable.person),
-                  contentDescription = null,
-                  tint = Color.Black,
-                  modifier = Modifier.size(20.dp)
-              )
-              Text(
-                  text = "البيانات شخصية",
-                  color = Color.Black,
-                  fontSize = 18.sp,
-                  fontWeight = FontWeight.Bold,
-                  modifier = Modifier.padding(start = 8.dp)
-              )
-          }
+            Row() {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.person),
+                    contentDescription = null,
+                    tint = Color.Black,
+                    modifier = Modifier.size(20.dp)
+                )
+                Text(
+                    text = "البيانات شخصية",
+                    color = Color.Black,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
 
             Text(
                 text = "الاسم الكامل",
@@ -166,8 +178,8 @@ fun SignUpBody(navController: NavController) {
             )
 
             CustomEditText(
-                value = fullName,
-                onValueChange = { fullName = it },
+                value = state.value.fullName,
+                onValueChange = { vm.updateFullName(it) },
                 label = "الاسم باللغة العربية",
                 placeholder = "ادخل اسمك الكامل",
                 imageVector = ImageVector.vectorResource(id = R.drawable.person),
@@ -183,8 +195,8 @@ fun SignUpBody(navController: NavController) {
 
 
             CustomEditText(
-                value = nationlaId,
-                onValueChange = { nationlaId = it },
+                value = state.value.nationalId,
+                onValueChange = { vm.updateNationalId(it) },
                 label = "الرقم القومي",
                 placeholder = "14 رقم",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
@@ -217,8 +229,8 @@ fun SignUpBody(navController: NavController) {
             )
 
             CustomEditText(
-                value = phoneNumber,
-                onValueChange = { phoneNumber = it },
+                value = state.value.phoneNumber,
+                onValueChange = { vm.updatePhoneNumber(it) },
                 label = "رقم الهاتف",
                 placeholder = "01xxxxxxxxx",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone),
@@ -230,17 +242,30 @@ fun SignUpBody(navController: NavController) {
                 modifier = Modifier.padding(top = 12.dp)
             )
             CustomEditText(
-                value = email,
-                onValueChange = { email = it },
+                value = state.value.email,
+                onValueChange = { vm.updateEmail(it) },
                 label = "البريد الإلكتروني",
                 placeholder = "example@email.com",
-                imageVector = ImageVector.vectorResource(id = R.drawable.email))
+                imageVector = ImageVector.vectorResource(id = R.drawable.email)
+            )
 
+            Spacer(Modifier.height(16.dp))
+
+            if (state.value.error != null) {
+                Box() {
+                    Text(
+                        state.value.error!!,
+                        color = Color.Red,
+                    )
+                }
+            }
             Spacer(Modifier.height(32.dp))
+
 
             Button(
                 onClick = {
-                   navController.navigate(Route.OTP(phoneNumber))
+                    vm.register()
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -256,13 +281,19 @@ fun SignUpBody(navController: NavController) {
                 ),
                 contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
             ) {
-                Text(
-                    text = "انشاء حساب",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
-                )
+                if (state.value.isLoading) {
+                    CircularProgressIndicator(
+                        color = Color.White,
+                    )
+                } else {
+                    Text(
+                        text = "انشاء حساب",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
+                    )
+                }
 
             }
 
@@ -280,9 +311,7 @@ fun SignUpBody(navController: NavController) {
                 fontWeight = FontWeight.Bold,
 
 
-            )
-
-
+                )
 
 
         }
