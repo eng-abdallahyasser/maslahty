@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.Navigator
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditText
@@ -65,10 +66,8 @@ fun LoginBody(navController: NavController) {
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
-            if (event is AuthUiEvent.NavigateToHome) {
-                navController.navigate(Route.Home) {
-                    popUpTo(Route.Login) { inclusive = true }
-                }
+            if (event is AuthUiEvent.NavigateToVerifyOTP) {
+                navController.navigate(Route.OTP)
             }
         }
     }
@@ -106,19 +105,17 @@ fun LoginBody(navController: NavController) {
             Spacer(Modifier.height(16.dp))
 
             if (state.error != null) {
-                Box() {
-                    Text(
-                        state.error,
-                        color = Color.Red,
-                    )
-                }
+                Text(
+                    state.error,
+                    color = Color.Red,
+                )
             }
 
             Spacer(Modifier.height(24.dp))
 
             Button(
                 onClick = {
-                    vm.login(state.phoneNumber, state.nationalId)
+                    vm.login()
                 },
                 modifier = Modifier
                     .fillMaxWidth()

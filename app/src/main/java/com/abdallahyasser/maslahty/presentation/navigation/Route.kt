@@ -19,7 +19,7 @@ sealed class Route {
 
     // الشاشات اللي بتاخد أرجيومنتس بنحولها لـ Data Class
     @Serializable
-    data class OTP(val phoneNumber: String)
+    object OTP
     @Serializable
     data class VehicleViolationsScreen(val vehicleId: String)
 

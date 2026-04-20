@@ -60,13 +60,13 @@ class AuthViewModel @Inject constructor(
         _authState.value = _authState.value.copy(otpValue = value)
     }
 
-    fun login(phoneNumber: String, password: String) {
+    fun login() {
         viewModelScope.launch {
             // Set loading state
             _authState.value = _authState.value.copy(isLoading = true, error = null)
 
             // Call use case
-            val result = loginUseCase(phoneNumber, password)
+            val result = loginUseCase(_authState.value.phoneNumber, _authState.value.nationalId)
 
             // Update state based on result
             if (result.isSuccess) {
@@ -82,9 +82,9 @@ class AuthViewModel @Inject constructor(
                         phoneNumber = user.phoneNumber
                     )
                 }
-                _eventFlow.emit(AuthUiEvent.NavigateToHome)
+                _eventFlow.emit(AuthUiEvent.NavigateToVerifyOTP)
             } else {
-                _eventFlow.emit(AuthUiEvent.ShowSnackbar(result.exceptionOrNull()?.message ?: "Login failed"))
+//                _eventFlow.emit(AuthUiEvent.ShowSnackbar(result.exceptionOrNull()?.message ?: "Login failed"))
                 _authState.value = _authState.value.copy(
                     isLoading = false,
                     success = false,
@@ -219,13 +219,13 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun verifyOTP(phoneNumber: String, otp: String) {
+    fun verifyOTP() {
         viewModelScope.launch {
             // Set loading state
             _authState.value = _authState.value.copy(isLoading = true, error = null)
 
             // Call use case
-            val result = verifyOtpUseCase(phoneNumber, otp)
+            val result = verifyOtpUseCase(_authState.value.phoneNumber, _authState.value.otpValue)
 
             // Update state based on result
             if (result.isSuccess) {
@@ -239,9 +239,10 @@ class AuthViewModel @Inject constructor(
                         nationalId = user.nationalId,
                         email = user.email,
                         phoneNumber = user.phoneNumber,
-                        otpValue = otp
+                        otpValue = _authState.value.otpValue
                     )
                 }
+                _eventFlow.emit(AuthUiEvent.NavigateToHome)
             } else {
                 _authState.value = _authState.value.copy(
                     isLoading = false,

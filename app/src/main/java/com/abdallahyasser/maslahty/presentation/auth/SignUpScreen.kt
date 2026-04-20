@@ -142,7 +142,7 @@ fun SignUpBody(navController: NavController) {
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
             if (event is AuthUiEvent.NavigateToVerifyOTP) {
-                navController.navigate(Route.OTP(state.value.phoneNumber))
+                navController.navigate(Route.OTP)
 
             }
         }

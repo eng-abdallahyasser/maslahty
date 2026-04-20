@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -43,20 +44,29 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentation.navigation.Route
+import kotlinx.coroutines.flow.collectLatest
 
 
 @Composable
 fun OTPVerification(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {
-        navController.popBackStack()
-    },
-    onConfirm: (String) -> Unit = {},
-    phoneNumber: String
+    modifier: Modifier = Modifier
 ) {
     val vm: AuthViewModel = hiltViewModel()
     val state = vm.authState.collectAsState()
+
+
+
+    LaunchedEffect(Unit) {
+        vm.eventFlow.collectLatest { event ->
+            if (event is AuthUiEvent.NavigateToHome) {
+                navController.navigate(Route.Home) {
+                    popUpTo(Route.Registration) { inclusive = true }
+                }
+            }
+        }
+    }
 
     Column(
         modifier = modifier
@@ -95,7 +105,7 @@ fun OTPVerification(
             )
 
             IconButton(
-                onClick = onBackClick,
+                onClick = { navController.popBackStack() },
                 modifier = Modifier
                     .size(48.dp)
                     .background(Color(0xFF374151), shape = CircleShape)
@@ -219,11 +229,23 @@ fun OTPVerification(
                 )
             }
 
-            Spacer(modifier = Modifier.height(236.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (state.value.error != null) {
+                Text(
+                    state.value.error!!,
+                    color = Color.Red,
+                )
+            }
+
 
             // Confirm Button
             Button(
-                onClick = { onConfirm(state.value.otpValue) },
+                onClick = {
+                    vm.verifyOTP()
+
+
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),

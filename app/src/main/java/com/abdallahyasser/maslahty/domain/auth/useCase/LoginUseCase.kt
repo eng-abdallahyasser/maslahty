@@ -5,7 +5,7 @@ import com.abdallahyasser.maslahty.domain.auth.entity.User
 
 class LoginUseCase(private val authRepository: AuthRepositoryImpl){
 
-    suspend operator fun invoke(username: String, password: String): Result<User> {
-        return authRepository.login(username, password)
+    suspend operator fun invoke(phoneNumber: String, password: String): Result<User> {
+        return authRepository.login(phoneNumber, password)
     }
 }

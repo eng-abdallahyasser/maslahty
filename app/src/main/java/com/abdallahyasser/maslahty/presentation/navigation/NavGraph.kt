@@ -40,11 +40,9 @@ fun NavGraph(navController: NavHostController) {
         composable<Route.Login> {
             LoginScreen(navController = navController)
         }
-        composable<Route.OTP> { backStackEntry ->
-            val args = backStackEntry.toRoute<Route.OTP>()
+        composable<Route.OTP> { 
             OTPVerification(
                 navController = navController,
-                phoneNumber = args.phoneNumber
             )
         }
         composable<Route.Registration> {
