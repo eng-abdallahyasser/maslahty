@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentation.transfer.Pricing
+package com.abdallahyasser.maslahty.presentaion.screens.transfer.Pricing
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

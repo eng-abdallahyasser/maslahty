@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails
+package com.abdallahyasser.maslahty.presentaion.screens.transfer.vehicleDetails
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

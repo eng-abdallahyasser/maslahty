@@ -23,6 +23,13 @@ navigationCompose = "2.8.0"
 threetenbp = "1.6.9"
 firebaseFirestoreKtx = "26.1.2"
 firebaseFirestoreKtxVersion = "26.1.2"
+navigationRuntimeKtx = "2.9.7"
+navigationCompose = "2.9.7"
+coreSplashscreen = "1.2.0"
+runtime = "1.10.6"
+roomKtx = "2.8.4"
+lifecycleViewmodelKtx = "2.10.0"
+composeMaterial = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -58,6 +65,13 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converte
 threetenbp = { module = "org.threeten:threetenbp", version.ref = "threetenbp" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx"}
 google-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtxVersion" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

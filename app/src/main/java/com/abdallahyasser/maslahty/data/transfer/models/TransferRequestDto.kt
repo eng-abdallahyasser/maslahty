@@ -1,4 +1,4 @@
-import com.abdallahyasser.maslahty.data.models.PriceWarningDto
+import com.abdallahyasser.maslahty.data.transfer.models.PriceWarningDto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,8 +1,7 @@
-package com.example.maslahty.data.models
+package com.abdallahyasser.maslahty.data.vehicle.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 
 @Serializable
 data class VehicleDto(
@@ -39,4 +38,3 @@ data class VehicleDto(
     @SerialName("updated_at")
     val updatedAt: Long
 )
-

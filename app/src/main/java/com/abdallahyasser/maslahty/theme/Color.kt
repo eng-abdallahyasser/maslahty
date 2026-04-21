@@ -58,7 +58,7 @@ val GrayBlue = Color(0xFF7684A1)
 val LightGray = Color(0xFFC5C6CE)
 
 // =============================================
-// Onboarding Colors
+// Onboarding & UI Elements
 // =============================================
 val HeaderGradientStart = Color(0xFF0A1931)
 val HeaderGradientEnd = Color(0xFF1A2A44)
@@ -76,6 +76,56 @@ val BottomDecoration = Color(0xFFFDC003).copy(alpha = 0.2f)
 val SkeletonDark = Color(0xFFE1E3E4)
 val SkeletonLight = Color(0xFFEDEEEF)
 val BorderColor = Color(0xFFC5C6CE)
+
+// =============================================
+// Dark Theme Colors
+// =============================================
+val BackgroundDark = Color(0xFF0A0F1E)
+val SurfaceDark = Color(0xFF121829)
+val SurfaceVariantDark = Color(0xFF1C2540)
+val CardDark = Color(0xFF1A2238)
+val CardBorderDark = Color(0xFF2A3558)
+
+// =============================================
+// Light Theme Colors
+// =============================================
+val BackgroundLight = Color(0xFFF5F7FF)
+val SurfaceLight = Color(0xFFFFFFFF)
+val SurfaceVariantLight = Color(0xFFEEF1FA)
+val CardLight = Color(0xFFFFFFFF)
+val CardBorderLight = Color(0xFFDDE3F0)
+
+// =============================================
+// Semantic & Status Colors
+// =============================================
+val SuccessGreen = Color(0xFF22C55E)
+val SuccessGreenLight = Color(0xFFDCFCE7)
+val WarningAmber = Color(0xFFF59E0B)
+val WarningAmberLight = Color(0xFFFEF3C7)
+val ErrorRed = Color(0xFFEF4444)
+val ErrorRedLight = Color(0xFFFEE2E2)
+val InfoBlue = Color(0xFF3B82F6)
+val InfoBlueLight = Color(0xFFDBEAFE)
+
+val StatusPending = Color(0xFFF59E0B)
+val StatusPendingBg = Color(0xFFFFF8E6)
+val StatusApproved = Color(0xFF22C55E)
+val StatusApprovedBg = Color(0xFFE6FFF2)
+val StatusRejected = Color(0xFFEF4444)
+val StatusRejectedBg = Color(0xFFFFE6E6)
+val StatusCompleted = Color(0xFF3B82F6)
+val StatusCompletedBg = Color(0xFFE6F0FF)
+
+// =============================================
+// Text Colors
+// =============================================
+val TextPrimaryDark = Color(0xFFF0F4FF)
+val TextSecondaryDark = Color(0xFFADB5CC)
+val TextTertiaryDark = Color(0xFF6B7494)
+
+val TextPrimaryLight = Color(0xFF0D1B3E)
+val TextSecondaryLight = Color(0xFF4A5580)
+val TextTertiaryLight = Color(0xFF8A95B5)
 
 // === Status Colors ===
 val StatusPending = Color(0xFFF59E0B)

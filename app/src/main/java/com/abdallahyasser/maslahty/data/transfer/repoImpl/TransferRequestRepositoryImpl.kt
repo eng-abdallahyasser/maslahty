@@ -1,8 +1,9 @@
-package com.abdallahyasser.maslahty.data.repoImpl
+package com.abdallahyasser.maslahty.data.transfer.repoImpl
 
 import com.abdallahyasser.maslahty.domain.transfer.repo.TransferRequestRepository
 import com.example.maslahty.domain.entities.TransferRequest
 import com.example.maslahty.domain.entities.TransferStatus
+import java.util.Date
 
 class TransferRequestRepositoryImpl : TransferRequestRepository {
     override suspend fun createTransferRequest(request: TransferRequest): Result<TransferRequest> {
@@ -10,8 +11,8 @@ class TransferRequestRepositoryImpl : TransferRequestRepository {
         return Result.success(
             request.copy(
                 id = "REQ_${(1000..9999).random()}",
-                createdAt = System.currentTimeMillis(),
-                updatedAt = System.currentTimeMillis()
+                createdAt =Date() ,
+                updatedAt = Date(),
             )
         )
     }
@@ -27,8 +28,8 @@ class TransferRequestRepositoryImpl : TransferRequestRepository {
                 status = TransferStatus.PENDING, // حالة قيد الانتظار
                 sellerName = "محمود حسن",
                 buyerName = "مصطفى علي",
-                createdAt = System.currentTimeMillis() - 86400000, // من يوم فات
-                updatedAt = System.currentTimeMillis() - 86400000
+                createdAt = Date(), // من يوم فات
+                updatedAt = Date()
             )
         )
     }
@@ -36,8 +37,12 @@ class TransferRequestRepositoryImpl : TransferRequestRepository {
     override suspend fun getSellerRequests(sellerId: String): Result<List<TransferRequest>> {
         // بنرجع قائمة فيها طلبين تجريبيين للبائع
         val mockList = listOf(
-            TransferRequest("1", "V-1", sellerId, "B-1", 100000.0, TransferStatus.PENDING, "أنا (البائع)", "مشتري 1", System.currentTimeMillis(), System.currentTimeMillis()),
-            TransferRequest("2", "V-2", sellerId, "B-2", 150000.0, TransferStatus.APPROVED_BY_BUYER, "أنا (البائع)", "مشتري 2", System.currentTimeMillis(), System.currentTimeMillis())
+            TransferRequest("1", "V-1", sellerId, "B-1",
+                100000.0, TransferStatus.PENDING, "أنا (البائع)", "مشتري 1",
+                Date(), Date()),
+            TransferRequest("2", "V-2", sellerId, "B-2",
+                150000.0, TransferStatus.APPROVED_BY_BUYER,
+                "أنا (البائع)", "مشتري 2", Date(), Date())
         )
         return Result.success(mockList)
     }
@@ -45,14 +50,14 @@ class TransferRequestRepositoryImpl : TransferRequestRepository {
     override suspend fun getBuyerRequests(buyerId: String): Result<List<TransferRequest>> {
         // بنرجع قائمة بطلبات المشتري
         val mockList = listOf(
-            TransferRequest("3", "V-3", "S-3", buyerId, 200000.0, TransferStatus.PENDING, "بائع 3", "أنا (المشتري)", System.currentTimeMillis(), System.currentTimeMillis())
+            TransferRequest("3", "V-3", "S-3", buyerId, 200000.0, TransferStatus.PENDING, "بائع 3", "أنا (المشتري)", Date(), Date())
         )
         return Result.success(mockList)
     }
 
     override suspend fun updateTransferRequest(request: TransferRequest): Result<TransferRequest> {
         // بنرجع الـ request بعد ما نحدث وقت التعديل
-        return Result.success(request.copy(updatedAt = System.currentTimeMillis()))
+        return Result.success(request.copy(updatedAt = Date()))
     }
 
 
@@ -70,8 +75,8 @@ class TransferRequestRepositoryImpl : TransferRequestRepository {
             status = TransferStatus.APPROVED_BY_BUYER,
             sellerName = "seller",
             buyerName = "buyer",
-            createdAt = System.currentTimeMillis(),
-            updatedAt = System.currentTimeMillis()
+            createdAt = Date(),
+            updatedAt = Date()
 
         ))
     }
