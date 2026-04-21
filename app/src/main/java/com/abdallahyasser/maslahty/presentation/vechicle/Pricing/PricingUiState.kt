@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.Pricing
+package com.abdallahyasser.maslahty.presentation.vechicle.Pricing
 
 data class PricingUiState(
 

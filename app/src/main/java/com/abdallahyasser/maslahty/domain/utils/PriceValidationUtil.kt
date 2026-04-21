@@ -1,6 +1,6 @@
 package com.example.maslahty.domain.utils
 
-import com.example.maslahty.domain.entities.PriceWarning
+import com.abdallahyasser.maslahty.domain.transfer.entity.PriceWarning
 
 object PriceValidationUtil {
     fun validatePrice(askedPrice: Double, marketPrice: Double): PriceWarning? {

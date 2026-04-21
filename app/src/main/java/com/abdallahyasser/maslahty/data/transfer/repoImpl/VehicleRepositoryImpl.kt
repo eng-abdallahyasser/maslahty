@@ -3,7 +3,7 @@ package com.abdallahyasser.maslahty.data.repoImpl
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
 import com.abdallahyasser.maslahty.domain.common.Result
-import com.example.maslahty.domain.repositories.VehicleRepository
+import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 import java.util.Date
 
 class VehicleRepositoryImpl : VehicleRepository {

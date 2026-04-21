@@ -24,13 +24,11 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.navigation.Screen
-import com.abdallahyasser.maslahty.presentaion.screens.home.HomeViewModel
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

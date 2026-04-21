@@ -1,8 +1,9 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload
+package com.abdallahyasser.maslahty.presentation.vechicle.ImageUpload
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.foundation.background
@@ -23,14 +24,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
-import com.example.maslahty.presentation.components.*
 import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
+import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.presentation.shared_composables.ErrorMessage
+import com.abdallahyasser.maslahty.presentation.shared_composables.GradientHeader
+import com.example.maslahty.presentation.components.PrimaryButton
+import com.example.maslahty.presentation.components.StepIndicator
 
 @Composable
 fun ImageUploadScreen(
@@ -175,7 +178,7 @@ fun VerticalUploadSlot(
             .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        border = androidx.compose.foundation.BorderStroke(1.dp, Color(0xFFE2E8F0))
+        border = BorderStroke(1.dp, Color(0xFFE2E8F0))
     ) {
         Column(
             modifier = Modifier.padding(12.dp),

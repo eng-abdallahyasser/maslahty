@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.repositories
+package com.abdallahyasser.maslahty.domain.vehicle.repo
 
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.common.Result

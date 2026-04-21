@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload
+package com.abdallahyasser.maslahty.presentation.vechicle.ImageUpload
 
 data class ImageUploadState(
     val licenseImageUrl: String = "",

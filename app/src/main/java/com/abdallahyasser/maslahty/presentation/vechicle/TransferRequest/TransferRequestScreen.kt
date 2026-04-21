@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.TransferRequest
+package com.abdallahyasser.maslahty.presentation.vechicle.TransferRequest
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
-import com.abdallahyasser.maslahty.presentaion.navigation.Route
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.AppColors
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.components.AppCard

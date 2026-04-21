@@ -1,10 +1,6 @@
 package com.example.maslahty.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
@@ -93,7 +89,6 @@ fun SecondaryButton(
     icon: ImageVector? = null
 ) {
     val appColors = LocalAppColors.current
-    val goldColor = appColors.gold
     OutlinedButton(
         onClick = onClick,
         enabled = enabled,
@@ -101,10 +96,10 @@ fun SecondaryButton(
             .fillMaxWidth()
             .height(52.dp),
         shape = RoundedCornerShape(14.dp),
-        border = androidx.compose.foundation.BorderStroke(1.5.dp, goldColor.copy(alpha = 0.6f)),
+        border = androidx.compose.foundation.BorderStroke(1.5.dp, appColors.gold.copy(alpha = 0.6f)),
         colors = ButtonDefaults.outlinedButtonColors(
-            contentColor = goldColor,
-            disabledContentColor = goldColor.copy(alpha = 0.4f)
+            contentColor = appColors.gold,
+            disabledContentColor = appColors.gold.copy(alpha = 0.4f)
         )
     ) {
         if (icon != null) {
@@ -617,7 +612,6 @@ fun StepIndicator(
             val step = index + 1
             val isDone = step < currentStep
             val isActive = step == currentStep
-            
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.weight(1f)
@@ -628,20 +622,25 @@ fun StepIndicator(
                         .clip(CircleShape)
                         .background(
                             when {
-                                isDone -> Color(0xFF22C55E) // أخضر للخطوات المكتملة
-                                isActive -> appColors.gold // ذهبي للخطوة الحالية
-                                else -> Color(0xFFE2E8F0) // رمادي للخطوات القادمة
+                                isDone -> appColors.success
+                                isActive -> appColors.gold
+                                else -> appColors.cardBorder
                             }
                         ),
                     contentAlignment = Alignment.Center
                 ) {
                     if (isDone) {
-                        Icon(Icons.Default.Check, null, tint = Color.White, modifier = Modifier.size(16.dp))
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(16.dp)
+                        )
                     } else {
                         Text(
                             text = step.toString(),
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (isActive) Color(0xFF0D1B3E) else Color(0xFF94A3B8),
+                            color = if (isActive) Color(0xFF0D1B3E) else appColors.textTertiary,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -649,27 +648,25 @@ fun StepIndicator(
                 Spacer(Modifier.height(4.dp))
                 Text(
                     text = label,
-                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 11.sp),
+                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
                     color = when {
-                        isDone -> Color(0xFF22C55E)
+                        isDone -> appColors.success
                         isActive -> appColors.gold
-                        else -> Color(0xFF94A3B8)
+                        else -> appColors.textTertiary
                     },
                     textAlign = TextAlign.Center,
                     fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal
                 )
             }
-            
-            // الخط الواصل
             if (index < stepLabels.size - 1) {
                 Box(
                     modifier = Modifier
                         .weight(0.5f)
-                        .height(3.dp)
+                        .height(2.dp)
                         .padding(top = 15.dp)
                         .background(
-                            if (step < currentStep) Color(0xFF22C55E) // الخط يبقى أخضر لو الخطوة خلصت
-                            else Color(0xFFE2E8F0)
+                            if (step < currentStep) appColors.success
+                            else appColors.cardBorder
                         )
                 )
             }

@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.TransferRequest
+package com.abdallahyasser.maslahty.presentation.vechicle.TransferRequest
 
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
 

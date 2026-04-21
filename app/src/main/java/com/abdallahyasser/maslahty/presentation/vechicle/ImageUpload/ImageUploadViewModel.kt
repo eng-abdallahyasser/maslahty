@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.ImageUpload
+package com.abdallahyasser.maslahty.presentation.vechicle.ImageUpload
 
 import androidx.lifecycle.ViewModel
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
@@ -6,8 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.util.Date
-import kotlin.compareTo
-import kotlin.text.get
 
 
 // TODO: Implement the ViewModel for handling image upload

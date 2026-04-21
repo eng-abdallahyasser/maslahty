@@ -1,6 +1,6 @@
 package com.abdallahyasser.maslahty.domain.transfer.repo
 
-import com.example.maslahty.domain.entities.TransferRequest
+import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
 
 interface TransferRequestRepository {
     suspend fun createTransferRequest(request: TransferRequest): Result<TransferRequest>

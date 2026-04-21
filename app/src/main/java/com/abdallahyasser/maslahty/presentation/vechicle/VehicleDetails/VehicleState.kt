@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.VehicleDetails
+package com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails
 
 sealed class VehicleState {
     data class VehicleIdentificationState(

@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.Pricing
+package com.abdallahyasser.maslahty.presentation.vechicle.Pricing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,7 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.navigation.Route
+import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.theme.AppColors
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.components.PrimaryButton
 import com.example.maslahty.presentation.components.StepIndicator
@@ -100,7 +101,7 @@ fun PricingScreen(
                     modifier = Modifier.padding(20.dp).fillMaxWidth(),
                     onClick = {
                         viewModel.onNextClicked(vehicleId) {
-                            navController.navigate(Route.TransferRequest(vehicleId))
+                            navController.navigate(Route.TransferRequestRoute(vehicleId))
                         }
                     }
                 )
@@ -161,7 +162,7 @@ fun PricingScreen(
 }
 
 @Composable
-fun CustomPriceInput(value: String, onValueChange: (String) -> Unit, appColors: com.abdallahyasser.maslahty.theme.AppColors) {
+fun CustomPriceInput(value: String, onValueChange: (String) -> Unit, appColors: AppColors) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -203,7 +204,7 @@ fun CustomPriceInput(value: String, onValueChange: (String) -> Unit, appColors: 
 }
 
 @Composable
-fun MarketPriceIndicator(marketPrice: Double, appColors: com.abdallahyasser.maslahty.theme.AppColors) {
+fun MarketPriceIndicator(marketPrice: Double, appColors: AppColors) {
     val avg = marketPrice
     val min = avg * 0.85
     val max = avg * 1.15

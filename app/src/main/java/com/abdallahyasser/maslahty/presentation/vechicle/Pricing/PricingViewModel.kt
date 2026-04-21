@@ -1,8 +1,8 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.Pricing
+package com.abdallahyasser.maslahty.presentation.vechicle.Pricing
 
 import androidx.lifecycle.ViewModel
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
-import com.example.maslahty.domain.entities.PriceWarning
+import com.abdallahyasser.maslahty.domain.transfer.entity.PriceWarning
 import com.example.maslahty.domain.utils.PriceValidationUtil
 import com.example.maslahty.domain.utils.ValidationUtil
 import kotlinx.coroutines.flow.MutableStateFlow

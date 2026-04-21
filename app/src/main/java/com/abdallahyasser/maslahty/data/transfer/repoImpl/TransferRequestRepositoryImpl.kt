@@ -1,8 +1,9 @@
 package com.abdallahyasser.maslahty.data.transfer.repoImpl
 
 import com.abdallahyasser.maslahty.domain.transfer.repo.TransferRequestRepository
-import com.example.maslahty.domain.entities.TransferRequest
-import com.example.maslahty.domain.entities.TransferStatus
+import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
+import com.abdallahyasser.maslahty.domain.transfer.entity.TransferStatus
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 import java.util.Date
 
 class TransferRequestRepositoryImpl : TransferRequestRepository {

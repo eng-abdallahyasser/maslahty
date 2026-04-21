@@ -3,7 +3,7 @@ package com.example.maslahty.domain.usecases.vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.common.Result
 
-import com.example.maslahty.domain.repositories.VehicleRepository
+import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 
 class AddVehicleUseCase(private val vehicleRepository: VehicleRepository) {
     suspend operator fun invoke(vehicle: Vehicle): Result<Vehicle> {

@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.presentaion.screens.vechicle.VehicleDetails
+package com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails
 import VehicleDetailsViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.presentaion.navigation.Route
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.components.AppTextField
 import com.example.maslahty.presentation.components.ErrorMessage

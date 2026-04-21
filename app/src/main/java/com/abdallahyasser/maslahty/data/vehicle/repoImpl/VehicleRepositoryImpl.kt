@@ -1,8 +1,9 @@
 package com.abdallahyasser.maslahty.data.vehicle.repoImpl
 
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
-import com.example.maslahty.domain.repositories.VehicleRepository
-import com.example.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
+import com.abdallahyasser.maslahty.domain.common.Result
+
 
 class VehicleRepositoryImpl: VehicleRepository {
     override suspend fun getVehicleByPlate(licensePlate: String): Result<Vehicle>{
@@ -21,7 +22,7 @@ class VehicleRepositoryImpl: VehicleRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserVehicles(userId: String): Result<List<Vehicle>> {
+    override suspend fun getUserVehicles(userId: String): kotlin.Result<List<Vehicle>> {
         TODO("Not yet implemented")
     }
 

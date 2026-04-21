@@ -17,7 +17,7 @@ import com.abdallahyasser.maslahty.presentation.auth.SignUpScreen
 import com.abdallahyasser.maslahty.presentation.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.presentation.splash.SplashScreen
 import com.abdallahyasser.maslahty.presentation.transfer.imageUpload.ImageUploadScreen
-import com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails.VehicleDetailsScreen
+import com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails.VehicleDetailsScreen
 
 // Create dependencies singleton
 object AppDependencies {
@@ -29,7 +29,7 @@ fun NavGraph(navController: NavHostController) {
     val violationsViewModel: ViolationsViewModel = viewModel(factory = AppDependencies.violationsViewModelFactory)
     NavHost(
         navController = navController,
-        startDestination = Route.Login
+        startDestination = Route.Home
     ) {
         composable<Route.Splash> {
             SplashScreen(navController = navController)

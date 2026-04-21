@@ -3,10 +3,13 @@
 import androidx.lifecycle.ViewModel
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
-import com.abdallahyasser.maslahty.presentaion.screens.vechicle.VehicleDetails.VehicleState
+import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
+import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
+import com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails.VehicleState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.Date
 
 class VehicleDetailsViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(VehicleState.VehicleIdentificationState())
@@ -47,7 +50,7 @@ class VehicleDetailsViewModel : ViewModel() {
         val state = _uiState.value
 
         // استيراد الـ imports
-        val vehicle = com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle(
+        val vehicle = Vehicle(
             id = licensePlate,
             ownerId = "user1",
             licensePlate = licensePlate,
@@ -57,13 +60,13 @@ class VehicleDetailsViewModel : ViewModel() {
             manufacturingYear = 2024,
             color = "Unknown",
             kilometers = 0,
-            condition = com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition.GOOD,
+            condition = VehicleCondition.GOOD,
             licenseImageUrl = null,
             vehicleImageUrl = null,
             chassisImageUrl = null,
             engineImageUrl = null,
-            createdAt = java.util.Date(),
-            updatedAt = java.util.Date()
+            createdAt = Date(),
+            updatedAt = Date()
         )
 
         val draft = TransferDraft(

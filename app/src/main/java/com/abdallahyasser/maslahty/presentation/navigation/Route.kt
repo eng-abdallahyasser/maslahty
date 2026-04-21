@@ -28,7 +28,7 @@ sealed class Route {
     @Serializable
     data class Pricing(val vehicleId: String)
     @Serializable
-    data class TransferRequest(val vehicleId: String)
+    data class TransferRequestRoute(val vehicleId: String)
 
 
 }
