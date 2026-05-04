@@ -143,6 +143,8 @@ class AuthRepositoryImpl @Inject constructor(
         phoneNumber: String,
         otp: String
     ): Result<User> {
+
+        
         val vid = verificationId ?: return Result.failure(Exception("Verification ID not found. Call sendOtp first."))
         return try {
             val credential = PhoneAuthProvider.getCredential(vid, otp)

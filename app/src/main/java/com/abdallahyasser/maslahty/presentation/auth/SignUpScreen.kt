@@ -1,6 +1,5 @@
 package com.abdallahyasser.maslahty.presentation.auth
 
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,9 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,7 +34,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -46,6 +41,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentation.auth.registration.RegistrationUiEvent
+import com.abdallahyasser.maslahty.presentation.auth.registration.RegistrationViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
@@ -53,21 +50,17 @@ import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
 import com.abdallahyasser.maslahty.theme.HeaderGradientStart
 import kotlinx.coroutines.flow.collectLatest
 
-
 @Composable
 fun SignUpScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
-            .verticalScroll(scrollState) // This makes it scrollable
+            .verticalScroll(scrollState)
     ) {
         SignUpHeader()
         SignUpBody(navController)
-
-
     }
-
 }
 
 @Composable
@@ -93,15 +86,12 @@ fun SignUpHeader() {
             ),
         contentAlignment = Alignment.Center
     ) {
-
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.signup),
             contentDescription = "App Icon",
             modifier = Modifier
                 .size(150.dp)
                 .align(Alignment.Center)
-
-
         )
         Column(
             modifier = Modifier
@@ -121,29 +111,25 @@ fun SignUpHeader() {
                 text = "ادخل بياناتك الشخصية",
                 color = Color.White,
                 fontSize = 18.sp,
-                modifier = Modifier
-
-
             )
         }
     }
 }
 
-
 @Composable
 fun SignUpBody(navController: NavController) {
-
-
-    val vm: AuthViewModel = hiltViewModel()
-    val state = vm.authState.collectAsState()
-
-
+    val vm: RegistrationViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
-            if (event is AuthUiEvent.NavigateToVerifyOTP) {
-                navController.navigate(Route.OTP)
-
+            when (event) {
+                is RegistrationUiEvent.NavigateToVerifyOTP -> {
+                    navController.navigate(Route.OTP(state.phoneNumber))
+                }
+                is RegistrationUiEvent.ShowSnackbar -> {
+                    // Handle snackbar
+                }
             }
         }
     }
@@ -178,8 +164,8 @@ fun SignUpBody(navController: NavController) {
             )
 
             CustomEditText(
-                value = state.value.fullName,
-                onValueChange = { vm.updateFullName(it) },
+                value = state.fullName,
+                onValueChange = { vm.onFullNameChange(it) },
                 label = "الاسم باللغة العربية",
                 placeholder = "ادخل اسمك الكامل",
                 imageVector = ImageVector.vectorResource(id = R.drawable.person),
@@ -193,10 +179,9 @@ fun SignUpBody(navController: NavController) {
                 modifier = Modifier.padding()
             )
 
-
             CustomEditText(
-                value = state.value.nationalId,
-                onValueChange = { vm.updateNationalId(it) },
+                value = state.nationalId,
+                onValueChange = { vm.onNationalIdChange(it) },
                 label = "الرقم القومي",
                 placeholder = "14 رقم",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
@@ -229,8 +214,8 @@ fun SignUpBody(navController: NavController) {
             )
 
             CustomEditText(
-                value = state.value.phoneNumber,
-                onValueChange = { vm.updatePhoneNumber(it) },
+                value = state.phoneNumber,
+                onValueChange = { vm.onPhoneNumberChange(it) },
                 label = "رقم الهاتف",
                 placeholder = "01xxxxxxxxx",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone),
@@ -242,8 +227,8 @@ fun SignUpBody(navController: NavController) {
                 modifier = Modifier.padding(top = 12.dp)
             )
             CustomEditText(
-                value = state.value.email,
-                onValueChange = { vm.updateEmail(it) },
+                value = state.email,
+                onValueChange = { vm.onEmailChange(it) },
                 label = "البريد الإلكتروني",
                 placeholder = "example@email.com",
                 imageVector = ImageVector.vectorResource(id = R.drawable.email)
@@ -251,21 +236,17 @@ fun SignUpBody(navController: NavController) {
 
             Spacer(Modifier.height(16.dp))
 
-            if (state.value.error != null) {
-                Box() {
-                    Text(
-                        state.value.error!!,
-                        color = Color.Red,
-                    )
-                }
+            if (state.error != null) {
+                Text(
+                    state.error!!,
+                    color = Color.Red,
+                )
             }
             Spacer(Modifier.height(32.dp))
-
 
             Button(
                 onClick = {
                     vm.register()
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -279,9 +260,9 @@ fun SignUpBody(navController: NavController) {
                     containerColor = GoldenYellow,
                     contentColor = HeaderGradientStart
                 ),
-                contentPadding = PaddingValues(0.dp) // لضمان الـ alignment زي الـ CSS
+                contentPadding = PaddingValues(0.dp) 
             ) {
-                if (state.value.isLoading) {
+                if (state.isLoading) {
                     CircularProgressIndicator(
                         color = Color.White,
                     )
@@ -291,12 +272,10 @@ fun SignUpBody(navController: NavController) {
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
+                        modifier = Modifier.fillMaxWidth() 
                     )
                 }
-
             }
-
 
             Text(
                 text = "لديك حساب بالفعل ؟ تسجيل الدخول ",
@@ -309,13 +288,7 @@ fun SignUpBody(navController: NavController) {
                 color = GoldenYellow,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-
-
-                )
-
-
+            )
         }
     }
 }
-
-

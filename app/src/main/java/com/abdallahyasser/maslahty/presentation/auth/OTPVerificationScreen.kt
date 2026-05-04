@@ -2,6 +2,7 @@ package com.abdallahyasser.maslahty.presentation.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,44 +26,49 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import com.abdallahyasser.maslahty.theme.GoldenYellow
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentation.auth.otp.OTPVerificationUiEvent
+import com.abdallahyasser.maslahty.presentation.auth.otp.OTPVerificationViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.theme.GoldenYellow
 import kotlinx.coroutines.flow.collectLatest
-
 
 @Composable
 fun OTPVerification(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
-    val vm: AuthViewModel = hiltViewModel()
-    val state = vm.authState.collectAsState()
-
-
+    val vm: OTPVerificationViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
-            if (event is AuthUiEvent.NavigateToHome) {
-                navController.navigate(Route.Home) {
-                    popUpTo(Route.Registration) { inclusive = true }
+            when (event) {
+                is OTPVerificationUiEvent.NavigateToHome -> {
+                    navController.navigate(Route.Home) {
+                        popUpTo(Route.Registration) { inclusive = true }
+                    }
+                }
+                is OTPVerificationUiEvent.ShowSnackbar -> {
+                    // Handle snackbar
                 }
             }
         }
@@ -95,7 +101,6 @@ fun OTPVerification(
                 )
             }
 
-
             Text(
                 text = "التحقق من الرمز",
                 color = Color.White,
@@ -117,8 +122,6 @@ fun OTPVerification(
                     modifier = Modifier.size(24.dp)
                 )
             }
-
-
         }
 
         // Main Content
@@ -144,7 +147,7 @@ fun OTPVerification(
             )
 
             Text(
-                text = "تم إرسال رمز مكون من 4 أرقام إلى رقم هاتفك 01xxxxxxxxx",
+                text = "تم إرسال رمز مكون من 4 أرقام إلى رقم هاتفك ${state.phoneNumber}",
                 color = Color(0xFF4B5563),
                 fontSize = 14.sp,
                 modifier = Modifier
@@ -155,13 +158,8 @@ fun OTPVerification(
 
             // OTP Input Fields
             BasicTextField(
-                value = state.value.otpValue,
-                onValueChange = { newValue ->
-                    // Only allow digits and max 4 characters
-                    if (newValue.all { it.isDigit() } && newValue.length <= 4) {
-                        vm.updateOtpValue(newValue)
-                    }
-                },
+                value = state.otpValue,
+                onValueChange = { vm.onOtpValueChange(it) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 40.dp),
@@ -174,7 +172,7 @@ fun OTPVerification(
                         ) {
                             repeat(4) { index ->
                                 OTPInputBox(
-                                    value = if (index < state.value.otpValue.length) state.value.otpValue[index].toString() else "",
+                                    value = if (index < state.otpValue.length) state.otpValue[index].toString() else "",
                                     modifier = Modifier
                                         .size(70.dp)
                                         .padding(horizontal = 8.dp)
@@ -195,7 +193,7 @@ fun OTPVerification(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = state.value.timeRemaining,
+                    text = state.timeRemaining,
                     color = Color(0xFF1F2937),
                     fontSize = 14.sp
                 )
@@ -225,27 +223,24 @@ fun OTPVerification(
                     text = "إعادة الإرسال",
                     color = Color(0xFF9CA3AF),
                     fontSize = 14.sp,
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
+                        vm.resendOtp()
+                    }
                 )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (state.value.error != null) {
+            if (state.error != null) {
                 Text(
-                    state.value.error!!,
+                    state.error!!,
                     color = Color.Red,
                 )
             }
 
-
             // Confirm Button
             Button(
-                onClick = {
-                    vm.verifyOTP()
-
-
-                          },
+                onClick = { vm.verifyOTP() },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp),
@@ -254,7 +249,7 @@ fun OTPVerification(
                 ),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                if (state.value.isLoading) {
+                if (state.isLoading) {
                     CircularProgressIndicator(
                         color = Color.White,
                     )

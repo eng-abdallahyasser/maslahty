@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,8 +36,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.Navigator
 import com.abdallahyasser.maslahty.R
+import com.abdallahyasser.maslahty.presentation.auth.login.LoginUiEvent
+import com.abdallahyasser.maslahty.presentation.auth.login.LoginViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.CustomEditText
 import com.abdallahyasser.maslahty.theme.GoldenYellow
@@ -44,35 +46,31 @@ import com.abdallahyasser.maslahty.theme.HeaderGradientEnd
 import com.abdallahyasser.maslahty.theme.HeaderGradientStart
 import kotlinx.coroutines.flow.collectLatest
 
-
 @Composable
 fun LoginScreen(navController: NavController) {
-
-
     Column() {
-
         LoginHeader()
         LoginBody(navController)
-
     }
 }
 
 @Composable
 fun LoginBody(navController: NavController) {
-
-    val vm: AuthViewModel = hiltViewModel()
-
-    val state = vm.authState.collectAsState().value
+    val vm: LoginViewModel = hiltViewModel()
+    val state by vm.state.collectAsState()
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
-            if (event is AuthUiEvent.NavigateToVerifyOTP) {
-                navController.navigate(Route.OTP)
+            when (event) {
+                is LoginUiEvent.NavigateToVerifyOTP -> {
+                    navController.navigate(Route.OTP(state.phoneNumber))
+                }
+                is LoginUiEvent.ShowSnackbar -> {
+                    // Handle snackbar if needed
+                }
             }
         }
     }
-
-
 
     Box(
         modifier = Modifier
@@ -87,17 +85,16 @@ fun LoginBody(navController: NavController) {
             // EditText الأول - الرقم القومي
             CustomEditText(
                 value = state.nationalId,
-                onValueChange = { vm.updateNationalId(it) },
+                onValueChange = { vm.onNationalIdChange(it) },
                 label = "الرقم القومي",
                 placeholder = "أدخل الرقم القومي...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-
             CustomEditText(
                 value = state.phoneNumber,
-                onValueChange = { vm.updatePhoneNumber(it) },
+                onValueChange = { vm.onPhoneNumberChange(it) },
                 label = "رقم الهاتف",
                 placeholder = "أدخل رقم الهاتف...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone)
@@ -106,7 +103,7 @@ fun LoginBody(navController: NavController) {
 
             if (state.error != null) {
                 Text(
-                    state.error,
+                    state.error!!,
                     color = Color.Red,
                 )
             }
@@ -136,7 +133,6 @@ fun LoginBody(navController: NavController) {
                         color = Color.White,
                     )
                 } else {
-
                     Text(
                         text = "تسجيل الدخول",
                         fontSize = 16.sp,
@@ -145,7 +141,6 @@ fun LoginBody(navController: NavController) {
                         modifier = Modifier.fillMaxWidth() // عشان النص يكون في المنتصف
                     )
                 }
-
             }
 
             Text(
@@ -160,12 +155,8 @@ fun LoginBody(navController: NavController) {
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
-
         }
-
-
     }
-
 }
 
 @Composable
@@ -191,7 +182,6 @@ fun LoginHeader() {
             ),
         contentAlignment = Alignment.Center
     ) {
-
         val image = ImageVector.vectorResource(id = R.drawable.car_con)
         Image(
             imageVector = image,
@@ -202,4 +192,3 @@ fun LoginHeader() {
         )
     }
 }
-
