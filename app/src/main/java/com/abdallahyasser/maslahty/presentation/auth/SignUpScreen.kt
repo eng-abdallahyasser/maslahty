@@ -133,6 +133,9 @@ fun SignUpBody(navController: NavController) {
     var nationlaId by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
+
     //Todo: where is Password @desha
 
     // todo :where is viewModel @desha
@@ -235,6 +238,16 @@ fun SignUpBody(navController: NavController) {
                 label = "البريد الإلكتروني",
                 placeholder = "example@email.com",
                 imageVector = ImageVector.vectorResource(id = R.drawable.email))
+            Spacer(Modifier.height(18.dp))
+            CustomEditText(
+                value = password,
+                onValueChange = { password = it },
+                label = "كلمة السر",
+                placeholder = "****",
+                isPassword = true,
+                isPasswordVisible = passwordVisible,
+                onPasswordToggleClick = { passwordVisible = !passwordVisible },
+                imageVector = ImageVector.vectorResource(id = R.drawable.basma))
 
             Spacer(Modifier.height(32.dp))
 

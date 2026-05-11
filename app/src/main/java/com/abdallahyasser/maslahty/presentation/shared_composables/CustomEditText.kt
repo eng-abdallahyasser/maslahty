@@ -4,12 +4,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.abdallahyasser.maslahty.theme.GoldenYellow
 
@@ -20,7 +28,11 @@ fun CustomEditText(
     label: String,
     placeholder: String,
     imageVector: ImageVector,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isPassword: Boolean = false,
+    // --- Added parameters ---
+    isPasswordVisible: Boolean = false,
+    onPasswordToggleClick: (() -> Unit)? = null
 ) {
 
     Box(modifier = modifier) {
@@ -30,20 +42,34 @@ fun CustomEditText(
             onValueChange = onValueChange,
             label = { Text(label) },
             placeholder = { Text(placeholder) },
+            // --- Updated logic: Only mask if it IS a password AND visibility is false ---
+            visualTransformation = if (isPassword && !isPasswordVisible) PasswordVisualTransformation() else VisualTransformation.None,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = if (isPassword) KeyboardType.Password else KeyboardType.Text
+            ),
             leadingIcon = {
                 Icon(
                     modifier = Modifier.size(20.dp),
                     imageVector = imageVector,
                     contentDescription = null,
                     tint = GoldenYellow,
-
-
-                    )
+                )
+            },
+            // --- Added trailingIcon logic ---
+            trailingIcon = {
+                if (isPassword) {
+                    IconButton(onClick = { onPasswordToggleClick?.invoke() }) {
+                        Icon(
+                            imageVector = if (isPasswordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
+                            contentDescription = if (isPasswordVisible) "Hide password" else "Show password",
+                            tint = GoldenYellow
+                        )
+                    }
+                }
             },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(22.dp),
             singleLine = true
         )
     }
-
 }
