@@ -62,19 +62,8 @@ class RegistrationViewModel @Inject constructor(
             val result = registerUseCase(user)
 
             if (result.isSuccess) {
-                val registeredUser = result.getOrNull()
-                if (registeredUser != null) {
-                    val otpResult = sendOtpUseCase(registeredUser.phoneNumber)
-                    if (otpResult.isSuccess) {
-                        _state.value = _state.value.copy(isLoading = false, success = true)
-                        _eventFlow.emit(RegistrationUiEvent.NavigateToVerifyOTP)
-                    } else {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            error = otpResult.exceptionOrNull()?.message ?: "Failed to send OTP"
-                        )
-                    }
-                }
+                _state.value = _state.value.copy(isLoading = false, success = true)
+                _eventFlow.emit(RegistrationUiEvent.NavigateToHome)
             } else {
                 _state.value = _state.value.copy(
                     isLoading = false,

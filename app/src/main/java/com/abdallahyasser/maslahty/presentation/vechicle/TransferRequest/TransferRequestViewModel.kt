@@ -5,12 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
 import com.example.maslahty.domain.utils.PriceValidationUtil
 import com.example.maslahty.domain.utils.ValidationUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TransferRequestViewModel () : ViewModel() {
+@HiltViewModel
+class TransferRequestViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(TransferRequestUiState())
     val uiState = _uiState.asStateFlow()

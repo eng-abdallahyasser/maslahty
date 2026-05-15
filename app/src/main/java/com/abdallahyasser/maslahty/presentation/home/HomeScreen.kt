@@ -28,12 +28,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
     val appColors = LocalAppColors.current
-    val homeViewModel: HomeViewModel = viewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val uiState=homeViewModel.screenState.collectAsState()
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {

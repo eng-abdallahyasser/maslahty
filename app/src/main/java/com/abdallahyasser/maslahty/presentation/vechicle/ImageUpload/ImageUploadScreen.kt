@@ -29,18 +29,20 @@ import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import coil.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.presentation.shared_composables.ErrorMessage
 import com.abdallahyasser.maslahty.presentation.shared_composables.GradientHeader
 import com.example.maslahty.presentation.components.PrimaryButton
 import com.example.maslahty.presentation.components.StepIndicator
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun ImageUploadScreen(
     navController: NavHostController,
     vehicleId: String,
 ) {
-    val viewModel: ImageUploadViewModel = viewModel()
+    val viewModel: ImageUploadViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
     val bgColor = Color(0xFFF8FAFC)

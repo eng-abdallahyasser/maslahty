@@ -47,8 +47,9 @@ import java.util.Locale
 fun VehicleViolationsScreen(
     navController: NavHostController,
     vehicleId: String,
-    viewModel: ViolationsViewModel = hiltViewModel()
+
 ) {
+    val viewModel: ViolationsViewModel = hiltViewModel()
     val appColors = LocalAppColors.current
     val violationsState by viewModel.violationsState.collectAsState()
 

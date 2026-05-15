@@ -2,6 +2,8 @@ package com.abdallahyasser.maslahty.presentation.vechicle.ImageUpload
 
 import androidx.lifecycle.ViewModel
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -9,7 +11,8 @@ import java.util.Date
 
 
 // TODO: Implement the ViewModel for handling image upload
-class ImageUploadViewModel: ViewModel() {
+@HiltViewModel
+class ImageUploadViewModel @Inject constructor(): ViewModel() {
     private val _uiState = MutableStateFlow(ImageUploadState())
     val uiState = _uiState.asStateFlow()
 

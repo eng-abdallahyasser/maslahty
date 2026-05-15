@@ -1,17 +1,19 @@
-
+package com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails
 
 import androidx.lifecycle.ViewModel
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
-import com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails.VehicleState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.Date
 
-class VehicleDetailsViewModel : ViewModel() {
+@HiltViewModel
+class VehicleDetailsViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(VehicleState.VehicleIdentificationState())
     var uiState : StateFlow<VehicleState.VehicleIdentificationState> = _uiState.asStateFlow()
 

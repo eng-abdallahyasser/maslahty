@@ -26,7 +26,17 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun registerUser(user: User): Result<User> {
         return try {
-            val result = authService.createUserWithEmailAndPassword(user.email, user.nationalId).await()
+            // Check if national ID already exists
+            val query = firestoreService.collection("users")
+                .whereEqualTo("nationalId", user.nationalId)
+                .get()
+                .await()
+
+            if (!query.isEmpty) {
+                return Result.failure(Exception("National ID already in use"))
+            }
+
+            val result = authService.createUserWithEmailAndPassword(user.email, user.password).await()
             val uid = result.user?.uid ?: throw Exception("Registration failed")
             val updatedUser = user.copy(id = uid)
             firestoreService.collection("users")

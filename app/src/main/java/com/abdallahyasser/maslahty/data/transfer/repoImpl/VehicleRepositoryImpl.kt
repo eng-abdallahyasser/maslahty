@@ -1,12 +1,18 @@
-package com.abdallahyasser.maslahty.data.repoImpl
+package com.abdallahyasser.maslahty.data.transfer.repoImpl
 
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import jakarta.inject.Inject
 import java.util.Date
 
-class VehicleRepositoryImpl : VehicleRepository {
+class VehicleRepositoryImpl @Inject constructor(
+	private val authService: FirebaseAuth,
+	private val firestoreService: FirebaseFirestore
+)  : VehicleRepository {
 
 	override suspend fun getVehicleByPlate(licensePlate: String): Result<Vehicle> {
 		return try {

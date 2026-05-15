@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.presentation.navigation.Route
@@ -37,7 +38,7 @@ fun PricingScreen(
     navController: NavHostController,
     vehicleId: String,
 ) {
-    val viewModel: PricingViewModel = viewModel()
+    val viewModel: PricingViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
 

@@ -127,6 +127,12 @@ fun SignUpBody(navController: NavController) {
                 is RegistrationUiEvent.NavigateToVerifyOTP -> {
                     navController.navigate(Route.OTP(state.phoneNumber))
                 }
+                is RegistrationUiEvent.NavigateToHome -> {
+                    navController.navigate(Route.Home) {
+                        popUpTo(Route.Registration) { inclusive = true }
+                        popUpTo(Route.Login) { inclusive = true }
+                    }
+                }
                 is RegistrationUiEvent.ShowSnackbar -> {
                     // Handle snackbar
                 }
@@ -184,6 +190,21 @@ fun SignUpBody(navController: NavController) {
                 onValueChange = { vm.onNationalIdChange(it) },
                 label = "الرقم القومي",
                 placeholder = "14 رقم",
+                imageVector = ImageVector.vectorResource(id = R.drawable.id),
+            )
+
+            Text(
+                text = "كلمة السر",
+                color = Color.Gray,
+                fontSize = 14.sp,
+                modifier = Modifier.padding()
+            )
+
+            CustomEditText(
+                value = state.password,
+                onValueChange = { vm.onPasswordChange(it) },
+                label = "كلمة السر",
+                placeholder = "كلمة السر",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
             )
 

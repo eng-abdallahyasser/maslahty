@@ -3,9 +3,15 @@ package com.abdallahyasser.maslahty.data.vehicle.repoImpl
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 import com.abdallahyasser.maslahty.domain.common.Result
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import jakarta.inject.Inject
 
 
-class VehicleRepositoryImpl: VehicleRepository {
+class VehicleRepositoryImpl @Inject constructor(
+    private val authService: FirebaseAuth,
+    private val firestoreService: FirebaseFirestore
+) : VehicleRepository {
     override suspend fun getVehicleByPlate(licensePlate: String): Result<Vehicle>{
         TODO()
     }

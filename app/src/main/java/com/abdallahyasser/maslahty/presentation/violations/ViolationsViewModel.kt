@@ -8,11 +8,13 @@ import com.abdallahyasser.maslahty.domain.common.Result
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
-class ViolationsViewModel(
+@HiltViewModel
+class ViolationsViewModel @Inject constructor(
     private val getUserVehiclesUseCase: GetUserVehiclesUseCase,
     private val getVehicleViolationsUseCase: GetVehicleViolationsUseCase,
     private val checkViolationsForTransferUseCase: CheckViolationsForTransferUseCase

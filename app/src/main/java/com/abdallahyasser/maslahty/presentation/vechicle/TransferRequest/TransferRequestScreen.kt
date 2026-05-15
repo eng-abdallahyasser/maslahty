@@ -41,6 +41,7 @@ import com.example.maslahty.presentation.components.SectionHeader
 import androidx.compose.material.icons.filled.Sell
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.hilt.navigation.compose.hiltViewModel
 
 // TODO: creat hilt ViewModel and inject it here instead of using viewModel() directly
 @Composable
@@ -49,7 +50,7 @@ fun TransferRequestScreen(
     vehicleId: String,
 
 ) {
-    val viewModel: TransferRequestViewModel = viewModel()
+    val viewModel: TransferRequestViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
 

@@ -5,11 +5,13 @@ import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
 import com.abdallahyasser.maslahty.domain.transfer.entity.PriceWarning
 import com.example.maslahty.domain.utils.PriceValidationUtil
 import com.example.maslahty.domain.utils.ValidationUtil
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-
-class PricingViewModel : ViewModel() {
+@HiltViewModel
+class PricingViewModel @Inject constructor() : ViewModel() {
 
     private val _uiState = MutableStateFlow(PricingUiState())
     val uiState = _uiState.asStateFlow()

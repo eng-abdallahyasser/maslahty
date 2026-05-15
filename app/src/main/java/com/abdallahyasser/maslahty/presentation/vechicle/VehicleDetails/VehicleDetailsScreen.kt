@@ -1,5 +1,4 @@
 package com.abdallahyasser.maslahty.presentation.vechicle.VehicleDetails
-import VehicleDetailsViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -22,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
@@ -32,7 +31,7 @@ import com.example.maslahty.presentation.components.PrimaryButton
 
 @Composable
 fun VehicleDetailsScreen(navController: NavHostController) {
-    val viewModel: VehicleDetailsViewModel = viewModel()
+    val viewModel: VehicleDetailsViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
 
