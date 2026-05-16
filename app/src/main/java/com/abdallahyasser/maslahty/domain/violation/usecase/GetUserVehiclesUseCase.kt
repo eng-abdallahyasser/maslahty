@@ -5,7 +5,7 @@ import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 
 class GetUserVehiclesUseCase(private val vehicleRepository: VehicleRepository) {
-    suspend operator fun invoke(userId: String): kotlin.Result<List<Vehicle>> {
+    suspend operator fun invoke(userId: String): Result<List<Vehicle>> {
         return vehicleRepository.getUserVehicles(userId)
     }
 }

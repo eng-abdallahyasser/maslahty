@@ -2,9 +2,11 @@ package com.abdallahyasser.maslahty.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.abdallahyasser.maslahty.domain.auth.useCase.getCurrentUserUseCase
+import com.abdallahyasser.maslahty.domain.auth.useCase.GetCurrentUserUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.isLoggedInUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
+import com.abdallahyasser.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.getOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val logoutUseCase: logoutUseCase,
-    private val getCurrentUserUseCase: getCurrentUserUseCase,
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
     private val isLoggedInUseCase: isLoggedInUseCase
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(HomeScreenState())
@@ -27,7 +29,9 @@ class HomeViewModel @Inject constructor(
     private fun getCurrentUser() {
         viewModelScope.launch {
             val result = getCurrentUserUseCase()
-            if (result.isSuccess) {
+
+
+            if (result is Result.Success<*>) {
                 val user = result.getOrNull()
                 if (user != null) {
                     _screenState.value = _screenState.value.copy(

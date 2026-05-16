@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.utils
+package com.abdallahyasser.maslahty.domain.utils
 
 object ValidationUtil {
     fun isValidNationalId(nationalId: String): Boolean {

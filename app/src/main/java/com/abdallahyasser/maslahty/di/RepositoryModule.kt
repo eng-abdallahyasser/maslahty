@@ -1,9 +1,11 @@
 package com.abdallahyasser.maslahty.di
 
 import com.abdallahyasser.maslahty.data.auth.AuthRepositoryImpl
+import com.abdallahyasser.maslahty.data.transfer.repoImpl.TransferRequestRepositoryImpl
 import com.abdallahyasser.maslahty.data.vehicle.repoImpl.VehicleRepositoryImpl
 import com.abdallahyasser.maslahty.data.violations.repoImpl.ViolationRepoImpl
 import com.abdallahyasser.maslahty.domain.auth.repo.AuthRepository
+import com.abdallahyasser.maslahty.domain.transfer.repo.TransferRequestRepository
 import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 import com.example.maslahty.domain.repositories.ViolationRepository
 import dagger.Module
@@ -28,5 +30,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideViolationRepository(impl: ViolationRepoImpl): ViolationRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideRequestRepository(impl: TransferRequestRepositoryImpl): TransferRequestRepository = impl
 
 }

@@ -143,7 +143,7 @@ fun HomeScreen(navController: NavHostController) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        QuickStatChip(label = "مركباتي", value = "${uiState.value.vehiclesNumber}", modifier = Modifier.weight(1f))
+                        QuickStatChip(label = "مركباتي", value = "${uiState.value.vehiclesNumber}", modifier = Modifier.weight(1f), onClick = { navController.navigate(Route.MyVehicles) })
                         QuickStatChip(label = "طلبات نشطة", value = "${uiState.value.activeRequests}", modifier = Modifier.weight(1f))
                         QuickStatChip(label = "مكتملة", value = "${uiState.value.completedRequests}", modifier = Modifier.weight(1f))
                     }
@@ -228,13 +228,15 @@ fun HomeScreen(navController: NavHostController) {
 private fun QuickStatChip(
     label: String,
     value: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {}
 ) {
     val appColors = LocalAppColors.current
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White.copy(alpha = 0.1f))
+            .clickable(onClick = onClick)
             .padding(vertical = 10.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.utils
+package com.abdallahyasser.maslahty.domain.utils
 
 import com.abdallahyasser.maslahty.domain.transfer.entity.PriceWarning
 

@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
 import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
 import com.abdallahyasser.maslahty.domain.common.Result
+import com.abdallahyasser.maslahty.domain.common.exceptionOrNull
+import com.abdallahyasser.maslahty.domain.common.getOrNull
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
@@ -32,11 +34,16 @@ class ViolationsViewModel @Inject constructor(
     fun loadUserVehicles(userId: String = "user1") {
         viewModelScope.launch {
             _vehiclesState.value = ViolationsUiState.Loading
-            val result = getUserVehiclesUseCase(userId)
-            _vehiclesState.value = when {
-                result.isSuccess -> ViolationsUiState.VehiclesLoaded(result.getOrNull() ?: emptyList())
-                result.isFailure -> ViolationsUiState.Error(result.exceptionOrNull()?.message ?: "خطأ غير معروف")
-                else -> ViolationsUiState.Loading
+            when(val result = getUserVehiclesUseCase(userId)){
+                is Result.Success<*> ->{
+                    _vehiclesState.value = ViolationsUiState.VehiclesLoaded(result.getOrNull() ?: emptyList())
+                }
+                is Result.Error ->{
+                    _vehiclesState.value = ViolationsUiState.Error(result.exceptionOrNull()?.message ?: "خطأ غير معروف")
+                }
+                is Result.Loading ->{
+                    _vehiclesState.value = ViolationsUiState.Loading
+                }
             }
         }
     }

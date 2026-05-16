@@ -1,5 +1,6 @@
 package com.abdallahyasser.maslahty.domain.transfer.usecase
 
+import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
 import com.abdallahyasser.maslahty.domain.transfer.repo.TransferRequestRepository
 

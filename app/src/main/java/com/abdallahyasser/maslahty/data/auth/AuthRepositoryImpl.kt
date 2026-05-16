@@ -1,7 +1,5 @@
 package com.abdallahyasser.maslahty.data.auth
 
-import android.app.Activity
-import android.util.Log
 import com.abdallahyasser.maslahty.domain.auth.entity.User
 import com.abdallahyasser.maslahty.domain.auth.repo.AuthRepository
 import com.google.firebase.FirebaseException
@@ -11,7 +9,6 @@ import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import jakarta.inject.Inject
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.TimeUnit
@@ -62,7 +59,7 @@ class AuthRepositoryImpl @Inject constructor(
         return authService.currentUser != null
     }
 
-    override suspend fun getCurrentUser(): Result<User> {
+    override suspend fun getCurrentUser(): com.abdallahyasser.maslahty.domain.common.Result<User> {
         return try {
             val uid = authService.currentUser?.uid
             if (uid != null) {
@@ -76,15 +73,15 @@ class AuthRepositoryImpl @Inject constructor(
                         phoneNumber = document.getString("phoneNumber") ?: "",
                         password = document.getString("password") ?: ""
                     )
-                    Result.success(user)
+                    com.abdallahyasser.maslahty.domain.common.Result.Success(user)
                 } else {
-                    Result.failure(Exception("User data not found in Firestore"))
+                    com.abdallahyasser.maslahty.domain.common.Result.Error(Exception("User data not found in Firestore"))
                 }
             } else {
-                Result.failure(Exception("No user currently logged in"))
+                com.abdallahyasser.maslahty.domain.common.Result.Error(Exception("No user currently logged in"))
             }
         } catch (e: Exception) {
-            Result.failure(e)
+            com.abdallahyasser.maslahty.domain.common.Result.Error(e)
         }
     }
 

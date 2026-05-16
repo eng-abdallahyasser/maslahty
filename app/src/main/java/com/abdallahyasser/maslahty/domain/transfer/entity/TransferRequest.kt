@@ -6,14 +6,16 @@ data class TransferRequest(
     val id: String,
     val vehicleId: String,
     val sellerId: String,
-    val buyerId: String,
+    val buyerId: String? = null,
+    val buyerNationalId: String,
+    val buyerName: String,
+    val sellerName: String,
     val price: Double,
     val status: TransferStatus,
-    val sellerName: String,
-    val buyerName: String,
-    val createdAt: Date,
-    val updatedAt: Date,
+    val imageUrls: List<String> = emptyList(),
     val notes: String = "",
-    val priceWarning: PriceWarning? = null
+    val priceWarning: PriceWarning? = null,
+    val createdAt: Date,
+    val updatedAt: Date
 )
 

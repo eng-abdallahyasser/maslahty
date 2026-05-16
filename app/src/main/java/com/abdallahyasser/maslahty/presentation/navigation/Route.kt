@@ -11,6 +11,7 @@ sealed class Route {
     @Serializable object Registration
     @Serializable object Home
     @Serializable object VehicleDetails
+    @Serializable object MyVehicles
 
     @Serializable
      object ViolationsMenuScreen

@@ -46,9 +46,9 @@ class VehicleRepositoryImpl @Inject constructor(
 		}
 	}
 
-	override suspend fun getUserVehicles(userId: String): kotlin.Result<List<Vehicle>> {
+	override suspend fun getUserVehicles(userId: String): Result<List<Vehicle>> {
 		return try {
-			kotlin.Result.success(
+			Result.Success(
 				listOf(
 					mockVehicle("V-8822", userId, "ق س س 123", "Toyota Camry 2022", 2022, "أبيض", 50000, VehicleCondition.GOOD),
 					mockVehicle("V-8823", userId, "ق س س 124", "Honda Civic 2020", 2020, "أسود", 75000, VehicleCondition.GOOD),
@@ -56,7 +56,7 @@ class VehicleRepositoryImpl @Inject constructor(
 				)
 			)
 		} catch (e: Exception) {
-			kotlin.Result.failure(e)
+			Result.Error(e)
 		}
 	}
 
