@@ -1,6 +1,5 @@
 package com.abdallahyasser.maslahty.presentation.auth
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -63,7 +62,7 @@ fun LoginBody(navController: NavController) {
         vm.eventFlow.collectLatest { event ->
             when (event) {
                 is LoginUiEvent.NavigateToVerifyOTP -> {
-                    navController.navigate(Route.OTP(state.phoneNumber))
+                    navController.navigate(Route.Home)
                 }
                 is LoginUiEvent.ShowSnackbar -> {
                     // Handle snackbar if needed
@@ -84,19 +83,19 @@ fun LoginBody(navController: NavController) {
             )
             // EditText الأول - الرقم القومي
             CustomEditText(
-                value = state.nationalId,
-                onValueChange = { vm.onNationalIdChange(it) },
-                label = "الرقم القومي",
-                placeholder = "أدخل الرقم القومي...",
+                value = state.nationalIdOrEmail,
+                onValueChange = { vm.onNationalIdOrEmailChange(it) },
+                label = "الرقم القومي او الإيميل",
+                placeholder = "أدخل الرقم القومي او الإيميل...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
             CustomEditText(
-                value = state.phoneNumber,
-                onValueChange = { vm.onPhoneNumberChange(it) },
-                label = "رقم الهاتف",
-                placeholder = "أدخل رقم الهاتف...",
+                value = state.password,
+                onValueChange = { vm.onPasswordChange(it) },
+                label = "كلمة السر",
+                placeholder = "كلمة السر...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone)
             )
             Spacer(Modifier.height(16.dp))
@@ -148,7 +147,7 @@ fun LoginBody(navController: NavController) {
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .align(Alignment.CenterHorizontally)
-                    .clickable() {
+                    .clickable{
                         navController.navigate(Route.Registration)
                     },
                 color = GoldenYellow,

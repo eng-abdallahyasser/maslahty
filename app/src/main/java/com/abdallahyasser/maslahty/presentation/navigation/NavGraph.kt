@@ -24,7 +24,7 @@ import com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails.VehicleD
 fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Route.Home
+        startDestination = Route.Splash
     ) {
         composable<Route.Splash> {
             SplashScreen(navController = navController)

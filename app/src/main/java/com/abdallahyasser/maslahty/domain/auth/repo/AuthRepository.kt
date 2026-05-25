@@ -8,7 +8,7 @@ interface AuthRepository {
     suspend fun logout(): Result<Unit>
     fun isLoggedIn(): Boolean
     suspend fun getCurrentUser(): com.abdallahyasser.maslahty.domain.common.Result<User>
-    suspend fun login(phoneNumber: String, password: String): Result<User>
+    suspend fun login(nationalIdOrEmail: String, password: String): Result<User>
     suspend fun sendOtp(phoneNumber: String): Result<Unit>
     suspend fun verifyOtp(phoneNumber: String, otp: String): Result<User>
 }

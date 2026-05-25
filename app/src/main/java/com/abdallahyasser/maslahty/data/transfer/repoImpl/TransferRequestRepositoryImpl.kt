@@ -139,6 +139,8 @@ class TransferRequestRepositoryImpl @Inject constructor(
         )
     }
 
+
+
     private fun mapFromFirestore(doc: DocumentSnapshot): TransferRequest {
         return TransferRequest(
             id = doc.getString("id") ?: doc.id,

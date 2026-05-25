@@ -25,12 +25,12 @@ class LoginViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<LoginUiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    fun onNationalIdChange(nationalId: String) {
-        _state.value = _state.value.copy(nationalId = nationalId)
+    fun onNationalIdOrEmailChange(nationalId: String) {
+        _state.value = _state.value.copy(nationalIdOrEmail = nationalId)
     }
 
-    fun onPhoneNumberChange(phoneNumber: String) {
-        _state.value = _state.value.copy(phoneNumber = phoneNumber)
+    fun onPasswordChange(password: String) {
+        _state.value = _state.value.copy(password = password)
     }
 
     fun login() {
@@ -38,24 +38,25 @@ class LoginViewModel @Inject constructor(
             _state.value = _state.value.copy(isLoading = true, error = null)
             
             val result = loginUseCase(
-                phoneNumber = _state.value.phoneNumber,
-                password = _state.value.nationalId
+                nationalIdOrEmail = _state.value.nationalIdOrEmail.trim() ,
+                password = _state.value.password.trim()
             )
 
             if (result.isSuccess) {
                 val user = result.getOrNull()
                 if (user != null) {
                     // Send OTP after successful login
-                    val otpResult = sendOtpUseCase(user.phoneNumber)
-                    if (otpResult.isSuccess) {
-                        _state.value = _state.value.copy(isLoading = false, success = true)
-                        _eventFlow.emit(LoginUiEvent.NavigateToVerifyOTP)
-                    } else {
-                        _state.value = _state.value.copy(
-                            isLoading = false,
-                            error = otpResult.exceptionOrNull()?.message ?: "Failed to send OTP"
-                        )
-                    }
+//                    val otpResult = sendOtpUseCase(user.phoneNumber)
+//                    if (otpResult.isSuccess) {
+//                        _state.value = _state.value.copy(isLoading = false, success = true)
+//                        _eventFlow.emit(LoginUiEvent.NavigateToVerifyOTP)
+//                    } else {
+//                        _state.value = _state.value.copy(
+//                            isLoading = false,
+//                            error = otpResult.exceptionOrNull()?.message ?: "Failed to send OTP"
+//                        )
+//                    }
+                    _eventFlow.emit(LoginUiEvent.NavigateToVerifyOTP)
                 }
             } else {
                 _state.value = _state.value.copy(

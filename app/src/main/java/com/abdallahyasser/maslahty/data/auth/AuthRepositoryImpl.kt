@@ -86,13 +86,13 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun login(
-        phoneNumber: String,
+        nationalIdOrEmail: String,
         password: String
     ): Result<User> {
         return try {
             // Note: In Firebase Auth, we usually use email and password.
-            // If phoneNumber is passed here, we treat it as the email/identifier.
-            val result = authService.signInWithEmailAndPassword(phoneNumber, password).await()
+
+            val result = authService.signInWithEmailAndPassword(nationalIdOrEmail, password).await()
             val uid = result.user?.uid ?: throw Exception("Login failed")
             val document = firestoreService.collection("users").document(uid).get().await()
             if (document.exists()) {
@@ -114,69 +114,80 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun sendOtp(phoneNumber: String): Result<Unit> = suspendCancellableCoroutine { continuation ->
-        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                // This is called when verification is done automatically (e.g. via instant verification or auto-retrieval)
-            }
-
-            override fun onVerificationFailed(e: FirebaseException) {
-                if (continuation.isActive) {
-                    continuation.resume(Result.failure(e))
-                }
-            }
-
-            override fun onCodeSent(
-                verificationId: String,
-                token: PhoneAuthProvider.ForceResendingToken
-            ) {
-                this@AuthRepositoryImpl.verificationId = verificationId
-                if (continuation.isActive) {
-                    continuation.resume(Result.success(Unit))
-                }
-            }
-        }
-
-        val options = PhoneAuthOptions.newBuilder(authService)
-            .setPhoneNumber(phoneNumber)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setCallbacks(callbacks)
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
+    override suspend fun sendOtp(phoneNumber: String): Result<Unit> {
+         return Result.failure(Exception("sendOtp : Not yet implemented"))
     }
 
     override suspend fun verifyOtp(
         phoneNumber: String,
         otp: String
     ): Result<User> {
-
-        
-        val vid = verificationId ?: return Result.failure(Exception("Verification ID not found. Call sendOtp first."))
-        return try {
-            val credential = PhoneAuthProvider.getCredential(vid, otp)
-            val result = authService.signInWithCredential(credential).await()
-            val uid = result.user?.uid ?: throw Exception("OTP verification failed")
-            
-            val document = firestoreService.collection("users").document(uid).get().await()
-            if (document.exists()) {
-                val user = User(
-                    id = document.getString("id") ?: uid,
-                    fullName = document.getString("fullName") ?: "",
-                    nationalId = document.getString("nationalId") ?: "",
-                    email = document.getString("email") ?: "",
-                    phoneNumber = document.getString("phoneNumber") ?: "",
-                    password = document.getString("password") ?: ""
-                )
-                Result.success(user)
-            } else {
-                // Create user in Firestore if they don't exist
-                val newUser = User(uid, "", "", "", phoneNumber, "")
-                firestoreService.collection("users").document(uid).set(newUser).await()
-                Result.success(newUser)
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+        return Result.failure(Exception("verifyOtp : Not yet implemented"))
     }
+
+//    override suspend fun sendOtp(phoneNumber: String): Result<Unit> = suspendCancellableCoroutine { continuation ->
+//        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+//
+//            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+//                // This is called when verification is done automatically (e.g. via instant verification or auto-retrieval)
+//            }
+//
+//            override fun onVerificationFailed(e: FirebaseException) {
+//                if (continuation.isActive) {
+//                    continuation.resume(Result.failure(e))
+//                }
+//            }
+//
+//            override fun onCodeSent(
+//                verificationId: String,
+//                token: PhoneAuthProvider.ForceResendingToken
+//            ) {
+//                this@AuthRepositoryImpl.verificationId = verificationId
+//                if (continuation.isActive) {
+//                    continuation.resume(Result.success(Unit))
+//                }
+//            }
+//        }
+//
+//        val options = PhoneAuthOptions.newBuilder(authService)
+//            .setPhoneNumber(phoneNumber)
+//            .setTimeout(60L, TimeUnit.SECONDS)
+//            .setCallbacks(callbacks)
+//            .build()
+//        PhoneAuthProvider.verifyPhoneNumber(options)
+//    }
+//
+//    override suspend fun verifyOtp(
+//        phoneNumber: String,
+//        otp: String
+//    ): Result<User> {
+//
+//
+//        val vid = verificationId ?: return Result.failure(Exception("Verification ID not found. Call sendOtp first."))
+//        return try {
+//            val credential = PhoneAuthProvider.getCredential(vid, otp)
+//            val result = authService.signInWithCredential(credential).await()
+//            val uid = result.user?.uid ?: throw Exception("OTP verification failed")
+//
+//            val document = firestoreService.collection("users").document(uid).get().await()
+//            if (document.exists()) {
+//                val user = User(
+//                    id = document.getString("id") ?: uid,
+//                    fullName = document.getString("fullName") ?: "",
+//                    nationalId = document.getString("nationalId") ?: "",
+//                    email = document.getString("email") ?: "",
+//                    phoneNumber = document.getString("phoneNumber") ?: "",
+//                    password = document.getString("password") ?: ""
+//                )
+//                Result.success(user)
+//            } else {
+//                // Create user in Firestore if they don't exist
+//                val newUser = User(uid, "", "", "", phoneNumber, "")
+//                firestoreService.collection("users").document(uid).set(newUser).await()
+//                Result.success(newUser)
+//            }
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        }
+//    }
 }
