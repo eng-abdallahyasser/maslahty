@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.R
 import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.util.PreferenceManager
 import com.abdallahyasser.maslahty.theme.CardBackground
 import com.abdallahyasser.maslahty.theme.DarkNavyLight
 import com.abdallahyasser.maslahty.theme.GoldenDark
@@ -85,23 +86,34 @@ fun OnboardingScreen(
 ) {
     var currentPage by remember { mutableIntStateOf(0) }
 
+    val completeOnboarding = {
+        PreferenceManager.setOnboardingShown(true)
+        navController.navigate(Route.Login) {
+            popUpTo(Route.onBoarding) { inclusive = true }
+        }
+    }
+
     when (currentPage) {
         0 -> OnboardingPage1(
             onNextClick = { currentPage = 1 },
-            onSkipClick = { navController.navigate(Route.Login) }
+            onSkipClick = completeOnboarding
         )
         1 -> OnboardingPage2(
             onNextClick = { currentPage = 2 },
             onBackClick = { currentPage = 0 }
         )
         2 -> OnboardingPage3(
-            onStartClick = {
-                navController.navigate(Route.Login)
-            },
+            onStartClick = completeOnboarding,
             onBackClick = { currentPage = 1 },
-            onSecondaryClick = onFinished
+            onSecondaryClick = {
+                PreferenceManager.setOnboardingShown(true)
+                onFinished()
+            }
         )
-        else -> onFinished()
+        else -> {
+            PreferenceManager.setOnboardingShown(true)
+            onFinished()
+        }
     }
 }
 

@@ -54,6 +54,7 @@ import com.abdallahyasser.maslahty.theme.GrayBlue
 import com.abdallahyasser.maslahty.theme.LightGray
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import com.abdallahyasser.maslahty.util.PreferenceManager
 
 @Composable
 fun SplashScreen(
@@ -144,10 +145,20 @@ fun SplashScreen(
             )
         }
 
-        // Wait for loading then navigate to HomeScreen
+        // Wait for loading then navigate based on saved state
         delay(3000)
         onSplashFinished()
-        navController.navigate(Route.onBoarding)
+        when {
+            !PreferenceManager.isOnboardingShown() -> navController.navigate(Route.onBoarding) {
+                popUpTo(Route.Splash) { inclusive = true }
+            }
+            PreferenceManager.isUserLoggedIn() -> navController.navigate(Route.Home) {
+                popUpTo(Route.Splash) { inclusive = true }
+            }
+            else -> navController.navigate(Route.Login) {
+                popUpTo(Route.Splash) { inclusive = true }
+            }
+        }
     }
 
     Box(

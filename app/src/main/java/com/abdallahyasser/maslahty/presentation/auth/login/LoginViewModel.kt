@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import com.abdallahyasser.maslahty.util.PreferenceManager
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -45,6 +46,8 @@ class LoginViewModel @Inject constructor(
             if (result.isSuccess) {
                 val user = result.getOrNull()
                 if (user != null) {
+                    // Persist user data
+                    PreferenceManager.saveUser(user)
                     // Send OTP after successful login
 //                    val otpResult = sendOtpUseCase(user.phoneNumber)
 //                    if (otpResult.isSuccess) {

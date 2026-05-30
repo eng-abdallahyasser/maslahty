@@ -7,7 +7,7 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.GetCurrentUserUseCase
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferStatus
-import com.abdallahyasser.maslahty.domain.requests.CreateTransferRequestUseCase
+import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.ValidateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.utils.PriceValidationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -73,7 +73,7 @@ class TransferRequestViewModel @Inject constructor(
                 id = "", // Will be generated in data layer
                 vehicleId = currentState.vehicleId,
                 sellerId = currentUser.id,
-                buyerId = null, // Unknown yet
+                buyerId = null,
                 buyerNationalId = currentState.buyerNationalId,
                 buyerName = "المشتري", // Placeholder or fetch if possible
                 sellerName = currentUser.fullName,

@@ -22,12 +22,22 @@ class TransferRequestRepositoryImpl @Inject constructor(
 
     override suspend fun createTransferRequest(request: TransferRequest): Result<TransferRequest> {
         return try {
+            val buyerSnapshot = firestore.collection("users")
+                .whereEqualTo("nationalId", request.buyerNationalId)
+                .get()
+                .await()
+            val buyerDoc = buyerSnapshot.documents.firstOrNull()
+            val buyerId = buyerDoc?.id
+            val buyerName = buyerDoc?.getString("fullName") ?: request.buyerName
+
             val docRef = collection.document()
             val id = docRef.id
             val now = Date()
             
             val updatedRequest = request.copy(
                 id = id,
+                buyerId = buyerId,
+                buyerName = buyerName,
                 createdAt = now,
                 updatedAt = now
             )

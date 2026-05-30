@@ -1,4 +1,4 @@
-package com.abdallahyasser.maslahty.domain.requests
+package com.abdallahyasser.maslahty.domain.transfer.usecase
 
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
