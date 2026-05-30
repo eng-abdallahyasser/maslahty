@@ -7,6 +7,7 @@ import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.requests.ApproveTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.requests.GetBuyerRequestsUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RequestsViewModel @Inject constructor(
+    private val authService: FirebaseAuth,
     private val getBuyerRequestsUseCase: GetBuyerRequestsUseCase,
     private val approveTransferRequestUseCase: ApproveTransferRequestUseCase
 ) : ViewModel() {
@@ -25,11 +27,18 @@ class RequestsViewModel @Inject constructor(
     private val _approveRequestState = MutableStateFlow<TransferState>(TransferState.Initial)
     val approveRequestState: StateFlow<TransferState> = _approveRequestState
 
+    init {
+        getBuyerRequests()
+    }
 
-    fun getBuyerRequests(buyerId: String) {
+    fun getBuyerRequests(buyerId: String = "") {
+        val currentUserId = authService.currentUser?.uid ?: run {
+            _buyerRequestsState.value = TransferState.Error("المستخدم غير مسجل دخول")
+            return
+        }
         viewModelScope.launch {
             _buyerRequestsState.value = TransferState.Loading
-            val result = getBuyerRequestsUseCase(buyerId)
+            val result = getBuyerRequestsUseCase(currentUserId)
             _buyerRequestsState.value = when (result) {
                 is Result.Success -> TransferState.RequestsLoaded(result.data)
                 is Result.Error -> TransferState.Error(result.exception.message ?: "Unknown error")

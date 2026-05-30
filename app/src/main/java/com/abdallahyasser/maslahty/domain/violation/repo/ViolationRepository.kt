@@ -1,4 +1,4 @@
-package com.example.maslahty.domain.repositories
+package com.abdallahyasser.maslahty.domain.violation.repo
 
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.example.maslahty.domain.entities.Violation

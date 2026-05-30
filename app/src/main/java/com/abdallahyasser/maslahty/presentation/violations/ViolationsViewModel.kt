@@ -3,13 +3,14 @@ package com.abdallahyasser.maslahty.presentation.violations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
-import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.common.exceptionOrNull
 import com.abdallahyasser.maslahty.domain.common.getOrNull
+import com.abdallahyasser.maslahty.domain.vehicle.usecase.GetUserVehiclesUseCase
 import com.example.maslahty.domain.entities.Violation
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 @HiltViewModel
 class ViolationsViewModel @Inject constructor(
+    private val authService: FirebaseAuth,
     private val getUserVehiclesUseCase: GetUserVehiclesUseCase,
     private val getVehicleViolationsUseCase: GetVehicleViolationsUseCase,
     private val checkViolationsForTransferUseCase: CheckViolationsForTransferUseCase
@@ -31,7 +33,11 @@ class ViolationsViewModel @Inject constructor(
     private val _transferCheckState = MutableStateFlow<TransferCheckState>(TransferCheckState.Initial)
     val transferCheckState: StateFlow<TransferCheckState> = _transferCheckState
 
-    fun loadUserVehicles(userId: String = "user1") {
+    fun loadUserVehicles() {
+        val userId = authService.currentUser?.uid ?: run {
+            _vehiclesState.value = ViolationsUiState.Error("المستخدم غير مسجل دخول")
+            return
+        }
         viewModelScope.launch {
             _vehiclesState.value = ViolationsUiState.Loading
             when(val result = getUserVehiclesUseCase(userId)){

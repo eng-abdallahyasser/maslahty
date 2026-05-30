@@ -16,7 +16,7 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
 import com.abdallahyasser.maslahty.domain.requests.ApproveTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.requests.GetBuyerRequestsUseCase
-import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
+import com.abdallahyasser.maslahty.domain.vehicle.usecase.GetUserVehiclesUseCase
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
 import dagger.Module
@@ -135,5 +135,11 @@ object UseCaseModule {
     @Singleton
     fun provideApproveTransferRequestUseCase(repository: TransferRequestRepository): ApproveTransferRequestUseCase {
         return ApproveTransferRequestUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetUserDataUseCase(repository: com.abdallahyasser.maslahty.domain.home.repository.HomeRepoInterface): com.abdallahyasser.maslahty.domain.home.useCase.GetUserDataUseCase {
+        return com.abdallahyasser.maslahty.domain.home.useCase.GetUserDataUseCase(repository)
     }
 }

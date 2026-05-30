@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.abdallahyasser.maslahty.domain.auth.useCase.GetCurrentUserUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.isLoggedInUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
+import com.abdallahyasser.maslahty.domain.home.useCase.GetUserDataUseCase
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.common.getOrNull
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,27 +18,27 @@ import kotlinx.coroutines.launch
 class HomeViewModel @Inject constructor(
     private val logoutUseCase: logoutUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
-    private val isLoggedInUseCase: isLoggedInUseCase
+    private val isLoggedInUseCase: isLoggedInUseCase,
+    private val getUserDataUseCase: GetUserDataUseCase
 ) : ViewModel() {
     private val _screenState = MutableStateFlow(HomeScreenState())
     val screenState = _screenState.asStateFlow()
 
     init {
-        getCurrentUser()
+        loadUserData()
     }
 
-    private fun getCurrentUser() {
+    private fun loadUserData() {
         viewModelScope.launch {
-            val result = getCurrentUserUseCase()
-
-
-            if (result is Result.Success<*>) {
-                val user = result.getOrNull()
-                if (user != null) {
-                    _screenState.value = _screenState.value.copy(
-                        fullName = user.fullName
-                    )
-                }
+            val result = getUserDataUseCase()
+            if (result is Result.Success) {
+                val data = result.data
+                _screenState.value = _screenState.value.copy(
+                    fullName = data.fullName,
+                    vehiclesNumber = data.vehiclesNumber,
+                    activeRequests = data.activeRequests,
+                    completedRequests = data.completedRequests
+                )
             }
         }
     }
@@ -46,6 +47,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val result = logoutUseCase()
             if (result.isSuccess) {
+                _screenState.value = HomeScreenState()
                 onSuccess()
             }
         }

@@ -14,6 +14,8 @@ import kotlinx.coroutines.tasks.await
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 
+import com.abdallahyasser.maslahty.util.PreferenceManager
+
 class AuthRepositoryImpl @Inject constructor(
     private val authService: FirebaseAuth,
     private val firestoreService: FirebaseFirestore
@@ -49,6 +51,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun logout(): Result<Unit> {
         return try {
             authService.signOut()
+            PreferenceManager.clearUser()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)
