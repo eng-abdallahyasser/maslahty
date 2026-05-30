@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -29,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -181,24 +183,43 @@ fun SplashScreen(
             modifier = Modifier
                 .offset(x = 45.dp, y = (-88).dp)
                 .size(384.dp)
-                .blur(50.dp)
-                .background(
-                    color = GoldenYellow.copy(alpha = 0.05f),
-                    shape = CircleShape
-                )
+                .drawBehind {
+                    // Draw a smooth radial gradient that fades completely to transparent
+                    drawCircle(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                GoldenYellow.copy(alpha = 0.05f),
+                                Color.Transparent
+                            ),
+                            center = center,
+                            radius = size.minDimension / 2
+                        ),
+                        radius = size.minDimension / 2
+                    )
+                }
         )
 
         // White blur circle (bottom-left area)
         Box(
             modifier = Modifier
                 .align(Alignment.BottomStart)
+
                 .offset(x = (-20).dp, y = 40.dp)
                 .size(288.dp)
-                .blur(40.dp)
-                .background(
-                    color = Color.White.copy(alpha = 0.05f),
-                    shape = CircleShape
-                )
+                .drawBehind {
+                    // Draw a smooth radial gradient that fades completely to transparent
+                    drawCircle(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.05f),
+                                Color.Transparent
+                            ),
+                            center = center,
+                            radius = size.minDimension / 2
+                        ),
+                        radius = size.minDimension / 2
+                    )
+                }
         )
 
         // ---- Center content ----

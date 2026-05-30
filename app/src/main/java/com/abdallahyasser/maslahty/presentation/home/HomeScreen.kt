@@ -183,7 +183,7 @@ fun HomeScreen(navController: NavHostController) {
                     icon = Icons.AutoMirrored.Filled.Assignment,
                     gradient = listOf(appColors.navy, appColors.gradientEnd),
                     textColor = Color.White,
-                    onClick = { //Todo :create navigation here
+                    onClick = { navController.navigate(Route.RequestsScreen)
                          },
                     badgeText = "مشتري / بائع"
                 )

@@ -13,6 +13,9 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.isLoggedInUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.sendOtpUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
+import com.abdallahyasser.maslahty.domain.requests.ApproveTransferRequestUseCase
+import com.abdallahyasser.maslahty.domain.requests.CreateTransferRequestUseCase
+import com.abdallahyasser.maslahty.domain.requests.GetBuyerRequestsUseCase
 import com.abdallahyasser.maslahty.domain.violation.usecase.GetUserVehiclesUseCase
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
@@ -120,5 +123,17 @@ object UseCaseModule {
     @Singleton
     fun provideCreateTransferRequestUseCase(repository: TransferRequestRepository): CreateTransferRequestUseCase {
         return CreateTransferRequestUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetBuyerRequestsUseCase(repository: TransferRequestRepository): GetBuyerRequestsUseCase {
+        return GetBuyerRequestsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApproveTransferRequestUseCase(repository: TransferRequestRepository): ApproveTransferRequestUseCase {
+        return ApproveTransferRequestUseCase(repository)
     }
 }

@@ -29,7 +29,6 @@ fun CustomEditText(
             value = value,
             onValueChange = onValueChange,
             label = { Text(label) },
-            placeholder = { Text(placeholder) },
             leadingIcon = {
                 Icon(
                     modifier = Modifier.size(20.dp),

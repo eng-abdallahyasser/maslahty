@@ -14,6 +14,9 @@ import com.abdallahyasser.maslahty.presentation.auth.SignUpScreen
 import com.abdallahyasser.maslahty.presentation.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.presentation.splash.SplashScreen
 import com.abdallahyasser.maslahty.presentation.my_vehicle.MyVehicleScreen
+import com.abdallahyasser.maslahty.presentation.requests.ApprovalScreen
+import com.abdallahyasser.maslahty.presentation.requests.RequestDetailsScreen
+import com.abdallahyasser.maslahty.presentation.requests.RequestsScreen
 import com.abdallahyasser.maslahty.presentation.transfer.imageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentation.transfer.pricing.PricingScreen
 import com.abdallahyasser.maslahty.presentation.transfer.transferRequest.TransferRequestScreen
@@ -46,6 +49,24 @@ fun NavGraph(navController: NavHostController) {
         composable<Route.Home> {
             HomeScreen(navController = navController)
         }
+        composable<Route.RequestsScreen> {
+            RequestsScreen(navController = navController)
+        }
+        composable<Route.RequestDetailsScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<Route.RequestDetailsScreen>()
+            RequestDetailsScreen(
+                navController = navController,
+                requestId = args.requestId
+            )
+        }
+        composable<Route.ApprovalScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<Route.ApprovalScreen>()
+            ApprovalScreen(
+                navController = navController,
+                requestId = args.requestId
+            )
+        }
+
         composable<Route.VehicleDetails> {
             VehicleDetailsScreen(navController = navController)
         }

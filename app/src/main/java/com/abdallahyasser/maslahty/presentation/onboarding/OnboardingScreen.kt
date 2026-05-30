@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -295,11 +296,20 @@ private fun OnboardingPage2(
             modifier = Modifier
                 .offset(x = (-20).dp, y = 510.dp)
                 .size(200.dp)
-                .blur(20.dp)
-                .background(
-                    color = Color.Black.copy(alpha = 0.05f),
-                    shape = CircleShape
-                )
+                .drawBehind {
+                    // Draw a smooth radial gradient that fades completely to transparent
+                    drawCircle(
+                        brush = Brush.radialGradient(
+                            colors = listOf(
+                                Color.Black.copy(alpha = 0.05f),
+                                Color.Transparent
+                            ),
+                            center = center,
+                            radius = size.minDimension / 2
+                        ),
+                        radius = size.minDimension / 2
+                    )
+                }
         )
 
         // Top gradient bleed (editorial accent)
@@ -398,11 +408,20 @@ private fun OnboardingPage3(
                     .align(Alignment.BottomStart)
                     .offset(x = 0.dp, y = (-160).dp)
                     .size(192.dp)
-                    .blur(30.dp)
-                    .background(
-                        color = DarkNavyLight,
-                        shape = CircleShape
-                    )
+                    .drawBehind {
+                        // Draw a smooth radial gradient that fades completely to transparent
+                        drawCircle(
+                            brush = Brush.radialGradient(
+                                colors = listOf(
+                                    DarkNavyLight,
+                                    Color.Transparent
+                                ),
+                                center = center,
+                                radius = size.minDimension / 2
+                            ),
+                            radius = size.minDimension / 2
+                        )
+                    }
             )
         }
 

@@ -7,7 +7,7 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.GetCurrentUserUseCase
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferStatus
-import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
+import com.abdallahyasser.maslahty.domain.requests.CreateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.ValidateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.utils.PriceValidationUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

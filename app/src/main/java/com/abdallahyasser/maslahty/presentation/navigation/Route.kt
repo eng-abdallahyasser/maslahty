@@ -10,11 +10,14 @@ sealed class Route {
     @Serializable object Login
     @Serializable object Registration
     @Serializable object Home
+    @Serializable object RequestsScreen
+    @Serializable data class RequestDetailsScreen(val requestId: String)
+    @Serializable data class ApprovalScreen(val requestId: String)
     @Serializable object VehicleDetails
     @Serializable object MyVehicles
 
     @Serializable
-     object ViolationsMenuScreen
+    object ViolationsMenuScreen
 
 
 

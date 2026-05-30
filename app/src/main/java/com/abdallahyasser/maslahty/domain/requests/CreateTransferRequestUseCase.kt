@@ -1,9 +1,8 @@
-package com.abdallahyasser.maslahty.domain.transfer.usecase
+package com.abdallahyasser.maslahty.domain.requests
 
 import com.abdallahyasser.maslahty.domain.common.Result
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferRequest
 import com.abdallahyasser.maslahty.domain.transfer.repo.TransferRequestRepository
-import com.abdallahyasser.maslahty.presentation.navigation.Route
 
 class CreateTransferRequestUseCase(private  val transferRequestRepository: TransferRequestRepository) {
     suspend operator fun invoke(request: TransferRequest): Result<TransferRequest> {
