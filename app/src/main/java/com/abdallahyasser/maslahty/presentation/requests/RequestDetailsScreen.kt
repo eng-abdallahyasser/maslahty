@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
 import com.abdallahyasser.maslahty.domain.transfer.entity.TransferStatus
@@ -54,11 +55,23 @@ import com.example.maslahty.presentation.components.PrimaryButton
 import com.example.maslahty.presentation.components.SecondaryButton
 import com.example.maslahty.presentation.components.SectionHeader
 import com.example.maslahty.presentation.components.StatusBadge
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 @Composable
 fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
+    val viewModel: RequestsViewModel = hiltViewModel()
+
     val appColors = LocalAppColors.current
-    val request = TransferDraftStore.lastLoadedRequests.firstOrNull { it.id == requestId }
+    // Collect the buyer requests state
+    val buyerRequestsState by viewModel.buyerRequestsState.collectAsState()
+    // Find the request matching the provided requestId
+    val request = when (buyerRequestsState) {
+        is TransferState.RequestsLoaded -> {
+            (buyerRequestsState as TransferState.RequestsLoaded).requests.find { it.id == requestId }
+        }
+        else -> null
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Column(modifier = Modifier

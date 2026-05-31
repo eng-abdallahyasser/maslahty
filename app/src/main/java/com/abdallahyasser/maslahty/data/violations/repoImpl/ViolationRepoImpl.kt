@@ -17,7 +17,7 @@ class ViolationRepoImpl @Inject constructor(
 ) : ViolationRepository {
 
     companion object {
-        private const val COLLECTION_VIOLATIONS = "violations"
+        private const val COLLECTION_VIOLATIONS = "Violation"
     }
 
     override suspend fun getVehicleViolations(vehicleId: String): Result<List<Violation>> {
