@@ -30,6 +30,8 @@ sealed class Route {
     @Serializable
     data class ImageUpload(val vehicleId: String)
     @Serializable
+    data class ImageContractUpload(val vehicleId: String)
+    @Serializable
     data class Pricing(val vehicleId: String)
     @Serializable
     data class TransferRequestRoute(val vehicleId: String)

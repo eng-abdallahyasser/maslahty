@@ -142,6 +142,7 @@ class VehicleRepositoryImpl @Inject constructor(
             vehicleImageUrl = doc.getString("vehicleImageUrl"),
             chassisImageUrl = doc.getString("chassisImageUrl"),
             engineImageUrl = doc.getString("engineImageUrl"),
+            contractImageUrl = doc.getString("contractImageUrl"),
             createdAt = doc.getDate("createdAt") ?: Date(),
             updatedAt = doc.getDate("updatedAt") ?: Date()
         )

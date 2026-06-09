@@ -17,6 +17,7 @@ data class      Vehicle(
     val vehicleImageUrl: String?,
     val chassisImageUrl: String?,
     val engineImageUrl: String?,
+    val contractImageUrl: String?,
     val createdAt: Date,
     val updatedAt: Date
 )

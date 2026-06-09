@@ -67,7 +67,7 @@ fun ImageUploadScreen(
         ) {
             GradientHeader(
                 title = "بيع مركبة",
-                subtitle = "الخطوة 2 من 4 — الصور",
+                subtitle = "الخطوة 3 من5 — الصور",
                 onBack = { navController.popBackStack() },
                 icon = Icons.Default.DirectionsCar
             )
@@ -81,9 +81,9 @@ fun ImageUploadScreen(
             ) {
                 Spacer(Modifier.height(20.dp))
                 StepIndicator(
-                    currentStep = 2,
-                    totalSteps = 4,
-                    stepLabels = listOf("المركبة", "الصور", "السعر", "الإرسال")
+                    currentStep = 3,
+                    totalSteps = 5,
+                    stepLabels = listOf("العقد","المركبة", "الصور", "السعر", "الإرسال")
                 )
 
                 Spacer(Modifier.height(24.dp))

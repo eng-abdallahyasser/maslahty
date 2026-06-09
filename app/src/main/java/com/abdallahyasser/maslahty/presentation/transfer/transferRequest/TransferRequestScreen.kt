@@ -74,7 +74,7 @@ fun TransferRequestScreen(
             .background(MaterialTheme.colorScheme.background)) {
             GradientHeader(
                 title = "إرسال طلب النقل",
-                subtitle = "الخطوة 4 من 4 — تأكيد وإرسال",
+                subtitle = "الخطوة 5 من 5 — تأكيد وإرسال",
                 onBack = { navController.popBackStack() },
                 icon = Icons.Default.Send
             )

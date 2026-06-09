@@ -28,6 +28,7 @@ import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.components.AppTextField
 import com.example.maslahty.presentation.components.ErrorMessage
 import com.example.maslahty.presentation.components.PrimaryButton
+import com.example.maslahty.presentation.components.StepIndicator
 
 @Composable
 fun VehicleDetailsScreen(navController: NavHostController) {
@@ -78,7 +79,7 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            "الخطوة 1 من 4 — تحقق الملكية",
+                            "الخطوة 2 من 5 — تحقق الملكية",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f)
                         )
@@ -92,104 +93,17 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                 }
             }
 
-            // Step Indicator - Circular Steps
+            // Step indicator (use shared StepIndicator for consistent done/active state)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp, vertical = 16.dp)
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    listOf("المركبة", "الصور", "السعر", "الإرسال").forEachIndexed { index, label ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .wrapContentWidth(align = Alignment.CenterHorizontally),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                // Circular Step Indicator
-                                Box(
-                                    modifier = Modifier
-                                        .size(32.dp)
-                                        .clip(CircleShape)
-                                        .background(
-                                            if (index == 0) Color(0xFFCD972E) else Color.White
-                                        )
-                                        .border(
-                                            width = if (index == 0) 0.dp else 2.dp,
-                                            color = if (index == 0) Color.Transparent else Color(0xFFE5E7EB),
-                                            shape = CircleShape
-                                        ),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        (index + 1).toString(),
-                                        style = MaterialTheme.typography.labelSmall,
-                                        fontWeight = FontWeight.Bold,
-                                        color = if (index == 0) Color.White else Color(0xFF9CA3AF)
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    label,
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = if (index == 0) Color(0xFFEAB308) else Color(0xFF9CA3AF),
-                                    fontWeight = if (index == 0) FontWeight.SemiBold else FontWeight.Normal
-                                )
-                            }
-                        }
-                    }
-                }
-
-                // Connecting Lines Background
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                        .padding(horizontal = 16.dp)
-                        .height(2.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    repeat(3) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(2.dp)
-                                .background(
-                                    color = Color(0xFFE5E7EB)
-                                )
-                        )
-                    }
-                }
-
-                // Connecting Line Active (Partial)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .align(Alignment.Center)
-                        .padding(horizontal = 16.dp)
-                        .height(2.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .weight(0.7f)
-                            .height(2.dp)
-                            .background(color = Color(0xFFDFA123))
-                    )
-                    Box(
-                        modifier = Modifier
-                            .weight(2.3f)
-                            .height(2.dp)
-                    )
-                }
+                StepIndicator(
+                    currentStep = 2,
+                    totalSteps = 5,
+                    stepLabels = listOf("العقد","المركبة", "الصور", "السعر", "الإرسال")
+                )
             }
 
             // Content

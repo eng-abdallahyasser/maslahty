@@ -76,14 +76,6 @@ fun PricingScreen(
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
-
-                    Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
-                        StepIndicator(
-                            currentStep = 3,
-                            totalSteps = 4,
-                            stepLabels = listOf("المركبة", "الصور", "السعر", "الإرسال")
-                        )
-                    }
                 }
             },
             bottomBar = {
@@ -114,6 +106,15 @@ fun PricingScreen(
                     .background(Color(0xFFF8F9FA))
                     .verticalScroll(rememberScrollState())
             ) {
+                // Step indicator placed under the top bar (not inside it)
+                Box(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
+                    StepIndicator(
+                        currentStep = 4,
+                        totalSteps = 5,
+                        stepLabels = listOf("العقد","المركبة", "الصور", "السعر", "الإرسال")
+                    )
+                }
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()

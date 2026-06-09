@@ -80,23 +80,24 @@ class VehicleRepositoryImpl @Inject constructor(
 	): Vehicle {
 		val now = Date()
 		return Vehicle(
-			id = id,
-			ownerId = ownerId,
-			licensePlate = plate,
-			chassisNumber = "CHASSIS$id",
-			engineNumber = "ENGINE$id",
-			model = model,
-			manufacturingYear = year,
-			color = color,
-			kilometers = kilometers,
-			condition = condition,
-			licenseImageUrl = null,
-			vehicleImageUrl = null,
-			chassisImageUrl = null,
-			engineImageUrl = null,
-			createdAt = Date(now.time - 180L * 24 * 60 * 60 * 1000),
-			updatedAt = now
-		)
+            id = id,
+            ownerId = ownerId,
+            licensePlate = plate,
+            chassisNumber = "CHASSIS$id",
+            engineNumber = "ENGINE$id",
+            model = model,
+            manufacturingYear = year,
+            color = color,
+            kilometers = kilometers,
+            condition = condition,
+            licenseImageUrl = null,
+            vehicleImageUrl = null,
+            chassisImageUrl = null,
+            engineImageUrl = null,
+            createdAt = Date(now.time - 180L * 24 * 60 * 60 * 1000),
+            updatedAt = now,
+            contractImageUrl = null,
+        )
 	}
 }
 

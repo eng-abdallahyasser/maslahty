@@ -17,6 +17,7 @@ import com.abdallahyasser.maslahty.presentation.my_vehicle.MyVehicleScreen
 import com.abdallahyasser.maslahty.presentation.requests.ApprovalScreen
 import com.abdallahyasser.maslahty.presentation.requests.RequestDetailsScreen
 import com.abdallahyasser.maslahty.presentation.requests.RequestsScreen
+import com.abdallahyasser.maslahty.presentation.transfer.contract.ImageContractScreen
 import com.abdallahyasser.maslahty.presentation.transfer.imageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentation.transfer.pricing.PricingScreen
 import com.abdallahyasser.maslahty.presentation.transfer.transferRequest.TransferRequestScreen
@@ -87,6 +88,13 @@ fun NavGraph(navController: NavHostController) {
         composable<Route.ImageUpload> { backStackEntry ->
             val args = backStackEntry.toRoute<Route.ImageUpload>()
             ImageUploadScreen(
+                navController = navController,
+                vehicleId = args.vehicleId
+            )
+        }
+        composable<Route.ImageContractUpload> { backStackEntry ->
+            val args = backStackEntry.toRoute<Route.ImageContractUpload>()
+            ImageContractScreen(
                 navController = navController,
                 vehicleId = args.vehicleId
             )

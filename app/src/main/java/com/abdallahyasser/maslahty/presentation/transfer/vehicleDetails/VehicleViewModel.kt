@@ -67,12 +67,34 @@ class VehicleDetailsViewModel @Inject constructor() : ViewModel() {
             vehicleImageUrl = null,
             chassisImageUrl = null,
             engineImageUrl = null,
+            contractImageUrl = null,
             createdAt = Date(),
             updatedAt = Date()
         )
 
+        // If there was an active temporary draft (e.g. created when starting from Contract screen),
+        // merge images/data from it into the new draft and remove the temp entry.
+        val activeId = TransferDraftStore.activeDraftId
+        val mergedVehicle = if (activeId != null && activeId != licensePlate) {
+            val prevDraft = TransferDraftStore.drafts[activeId]
+            if (prevDraft != null) {
+                // copy media fields from previous draft's vehicle
+                vehicle.copy(
+                    licenseImageUrl = prevDraft.vehicle.licenseImageUrl ?: vehicle.licenseImageUrl,
+                    vehicleImageUrl = prevDraft.vehicle.vehicleImageUrl ?: vehicle.vehicleImageUrl,
+                    chassisImageUrl = prevDraft.vehicle.chassisImageUrl ?: vehicle.chassisImageUrl,
+                    engineImageUrl = prevDraft.vehicle.engineImageUrl ?: vehicle.engineImageUrl,
+                    contractImageUrl = prevDraft.vehicle.contractImageUrl ?: vehicle.contractImageUrl,
+                    updatedAt = Date()
+                ).also {
+                    // remove the old temporary draft
+                    TransferDraftStore.drafts.remove(activeId)
+                }
+            } else vehicle
+        } else vehicle
+
         val draft = TransferDraft(
-            vehicle = vehicle,
+            vehicle = mergedVehicle,
             salePrice = null,
             marketPrice = null,
             notes = "",
@@ -81,6 +103,7 @@ class VehicleDetailsViewModel @Inject constructor() : ViewModel() {
 
         // حفظ في TransferDraftStore
         TransferDraftStore.drafts[licensePlate] = draft
+        TransferDraftStore.activeDraftId = licensePlate
 
         onNavigate()
     }

@@ -30,6 +30,11 @@ import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.abdallahyasser.maslahty.presentation.navigation.Route
+import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
+import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
+import com.abdallahyasser.maslahty.domain.vehicle.entity.Vehicle
+import com.abdallahyasser.maslahty.domain.vehicle.entity.VehicleCondition
+import java.util.Date
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -169,10 +174,35 @@ fun HomeScreen(navController: NavHostController) {
                     icon = Icons.Default.Sell,
                     gradient = listOf(appColors.gold, Color(0xFFEFBA66)),
                     textColor = Color(0xFF0D1B3E),
-                    onClick = { navController.navigate(Route.VehicleDetails)
+                    onClick = {
+                        // Create a temporary draft id and pre-populate an empty TransferDraft
+                        val tempId = System.currentTimeMillis().toString()
+                        val vehicle = Vehicle(
+                            id = tempId,
+                            ownerId = "user1",
+                            licensePlate = "",
+                            chassisNumber = "",
+                            engineNumber = "",
+                            model = "Unknown",
+                            manufacturingYear = 2024,
+                            color = "Unknown",
+                            kilometers = 0,
+                            condition = VehicleCondition.GOOD,
+                            licenseImageUrl = null,
+                            vehicleImageUrl = null,
+                            chassisImageUrl = null,
+                            engineImageUrl = null,
+                            contractImageUrl = null,
+                            createdAt = Date(),
+                            updatedAt = Date()
+                        )
+                        val draft = TransferDraft(vehicle = vehicle)
+                        TransferDraftStore.drafts[tempId] = draft
+                        com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore.activeDraftId = tempId
 
-
-                          }  ,
+                        // Start the 5-step flow from the contract upload screen
+                        navController.navigate(Route.ImageContractUpload(tempId))
+                    },
                     badgeText = "بائع"
                 )
 
