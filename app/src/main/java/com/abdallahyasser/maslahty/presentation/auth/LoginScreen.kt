@@ -85,8 +85,8 @@ fun LoginBody(navController: NavController) {
             CustomEditText(
                 value = state.nationalIdOrEmail,
                 onValueChange = { vm.onNationalIdOrEmailChange(it) },
-                label = "الرقم القومي او الإيميل",
-                placeholder = "أدخل الرقم القومي او الإيميل...",
+                label = " الإيميل",
+                placeholder = "الإيميل...",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
