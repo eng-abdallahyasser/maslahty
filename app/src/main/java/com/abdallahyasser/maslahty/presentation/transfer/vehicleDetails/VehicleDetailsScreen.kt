@@ -1,6 +1,5 @@
 package com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -31,10 +30,19 @@ import com.example.maslahty.presentation.components.PrimaryButton
 import com.example.maslahty.presentation.components.StepIndicator
 
 @Composable
-fun VehicleDetailsScreen(navController: NavHostController) {
-    val viewModel: VehicleDetailsViewModel = hiltViewModel()
+fun VehicleDetailsScreen(
+    navController: NavHostController,
+    vehicleId: String? = null,
+    viewModel: VehicleViewModel = hiltViewModel()
+) {
     val state by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
+
+    LaunchedEffect(vehicleId) {
+        if (vehicleId != null) {
+            viewModel.loadVehicleData(vehicleId)
+        }
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Column(
@@ -93,7 +101,7 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                 }
             }
 
-            // Step indicator (use shared StepIndicator for consistent done/active state)
+            // Step indicator
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -106,94 +114,81 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                 )
             }
 
-            // Content
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(18.dp)
-            ) {
-                // Owner Section
-                SectionHeader(title = "بيانات المالك الحالي", icon = Icons.Default.Person)
-                OwnerCard(
-                    name = "أحمد محمد",
-                    nationalId = "12345678901234",
-                    isVerified = true
-                )
-
-                // Vehicle Section
-                SectionHeader(title = "تعريف المركبة", icon = Icons.Default.Search)
-
-                AppTextField(
-                    value = state.licensePlate,
-                    onValueChange = { viewModel.onLicensePlateChange(it.uppercase()) },
-                    label = "رقم اللوحة",
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = Icons.Default.DirectionsCar
-                )
-
-                AppTextField(
-                    value = state.chassisNumber,
-                    onValueChange = { viewModel.onChassisNumberChange(it.uppercase()) },
-                    label = "رقم الشاسيه",
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = Icons.Default.Info
-                )
-
-                AppTextField(
-                    value = state.engineNumber,
-                    onValueChange = { viewModel.onEngineNumberChange(it.uppercase()) },
-                    label = "رقم الموتور",
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = Icons.Default.Build
-                )
-
-                // Buyer Section
-                SectionHeader(title = "بيانات المشتري", icon = Icons.Default.PersonSearch)
-
-                AppTextField(
-                    value = state.newOwnerNationalId,
-                    onValueChange = {
-                        if (it.length <= 14 && it.all { c -> c.isDigit() }) {
-                            viewModel.onNewOwnerNationalIdChange(it)
-                        }
-                    },
-                    label = "الرقم القومي للمشتري",
-                    keyboardType = KeyboardType.Number,
-                    modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = Icons.Default.Person
-                )
-
-                state.error?.let { ErrorMessage(it) }
-
-                if (state.isLoading) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .padding(16.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                strokeWidth = 2.dp
-                            )
-                            Text(
-                                "جاري التحقق...",
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    }
+            if (state.isLoading) {
+                Box(
+                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = appColors.gold)
                 }
+            } else {
+                // Content
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(18.dp)
+                ) {
+                    // Owner Section
+                    SectionHeader(title = "بيانات المالك الحالي", icon = Icons.Default.Person)
+                    OwnerCard(
+                        name = state.ownerName.ifEmpty { "جاري التحميل..." },
+                        nationalId = state.ownerNationalId.ifEmpty { "—" },
+                        isVerified = true
+                    )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                    // Vehicle Section
+                    SectionHeader(title = "تعريف المركبة", icon = Icons.Default.Search)
+
+                    AppTextField(
+                        value = state.licensePlate,
+                        onValueChange = { viewModel.onLicensePlateChange(it.uppercase()) },
+                        label = "رقم اللوحة",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.DirectionsCar,
+                        enabled = !state.isReadOnly
+                    )
+
+                    AppTextField(
+                        value = state.chassisNumber,
+                        onValueChange = { viewModel.onChassisNumberChange(it.uppercase()) },
+                        label = "رقم الشاسيه",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.Info,
+                        enabled = !state.isReadOnly
+                    )
+
+                    AppTextField(
+                        value = state.engineNumber,
+                        onValueChange = { viewModel.onEngineNumberChange(it.uppercase()) },
+                        label = "رقم الموتور",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.Build,
+                        enabled = !state.isReadOnly
+                    )
+
+                    // Buyer Section
+                    SectionHeader(title = "بيانات المشتري", icon = Icons.Default.PersonSearch)
+
+                    AppTextField(
+                        value = state.newOwnerNationalId,
+                        onValueChange = {
+                            if (it.length <= 14 && it.all { c -> c.isDigit() }) {
+                                viewModel.onNewOwnerNationalIdChange(it)
+                            }
+                        },
+                        label = "الرقم القومي للمشتري",
+                        keyboardType = KeyboardType.Number,
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.Person
+                    )
+
+                    state.error?.let { ErrorMessage(it) }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+                }
             }
 
             // Bottom Button
@@ -220,7 +215,6 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                                 viewModel.setError("أدخل رقم الموتور")
                             }
                             else -> {
-                                // ✅ حفظ البيانات أولاً في TransferDraftStore
                                 viewModel.saveVehicleDataAndNavigate(
                                     licensePlate = state.licensePlate,
                                     onNavigate = {
@@ -229,7 +223,6 @@ fun VehicleDetailsScreen(navController: NavHostController) {
                                 )
                             }
                         }
-
                     },
                     modifier = Modifier.fillMaxWidth()
                 )

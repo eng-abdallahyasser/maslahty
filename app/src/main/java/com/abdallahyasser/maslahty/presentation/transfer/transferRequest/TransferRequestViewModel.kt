@@ -35,6 +35,19 @@ class TransferRequestViewModel @Inject constructor(
             buyerNationalId = draft?.buyerNationalId.orEmpty(),
             notes = draft?.notes.orEmpty()
         ) }
+        loadCurrentUserInfo()
+    }
+
+    private fun loadCurrentUserInfo() {
+        viewModelScope.launch {
+            when (val result = getCurrentUserUseCase()) {
+                is Result.Success -> {
+                    val user = result.data
+                    _uiState.update { it.copy(sellerName = user.fullName) }
+                }
+                else -> {}
+            }
+        }
     }
 
     fun onNationalIdChange(newValue: String) {

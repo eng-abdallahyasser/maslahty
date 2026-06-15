@@ -44,8 +44,7 @@ fun MyVehicleScreen(
             floatingActionButton = {
                 FloatingActionButton(
                     onClick = { 
-                        // Navigate to add vehicle screen (to be implemented or existing)
-                        navController.navigate(Route.VehicleDetails) 
+                        navController.navigate(Route.VehicleDetails()) 
                     },
                     containerColor = appColors.gold,
                     contentColor = appColors.navy,
@@ -141,7 +140,12 @@ fun MyVehicleScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         items(state.vehicles) { vehicle ->
-                            VehicleCard(vehicle = vehicle)
+                            VehicleCard(
+                                vehicle = vehicle,
+                                onVehicleClick = { 
+                                    navController.navigate(Route.VehicleDetails(vehicleId = vehicle.id))
+                                }
+                            )
                         }
                     }
                 }
@@ -151,13 +155,13 @@ fun MyVehicleScreen(
 }
 
 @Composable
-private fun VehicleCard(vehicle: Vehicle) {
+private fun VehicleCard(vehicle: Vehicle, onVehicleClick: () -> Unit) {
     val appColors = LocalAppColors.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .clickable { /* Detail navigation if needed */ },
+            .clickable { onVehicleClick() },
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {

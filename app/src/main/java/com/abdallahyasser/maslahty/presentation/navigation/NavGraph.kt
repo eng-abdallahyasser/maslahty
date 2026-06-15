@@ -20,6 +20,7 @@ import com.abdallahyasser.maslahty.presentation.requests.RequestsScreen
 import com.abdallahyasser.maslahty.presentation.transfer.contract.ImageContractScreen
 import com.abdallahyasser.maslahty.presentation.transfer.imageUpload.ImageUploadScreen
 import com.abdallahyasser.maslahty.presentation.transfer.pricing.PricingScreen
+import com.abdallahyasser.maslahty.presentation.transfer.success.TransferSuccessScreen
 import com.abdallahyasser.maslahty.presentation.transfer.transferRequest.TransferRequestScreen
 import com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails.VehicleDetailsScreen
 
@@ -68,8 +69,9 @@ fun NavGraph(navController: NavHostController) {
             )
         }
 
-        composable<Route.VehicleDetails> {
-            VehicleDetailsScreen(navController = navController)
+        composable<Route.VehicleDetails> { backStackEntry ->
+            val args = backStackEntry.toRoute<Route.VehicleDetails>()
+            VehicleDetailsScreen(navController = navController, vehicleId = args.vehicleId)
         }
         composable<Route.MyVehicles> {
             MyVehicleScreen(navController = navController)
@@ -108,6 +110,9 @@ fun NavGraph(navController: NavHostController) {
             val args = backStackEntry.toRoute<Route.TransferRequestRoute>()
             TransferRequestScreen( navController = navController, vehicleId = args.vehicleId)
 
+        }
+        composable<Route.TransferSuccess> {
+            TransferSuccessScreen(navController = navController)
         }
     }
 }

@@ -13,7 +13,7 @@ sealed class Route {
     @Serializable object RequestsScreen
     @Serializable data class RequestDetailsScreen(val requestId: String)
     @Serializable data class ApprovalScreen(val requestId: String)
-    @Serializable object VehicleDetails
+    @Serializable data class VehicleDetails(val vehicleId: String? = null)
     @Serializable object MyVehicles
 
     @Serializable
@@ -35,6 +35,7 @@ sealed class Route {
     data class Pricing(val vehicleId: String)
     @Serializable
     data class TransferRequestRoute(val vehicleId: String)
-
+    @Serializable
+    object TransferSuccess
 
 }

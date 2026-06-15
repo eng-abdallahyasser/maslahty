@@ -10,5 +10,6 @@ data class TransferRequestUiState(
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
     val vehicleId: String = "",
-    val draft: TransferDraft? = null
+    val draft: TransferDraft? = null,
+    val sellerName: String = ""
 )

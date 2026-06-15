@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layot.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,6 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -191,6 +194,7 @@ fun SignUpBody(navController: NavController) {
                 label = "الرقم القومي",
                 placeholder = "14 رقم",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
 
             Text(
@@ -206,6 +210,8 @@ fun SignUpBody(navController: NavController) {
                 label = "كلمة السر",
                 placeholder = "كلمة السر",
                 imageVector = ImageVector.vectorResource(id = R.drawable.id),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                visualTransformation = PasswordVisualTransformation()
             )
 
             Spacer(Modifier.height(32.dp))
@@ -240,6 +246,7 @@ fun SignUpBody(navController: NavController) {
                 label = "رقم الهاتف",
                 placeholder = "01xxxxxxxxx",
                 imageVector = ImageVector.vectorResource(id = R.drawable.phone),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
             Text(
                 text = "البريد الإلكتروني",
@@ -252,7 +259,8 @@ fun SignUpBody(navController: NavController) {
                 onValueChange = { vm.onEmailChange(it) },
                 label = "البريد الإلكتروني",
                 placeholder = "example@email.com",
-                imageVector = ImageVector.vectorResource(id = R.drawable.email)
+                imageVector = ImageVector.vectorResource(id = R.drawable.email),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
 
             Spacer(Modifier.height(16.dp))

@@ -58,12 +58,12 @@ fun TransferRequestScreen(
         viewModel.initData(vehicleId, draft)
     }
 
-    // مراقبة النجاح للانتقال لشاشة أخرى
+    // مراقبة النجاح للانتقال لشاشة النجاح
     LaunchedEffect(uiState.isSuccess) {
         if (uiState.isSuccess) {
             TransferDraftStore.drafts.remove(vehicleId)
-            navController.navigate(Route.Home) {
-                popUpTo(Route.Home) { inclusive = true }
+            navController.navigate(Route.TransferSuccess) {
+                popUpTo(Route.Home) // Pop back stack to Home so back button doesn't return to request screen
             }
         }
     }
@@ -93,7 +93,7 @@ fun TransferRequestScreen(
 @Composable
 fun TransferContent(
     uiState: TransferRequestUiState,
-    appColors: AppColors, // افترضت اسم الكلاس عندك
+    appColors: AppColors,
     onNationalIdChange: (String) -> Unit,
     onNotesChange: (String) -> Unit,
     onSubmit: () -> Unit
@@ -109,7 +109,11 @@ fun TransferContent(
 
         AppCard {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                InfoRow(label = "البائع", value = "Mostafa Al", icon = Icons.Default.Sell)
+                InfoRow(
+                    label = "البائع",
+                    value = uiState.sellerName.ifEmpty { "جاري التحميل..." },
+                    icon = Icons.Default.Sell
+                )
                 Divider(color = appColors.cardBorder)
                 InfoRow(label = "المركبة", value = uiState.draft?.vehicle?.licensePlate ?: "—", icon = Icons.Default.DirectionsCar)
                 Divider(color = appColors.cardBorder)

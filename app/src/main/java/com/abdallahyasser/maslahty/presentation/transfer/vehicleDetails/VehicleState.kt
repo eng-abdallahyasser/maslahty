@@ -10,8 +10,8 @@ sealed class VehicleState {
         val isLoading: Boolean = false,
         val isVerified: Boolean = false,
         val newOwnerNationalId: String = "",
+        val isReadOnly: Boolean = false,
+        val ownerName: String = "",
+        val ownerNationalId: String = ""
     )
-
-
-
 }

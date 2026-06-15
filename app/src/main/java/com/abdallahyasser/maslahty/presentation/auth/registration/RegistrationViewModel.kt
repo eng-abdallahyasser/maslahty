@@ -31,7 +31,9 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun onNationalIdChange(value: String) {
-        _state.value = _state.value.copy(nationalId = value)
+        if (value.length <= 14 && value.all { it.isDigit() }) {
+            _state.value = _state.value.copy(nationalId = value)
+        }
     }
 
     fun onEmailChange(value: String) {
@@ -39,7 +41,9 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun onPhoneNumberChange(value: String) {
-        _state.value = _state.value.copy(phoneNumber = value)
+        if (value.length <= 11 && value.all { it.isDigit() }) {
+            _state.value = _state.value.copy(phoneNumber = value)
+        }
     }
 
     fun onPasswordChange(value: String) {
@@ -47,6 +51,38 @@ class RegistrationViewModel @Inject constructor(
     }
 
     fun register() {
+        val currentState = _state.value
+        
+        // 1. Validation for Arabic Full Name
+        val arabicRegex = Regex("^[\\u0621-\\u064A\\s]+$")
+        if (currentState.fullName.isBlank()) {
+            _state.value = currentState.copy(error = "يرجى إدخال الاسم بالكامل")
+            return
+        }
+        if (!arabicRegex.matches(currentState.fullName)) {
+            _state.value = currentState.copy(error = "الاسم يجب أن يكون باللغة العربية فقط")
+            return
+        }
+
+        // 2. Validation for National ID (14 digits)
+        if (currentState.nationalId.length != 14) {
+            _state.value = currentState.copy(error = "الرقم القومي يجب أن يتكون من 14 رقم")
+            return
+        }
+
+        // 3. Validation for Phone Number (Starts with 010, 011, 012, 015 and 11 digits total)
+        val phoneRegex = Regex("^01[0125][0-9]{8}$")
+        if (!phoneRegex.matches(currentState.phoneNumber)) {
+            _state.value = currentState.copy(error = "رقم الهاتف غير صحيح (يجب أن يبدأ بـ 010، 011، 012، أو 015)")
+            return
+        }
+
+        // 4. Basic Password check
+        if (currentState.password.length < 6) {
+            _state.value = currentState.copy(error = "كلمة السر يجب أن لا تقل عن 6 أحرف")
+            return
+        }
+
         viewModelScope.launch {
             _state.value = _state.value.copy(isLoading = true, error = null)
 
@@ -67,7 +103,7 @@ class RegistrationViewModel @Inject constructor(
             } else {
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    error = result.exceptionOrNull()?.message ?: "Registration failed"
+                    error = result.exceptionOrNull()?.message ?: "فشل إنشاء الحساب"
                 )
             }
         }
