@@ -605,18 +605,36 @@ fun StepIndicator(
     modifier: Modifier = Modifier
 ) {
     val appColors = LocalAppColors.current
+
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.Top
     ) {
         stepLabels.forEachIndexed { index, label ->
             val step = index + 1
             val isDone = step < currentStep
             val isActive = step == currentStep
+
+            // Connecting line BEFORE this step (between previous and this)
+            if (index > 0) {
+                val prevDone = index < currentStep  // previous step is < currentStep means line is green
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(top = 14.dp) // center the line with the 32.dp circles
+                        .height(4.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .background(
+                            if (prevDone) appColors.success
+                            else appColors.cardBorder.copy(alpha = 0.4f)
+                        )
+                )
+            }
+
+            // Step circle + label
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.width(IntrinsicSize.Min)
             ) {
                 Box(
                     modifier = Modifier
@@ -626,7 +644,7 @@ fun StepIndicator(
                             when {
                                 isDone -> appColors.success
                                 isActive -> appColors.gold
-                                else -> appColors.cardBorder
+                                else -> appColors.cardBorder.copy(alpha = 0.4f)
                             }
                         ),
                     contentAlignment = Alignment.Center
@@ -642,12 +660,12 @@ fun StepIndicator(
                         Text(
                             text = step.toString(),
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (isActive) Color(0xFF0D1B3E) else appColors.textTertiary,
+                            color = if (isActive) Color(0xFF0D1B3E) else Color.White,
                             fontWeight = FontWeight.Bold
                         )
                     }
                 }
-                Spacer(Modifier.height(4.dp))
+                Spacer(Modifier.height(6.dp))
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp),
@@ -657,19 +675,8 @@ fun StepIndicator(
                         else -> appColors.textTertiary
                     },
                     textAlign = TextAlign.Center,
-                    fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal
-                )
-            }
-            if (index < stepLabels.size - 1) {
-                Box(
-                    modifier = Modifier
-                        .weight(0.5f)
-                        .height(2.dp)
-                        .padding(top = 15.dp)
-                        .background(
-                            if (step < currentStep) appColors.success
-                            else appColors.cardBorder
-                        )
+                    fontWeight = if (isActive || isDone) FontWeight.Bold else FontWeight.Normal,
+                    maxLines = 1
                 )
             }
         }
