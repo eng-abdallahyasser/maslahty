@@ -65,15 +65,15 @@ fun PrimaryButton(
                 strokeWidth = 2.5.dp
             )
         } else {
-            if (icon != null) {
-                Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(20.dp))
-                Spacer(Modifier.width(8.dp))
-            }
             Text(
                 text = text,
                 style = MaterialTheme.typography.labelLarge.copy(fontSize = 15.sp),
                 fontWeight = FontWeight.Bold
             )
+            if (icon != null) {
+                Spacer(Modifier.width(8.dp))
+                Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(20.dp))
+            }
         }
     }
 }
@@ -103,15 +103,15 @@ fun SecondaryButton(
             disabledContentColor = appColors.gold.copy(alpha = 0.4f)
         )
     ) {
-        if (icon != null) {
-            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-        }
         Text(
             text = text,
             style = MaterialTheme.typography.labelLarge.copy(fontSize = 14.sp),
             fontWeight = FontWeight.SemiBold
         )
+        if (icon != null) {
+            Spacer(Modifier.width(8.dp))
+            Icon(imageVector = icon, contentDescription = null, modifier = Modifier.size(18.dp))
+        }
     }
 }
 

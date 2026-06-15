@@ -42,18 +42,18 @@ fun MyVehicleScreen(
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Scaffold(
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { 
-                        navController.navigate(Route.VehicleDetails()) 
-                    },
-                    containerColor = appColors.gold,
-                    contentColor = appColors.navy,
-                    shape = CircleShape
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "إضافة مركبة")
-                }
-            },
+//            floatingActionButton = {
+//                FloatingActionButton(
+//                    onClick = {
+//                        navController.navigate(Route.VehicleDetails())
+//                    },
+//                    containerColor = appColors.gold,
+//                    contentColor = appColors.navy,
+//                    shape = CircleShape
+//                ) {
+//                    Icon(Icons.Default.Add, contentDescription = "إضافة مركبة")
+//                }
+//            },
             containerColor = MaterialTheme.colorScheme.background
         ) { padding ->
             Column(

@@ -57,6 +57,9 @@ class VehicleViewModel @Inject constructor(
                         licensePlate = vehicle.licensePlate,
                         chassisNumber = vehicle.chassisNumber,
                         engineNumber = vehicle.engineNumber,
+                        model = vehicle.model,
+                        manufacturingYear = vehicle.manufacturingYear.toString(),
+                        color = vehicle.color,
                         isReadOnly = true,
                         isLoading = false,
                         error = null
@@ -93,6 +96,26 @@ class VehicleViewModel @Inject constructor(
         }
     }
 
+    fun onModelChange(value: String) {
+        if (!_uiState.value.isReadOnly) {
+            _uiState.value = _uiState.value.copy(model = value)
+        }
+    }
+
+    fun onManufacturingYearChange(value: String) {
+        if (!_uiState.value.isReadOnly) {
+            if (value.isEmpty() || (value.all { it.isDigit() } && value.length <= 4)) {
+                _uiState.value = _uiState.value.copy(manufacturingYear = value)
+            }
+        }
+    }
+
+    fun onColorChange(value: String) {
+        if (!_uiState.value.isReadOnly) {
+            _uiState.value = _uiState.value.copy(color = value)
+        }
+    }
+
     fun onNewOwnerNationalIdChange(value: String) {
         if (value.length <= 14 && value.all { it.isDigit() }) {
             _uiState.value = _uiState.value.copy(newOwnerNationalId = value)
@@ -120,9 +143,9 @@ class VehicleViewModel @Inject constructor(
             licensePlate = licensePlate,
             chassisNumber = state.chassisNumber,
             engineNumber = state.engineNumber,
-            model = "Unknown",
-            manufacturingYear = 2024,
-            color = "Unknown",
+            model = state.model.ifEmpty { "غير محدد" },
+            manufacturingYear = state.manufacturingYear.toIntOrNull() ?: 0,
+            color = state.color.ifEmpty { "غير محدد" },
             kilometers = 0,
             condition = VehicleCondition.GOOD,
             licenseImageUrl = null,

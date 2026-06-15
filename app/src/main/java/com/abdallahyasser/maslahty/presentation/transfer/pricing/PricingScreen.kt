@@ -96,7 +96,7 @@ fun PricingScreen(
                     }
                     PrimaryButton(
                         text = "التالي - مراجعة البيانات",
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        icon = Icons.AutoMirrored.Filled.ArrowForward,
                         modifier = Modifier.padding(20.dp).fillMaxWidth(),
                         onClick = {
                             viewModel.onNextClicked(vehicleId) {

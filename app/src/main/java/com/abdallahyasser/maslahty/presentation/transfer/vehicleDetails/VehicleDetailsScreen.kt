@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -171,6 +172,34 @@ fun VehicleDetailsScreen(
                         enabled = !state.isReadOnly
                     )
 
+                    AppTextField(
+                        value = state.model,
+                        onValueChange = { viewModel.onModelChange(it) },
+                        label = "الموديل",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.DirectionsCar,
+                        enabled = !state.isReadOnly
+                    )
+
+                    AppTextField(
+                        value = state.manufacturingYear,
+                        onValueChange = { viewModel.onManufacturingYearChange(it) },
+                        label = "سنة التصنيع",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.CalendarMonth,
+                        keyboardType = KeyboardType.Number,
+                        enabled = !state.isReadOnly
+                    )
+
+                    AppTextField(
+                        value = state.color,
+                        onValueChange = { viewModel.onColorChange(it) },
+                        label = "اللون",
+                        modifier = Modifier.fillMaxWidth(),
+                        leadingIcon = Icons.Default.Palette,
+                        enabled = !state.isReadOnly
+                    )
+
                     // Buyer Section
                     SectionHeader(title = "بيانات المشتري", icon = Icons.Default.PersonSearch)
 
@@ -202,6 +231,7 @@ fun VehicleDetailsScreen(
             ) {
                 PrimaryButton(
                     text = "التالي — رفع الصور",
+                    icon = Icons.AutoMirrored.Filled.ArrowForward,
                     enabled = !state.isLoading && state.licensePlate.isNotEmpty(),
                     onClick = {
                         when {

@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material3.Button
@@ -147,7 +148,7 @@ fun ImageContractScreen(
 
                     PrimaryButton(
                         text = "التالي",
-                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        icon = Icons.AutoMirrored.Filled.ArrowForward,
                         enabled = state.uploadedCount == 1,
                         onClick = {
                             viewModel.onNextClicked(vehicleId) {
