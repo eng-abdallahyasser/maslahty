@@ -30,7 +30,7 @@ val LightGray = Color(0xFFC5C6CE)
 // =============================================
 val HeaderGradientStart = Color(0xFF0A1931)
 val HeaderGradientEnd = Color(0xFF1A2A44)
-val PageBackground = Color(0xFFF8F9FA)
+val PageBackground = Color(0xFFFFFFFF)
 val CardBackground = Color(0xFFFFFFFF)
 val FeatureCardBg = Color(0xFFF3F4F5)
 val TextDark = Color(0xFF191C1D)
@@ -57,7 +57,7 @@ val CardBorderDark = Color(0xFF2A3558)
 // =============================================
 // Light Theme Colors
 // =============================================
-val BackgroundLight = Color(0xFFF5F7FF)
+val BackgroundLight = Color(0xFFFFFFFF)
 val SurfaceLight = Color(0xFFFFFFFF)
 val SurfaceVariantLight = Color(0xFFEEF1FA)
 val CardLight = Color(0xFFFFFFFF)

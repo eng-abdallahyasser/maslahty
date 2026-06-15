@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -539,6 +540,7 @@ fun GradientHeader(
                     colors = listOf(appColors.navy, appColors.gradientEnd.copy(alpha = 0.9f))
                 )
             )
+            .statusBarsPadding()
             .padding(horizontal = 20.dp, vertical = 24.dp)
     ) {
         Row(
@@ -555,7 +557,7 @@ fun GradientHeader(
                         .background(Color.White.copy(alpha = 0.12f))
                 ) {
                     Icon(
-                        imageVector = Icons.Default.ArrowForward,
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "رجوع",
                         tint = Color.White,
                         modifier = Modifier.size(20.dp)

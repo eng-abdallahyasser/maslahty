@@ -8,8 +8,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
@@ -85,7 +86,7 @@ fun MyVehicleScreen(
                                     .background(Color.White.copy(alpha = 0.1f))
                             ) {
                                 Icon(
-                                    imageVector = Icons.Default.ArrowBack,
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                     contentDescription = "رجوع",
                                     tint = Color.White
                                 )
@@ -143,7 +144,7 @@ fun MyVehicleScreen(
                             VehicleCard(
                                 vehicle = vehicle,
                                 onVehicleClick = { 
-                                    navController.navigate(Route.VehicleDetails(vehicleId = vehicle.id))
+                                    navController.navigate(Route.ImageContractUpload(vehicleId = vehicle.id))
                                 }
                             )
                         }
@@ -221,7 +222,7 @@ private fun VehicleCard(vehicle: Vehicle, onVehicleClick: () -> Unit) {
 
             // Status or Arrow
             Icon(
-                imageVector = Icons.Default.ArrowBack, // In RTL this points left, we might want forward
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                 contentDescription = null,
                 tint = appColors.textSecondary.copy(alpha = 0.4f),
                 modifier = Modifier.size(20.dp)

@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -43,7 +44,7 @@ fun ImageUploadScreen(
     val viewModel: ImageUploadViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
     val appColors = LocalAppColors.current
-    val bgColor = Color(0xFFF8FAFC)
+    val bgColor = MaterialTheme.colorScheme.background
 
     // تعريف الـ Launchers لفتح المعرض لكل صورة
     val licenseLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -108,7 +109,7 @@ fun ImageUploadScreen(
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                     VerticalUploadSlot(
-                        label = "داخلية المركبة",
+                        label = "رقم الموتور",
                         value = state.chassisImageUrl,
                         onClick = { chassisLauncher.launch("image/*") },
                         modifier = Modifier.weight(1f)
@@ -133,6 +134,7 @@ fun ImageUploadScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .navigationBarsPadding()
                     .padding(start = 20.dp, end = 20.dp, bottom = 32.dp),
                 horizontalAlignment = Alignment.End
             ) {
@@ -149,7 +151,7 @@ fun ImageUploadScreen(
 
                 PrimaryButton(
                     text = "التالي",
-                    icon = Icons.Default.ArrowBack,
+                    icon = Icons.AutoMirrored.Filled.ArrowBack,
                     enabled = state.uploadedCount == 4,
                     onClick = {
                         viewModel.onNextClicked(vehicleId) {

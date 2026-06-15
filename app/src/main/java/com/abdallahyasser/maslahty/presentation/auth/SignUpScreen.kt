@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -21,11 +23,19 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,13 +66,22 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun SignUpScreen(navController: NavController) {
     val scrollState = rememberScrollState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-    Column(
-        modifier = Modifier
-            .verticalScroll(scrollState)
-    ) {
-        SignUpHeader()
-        SignUpBody(navController)
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        containerColor = MaterialTheme.colorScheme.background
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .verticalScroll(scrollState)
+                .navigationBarsPadding()
+        ) {
+            SignUpHeader()
+            SignUpBody(navController = navController, snackbarHostState = snackbarHostState)
+        }
     }
 }
 
@@ -120,9 +139,13 @@ fun SignUpHeader() {
 }
 
 @Composable
-fun SignUpBody(navController: NavController) {
+fun SignUpBody(
+    navController: NavController,
+    snackbarHostState: SnackbarHostState
+) {
     val vm: RegistrationViewModel = hiltViewModel()
     val state by vm.state.collectAsState()
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         vm.eventFlow.collectLatest { event ->
@@ -136,8 +159,18 @@ fun SignUpBody(navController: NavController) {
                         popUpTo(Route.Login) { inclusive = true }
                     }
                 }
+                is RegistrationUiEvent.NavigateToLogin -> {
+                    scope.launch {
+                        delay(2000)
+                        navController.navigate(Route.Login) {
+                            popUpTo(Route.Registration) { inclusive = true }
+                        }
+                    }
+                }
                 is RegistrationUiEvent.ShowSnackbar -> {
-                    // Handle snackbar
+                    scope.launch {
+                        snackbarHostState.showSnackbar(event.message)
+                    }
                 }
             }
         }

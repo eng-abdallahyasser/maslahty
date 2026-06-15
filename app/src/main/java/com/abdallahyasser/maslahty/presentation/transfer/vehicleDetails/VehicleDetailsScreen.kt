@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -62,6 +63,7 @@ fun VehicleDetailsScreen(
                             )
                         )
                     )
+                    .statusBarsPadding()
                     .padding(24.dp)
             ) {
                 Row(
@@ -74,7 +76,7 @@ fun VehicleDetailsScreen(
                         modifier = Modifier.size(40.dp)
                     ) {
                         Icon(
-                            Icons.Default.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "الرجوع",
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
@@ -195,6 +197,7 @@ fun VehicleDetailsScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .navigationBarsPadding()
                     .padding(20.dp)
             ) {
                 PrimaryButton(

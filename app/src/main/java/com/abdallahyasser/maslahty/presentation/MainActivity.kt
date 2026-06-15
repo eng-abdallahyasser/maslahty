@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.rememberNavController
 import com.abdallahyasser.maslahty.presentation.navigation.NavGraph
+import com.abdallahyasser.maslahty.theme.MaslahtyTheme
 import com.abdallahyasser.maslahty.util.PreferenceManager
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,8 +17,10 @@ class MainActivity : ComponentActivity() {
         PreferenceManager.init(this)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-            NavGraph(navController = navController)
+            MaslahtyTheme {
+                val navController = rememberNavController()
+                NavGraph(navController = navController)
+            }
         }
     }
 }

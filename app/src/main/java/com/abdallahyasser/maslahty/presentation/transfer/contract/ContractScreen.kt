@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -22,9 +23,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DirectionsCar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -54,7 +57,11 @@ fun ImageContractScreen(
 
     val viewModel: ImageContractViewModel = hiltViewModel()
     val state by viewModel.uiState.collectAsState()
-    val bgColor = Color(0xFFF8FAFC)
+    val bgColor = MaterialTheme.colorScheme.background
+
+    LaunchedEffect(vehicleId) {
+        viewModel.loadDraftOrInitialize(vehicleId)
+    }
 
     // تعريف الـ Launchers لفتح المعرض لكل صورة
     val contractLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -63,7 +70,7 @@ fun ImageContractScreen(
             viewModel.updateContractImage(url)
             // بعد ما نرفع الصورة ننتقل مباشرة للخطوة التالية (تفاصيل المركبة)
             viewModel.onNextClicked(vehicleId) {
-                navController.navigate(Route.VehicleDetails)
+                navController.navigate(Route.VehicleDetails(vehicleId = vehicleId))
             }
         }
 
@@ -123,6 +130,7 @@ fun ImageContractScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .navigationBarsPadding()
                         .padding(start = 20.dp, end = 20.dp, bottom = 32.dp),
                     horizontalAlignment = Alignment.End
                 ) {
@@ -143,7 +151,7 @@ fun ImageContractScreen(
                         enabled = state.uploadedCount == 1,
                         onClick = {
                             viewModel.onNextClicked(vehicleId) {
-                                navController.navigate(Route.VehicleDetails)
+                                navController.navigate(Route.VehicleDetails(vehicleId = vehicleId))
                             }
 
                         }

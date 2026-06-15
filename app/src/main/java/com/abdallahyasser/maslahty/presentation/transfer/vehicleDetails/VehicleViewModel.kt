@@ -45,6 +45,9 @@ class VehicleViewModel @Inject constructor(
     }
 
     fun loadVehicleData(vehicleId: String) {
+        if (vehicleId.length >= 13 && vehicleId.all { it.isDigit() }) {
+            return
+        }
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true)
             when (val result = vehicleRepository.getVehicleById(vehicleId)) {

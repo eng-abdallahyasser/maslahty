@@ -4,4 +4,5 @@ sealed class RegistrationUiEvent {
     data class ShowSnackbar(val message: String) : RegistrationUiEvent()
     object NavigateToVerifyOTP : RegistrationUiEvent()
     object NavigateToHome : RegistrationUiEvent()
+    object NavigateToLogin : RegistrationUiEvent()
 }

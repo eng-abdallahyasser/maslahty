@@ -99,7 +99,8 @@ class RegistrationViewModel @Inject constructor(
 
             if (result.isSuccess) {
                 _state.value = _state.value.copy(isLoading = false, success = true)
-                _eventFlow.emit(RegistrationUiEvent.NavigateToHome)
+                _eventFlow.emit(RegistrationUiEvent.ShowSnackbar("تم إنشاء الحساب بنجاح!"))
+                _eventFlow.emit(RegistrationUiEvent.NavigateToLogin)
             } else {
                 _state.value = _state.value.copy(
                     isLoading = false,

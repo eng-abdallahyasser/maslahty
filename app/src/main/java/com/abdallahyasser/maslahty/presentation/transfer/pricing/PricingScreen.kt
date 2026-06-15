@@ -8,8 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Login
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -52,6 +52,7 @@ fun PricingScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color(0xFF1A233A))
+                        .statusBarsPadding()
                         .padding(top = 16.dp, bottom = 8.dp)
                 ) {
                     Row(
@@ -67,7 +68,7 @@ fun PricingScreen(
                         )
                         IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
-                                Icons.Default.ArrowForward,
+                                Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
                                 tint = Color.White,
                                 modifier = Modifier.background(Color.White.copy(alpha = 0.1f), RoundedCornerShape(12.dp))
@@ -79,31 +80,38 @@ fun PricingScreen(
                 }
             },
             bottomBar = {
-                if (state.error != null) {
-                    Text(
-                        text = state.error!!,
-                        color = Color.Red,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
-                        style = MaterialTheme.typography.bodySmall
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .background(Color.White)
+                ) {
+                    if (state.error != null) {
+                        Text(
+                            text = state.error!!,
+                            color = Color.Red,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                    PrimaryButton(
+                        text = "التالي - مراجعة البيانات",
+                        icon = Icons.AutoMirrored.Filled.ArrowBack,
+                        modifier = Modifier.padding(20.dp).fillMaxWidth(),
+                        onClick = {
+                            viewModel.onNextClicked(vehicleId) {
+                                navController.navigate(Route.TransferRequestRoute(vehicleId))
+                            }
+                        }
                     )
                 }
-                PrimaryButton(
-                    text = "التالي - مراجعة البيانات",
-                    icon = Icons.Default.ArrowBack,
-                    modifier = Modifier.padding(20.dp).fillMaxWidth(),
-                    onClick = {
-                        viewModel.onNextClicked(vehicleId) {
-                            navController.navigate(Route.TransferRequestRoute(vehicleId))
-                        }
-                    }
-                )
             }
         ) { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .background(Color(0xFFF8F9FA))
+                    .background(MaterialTheme.colorScheme.background)
                     .verticalScroll(rememberScrollState())
             ) {
                 // Step indicator placed under the top bar (not inside it)

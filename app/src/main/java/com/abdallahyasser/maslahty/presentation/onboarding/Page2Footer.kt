@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +49,8 @@ public fun Page2Footer(
                 .background(
                     color = Color.White.copy(alpha = 0.8f)
                 )
-                .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 40.dp),
+                .navigationBarsPadding()
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
