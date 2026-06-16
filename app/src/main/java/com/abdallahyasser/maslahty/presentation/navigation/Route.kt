@@ -15,6 +15,7 @@ sealed class Route {
     @Serializable data class ApprovalScreen(val requestId: String)
     @Serializable data class VehicleDetails(val vehicleId: String? = null)
     @Serializable object MyVehicles
+    @Serializable data class VehicleInfoScreen(val vehicleId: String)
 
     @Serializable
     object ViolationsMenuScreen

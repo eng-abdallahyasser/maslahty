@@ -63,7 +63,8 @@ fun ApprovalScreen(
     viewModel: RequestsViewModel = hiltViewModel()
 ) {
     val appColors = LocalAppColors.current
-    var buyerId by remember { mutableStateOf("user2") }
+    val currentUserId = viewModel.currentUserId ?: ""
+    var buyerId by remember { mutableStateOf(currentUserId) }
     var error by remember { mutableStateOf<String?>(null) }
     val approveState by viewModel.approveRequestState.collectAsState()
     val rejectState by viewModel.rejectRequestState.collectAsState()

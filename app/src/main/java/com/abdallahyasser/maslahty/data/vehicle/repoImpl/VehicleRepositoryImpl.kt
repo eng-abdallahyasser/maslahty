@@ -122,6 +122,30 @@ class VehicleRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun transferVehicleOwnership(vehicleId: String, oldOwnerId: String, newOwnerId: String): Result<Unit> {
+        return try {
+            val now = Date()
+            val vehicleRef = firestoreService.collection("vehicle").document(vehicleId)
+            val oldUserRef = firestoreService.collection("users").document(oldOwnerId)
+            val newUserRef = firestoreService.collection("users").document(newOwnerId)
+
+            firestoreService.runBatch { batch ->
+                // 1. Update ownerId in vehicle document
+                batch.update(vehicleRef, "ownerId", newOwnerId, "updatedAt", now)
+
+                // 2. Remove vehicleId from old owner's vehicles list
+                batch.update(oldUserRef, "vehicles", FieldValue.arrayRemove(vehicleId))
+
+                // 3. Add vehicleId to new owner's vehicles list
+                batch.update(newUserRef, "vehicles", FieldValue.arrayUnion(vehicleId))
+            }.await()
+
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     private fun mapToVehicle(doc: com.google.firebase.firestore.DocumentSnapshot): Vehicle {
         return Vehicle(
             id = doc.getString("id") ?: doc.id,

@@ -14,6 +14,7 @@ import com.abdallahyasser.maslahty.presentation.auth.SignUpScreen
 import com.abdallahyasser.maslahty.presentation.onboarding.OnboardingScreen
 import com.abdallahyasser.maslahty.presentation.splash.SplashScreen
 import com.abdallahyasser.maslahty.presentation.my_vehicle.MyVehicleScreen
+import com.abdallahyasser.maslahty.presentation.my_vehicle.VehicleInfoScreen
 import com.abdallahyasser.maslahty.presentation.requests.ApprovalScreen
 import com.abdallahyasser.maslahty.presentation.requests.RequestDetailsScreen
 import com.abdallahyasser.maslahty.presentation.requests.RequestsScreen
@@ -76,6 +77,13 @@ fun NavGraph(navController: NavHostController) {
         }
         composable<Route.MyVehicles> {
             MyVehicleScreen(navController = navController)
+        }
+        composable<Route.VehicleInfoScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<Route.VehicleInfoScreen>()
+            VehicleInfoScreen(
+                navController = navController,
+                vehicleId = args.vehicleId
+            )
         }
         composable<Route.ViolationsMenuScreen> {
             ViolationsMenuScreen(navController = navController)

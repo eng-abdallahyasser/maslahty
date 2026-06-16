@@ -29,6 +29,8 @@ import androidx.navigation.NavHostController
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.lifecycle.Lifecycle
 import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore
 import com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraft
@@ -41,6 +43,10 @@ fun HomeScreen(navController: NavHostController) {
     val appColors = LocalAppColors.current
     val homeViewModel: HomeViewModel = hiltViewModel()
     val uiState=homeViewModel.screenState.collectAsState()
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        homeViewModel.loadUserData()
+    }
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Column(
@@ -150,7 +156,7 @@ fun HomeScreen(navController: NavHostController) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        QuickStatChip(label = "مركباتي", value = "${uiState.value.vehiclesNumber}", modifier = Modifier.weight(1f), onClick = { navController.navigate(Route.MyVehicles) })
+                        QuickStatChip(label = "مركباتي", value = "${uiState.value.vehiclesNumber}", modifier = Modifier.weight(1f))
                         QuickStatChip(label = "طلبات نشطة", value = "${uiState.value.activeRequests}", modifier = Modifier.weight(1f))
                         QuickStatChip(label = "مكتملة", value = "${uiState.value.completedRequests}", modifier = Modifier.weight(1f))
                     }
@@ -177,33 +183,7 @@ fun HomeScreen(navController: NavHostController) {
                     gradient = listOf(appColors.gold, Color(0xFFEFBA66)),
                     textColor = Color(0xFF0D1B3E),
                     onClick = {
-                        // Create a temporary draft id and pre-populate an empty TransferDraft
-                        val tempId = System.currentTimeMillis().toString()
-                        val vehicle = Vehicle(
-                            id = tempId,
-                            ownerId = "user1",
-                            licensePlate = "",
-                            chassisNumber = "",
-                            engineNumber = "",
-                            model = "Unknown",
-                            manufacturingYear = 2024,
-                            color = "Unknown",
-                            kilometers = 0,
-                            condition = VehicleCondition.GOOD,
-                            licenseImageUrl = null,
-                            vehicleImageUrl = null,
-                            chassisImageUrl = null,
-                            engineImageUrl = null,
-                            contractImageUrl = null,
-                            createdAt = Date(),
-                            updatedAt = Date()
-                        )
-                        val draft = TransferDraft(vehicle = vehicle)
-                        TransferDraftStore.drafts[tempId] = draft
-                        com.abdallahyasser.maslahty.data.local.TransferDraft.TransferDraftStore.activeDraftId = tempId
-
-                        // Start the 5-step flow from the contract upload screen
-                        navController.navigate(Route.ImageContractUpload(tempId))
+                        navController.navigate(Route.MyVehicles)
                     },
                     badgeText = "بائع"
                 )
@@ -260,15 +240,13 @@ fun HomeScreen(navController: NavHostController) {
 private fun QuickStatChip(
     label: String,
     value: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    modifier: Modifier = Modifier
 ) {
     val appColors = LocalAppColors.current
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White.copy(alpha = 0.1f))
-            .clickable(onClick = onClick)
             .padding(vertical = 10.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

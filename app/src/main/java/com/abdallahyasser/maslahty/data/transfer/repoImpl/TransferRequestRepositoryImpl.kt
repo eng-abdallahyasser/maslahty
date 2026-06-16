@@ -99,6 +99,7 @@ class TransferRequestRepositoryImpl @Inject constructor(
             val now = Date()
             collection.document(requestId).update(
                 "status", TransferStatus.APPROVED_BY_BUYER.name,
+                "receiver_id", buyerId,
                 "updated_at", now.time
             ).await()
             

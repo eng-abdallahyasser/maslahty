@@ -72,6 +72,7 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
     // Collect the buyer requests state
     val buyerRequestsState by viewModel.buyerRequestsState.collectAsState()
     val rejectState by viewModel.rejectRequestState.collectAsState()
+    val cancelState by viewModel.cancelRequestState.collectAsState()
     var error by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(rejectState) {
@@ -83,6 +84,18 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
             }
             is TransferState.Error -> {
                 error = (rejectState as TransferState.Error).message
+            }
+            else -> Unit
+        }
+    }
+
+    LaunchedEffect(cancelState) {
+        when (cancelState) {
+            is TransferState.RequestCancelled -> {
+                navController.popBackStack()
+            }
+            is TransferState.Error -> {
+                error = (cancelState as TransferState.Error).message
             }
             else -> Unit
         }
@@ -197,19 +210,34 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
                     if (rejectState is TransferState.Loading) {
                         LoadingBox(message = "جاري رفض الطلب...")
                     }
+                    if (cancelState is TransferState.Loading) {
+                        LoadingBox(message = "جاري إلغاء الطلب...")
+                    }
 
                     // Action buttons
+                    val currentUserId = viewModel.currentUserId
+                    val isSeller = request.sellerId == currentUserId
+
                     if (request.status == TransferStatus.PENDING) {
-                        PrimaryButton(
-                            text = "الموافقة على الطلب",
-                            icon = Icons.Default.CheckCircle,
-                            onClick = { navController.navigate(Route.ApprovalScreen(requestId = requestId)) }
-                        )
-                        SecondaryButton(
-                            text = "رفض الطلب",
-                            icon = Icons.Default.Cancel,
-                            onClick = { viewModel.rejectRequest(requestId = requestId) }
-                        )
+                        if (isSeller) {
+                            PrimaryButton(
+                                text = "إلغاء العملية",
+                                icon = Icons.Default.Cancel,
+                                onClick = { viewModel.cancelRequest(requestId = requestId) }
+                            )
+                        } else {
+                            PrimaryButton(
+                                text = "الموافقة على الطلب",
+                                icon = Icons.Default.CheckCircle,
+                                onClick = { navController.navigate(Route.ApprovalScreen(requestId = requestId)) }
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            SecondaryButton(
+                                text = "رفض الطلب",
+                                icon = Icons.Default.Cancel,
+                                onClick = { viewModel.rejectRequest(requestId = requestId) }
+                            )
+                        }
                     } else {
                         SecondaryButton(
                             text = "رجوع",

@@ -144,7 +144,7 @@ fun MyVehicleScreen(
                             VehicleCard(
                                 vehicle = vehicle,
                                 onVehicleClick = { 
-                                    navController.navigate(Route.ImageContractUpload(vehicleId = vehicle.id))
+                                    navController.navigate(Route.VehicleInfoScreen(vehicleId = vehicle.id))
                                 }
                             )
                         }

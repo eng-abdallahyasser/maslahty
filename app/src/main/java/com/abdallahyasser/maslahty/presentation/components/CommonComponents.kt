@@ -389,6 +389,10 @@ fun StatusBadge(
             appColors.statusRejectedBg, appColors.statusRejected,
             "مرفوض", Icons.Default.Cancel
         )
+        "CANCELLED" -> Quad(
+            appColors.statusRejectedBg, appColors.statusRejected,
+            "ملغي", Icons.Default.Cancel
+        )
         else -> Quad(
             appColors.cardBackground, appColors.textSecondary,
             status, Icons.Default.Info

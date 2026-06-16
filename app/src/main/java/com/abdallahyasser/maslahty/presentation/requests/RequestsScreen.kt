@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,6 +64,10 @@ fun RequestsScreen(
     val appColors = LocalAppColors.current
     var buyerIdOrNationalId by remember { mutableStateOf("9876543210") }
     val requestsState by viewModel.buyerRequestsState.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.getBuyerRequests()
+    }
 
 
 
@@ -125,9 +130,11 @@ fun RequestsScreen(
                                 style = MaterialTheme.typography.titleSmall,
                                 color = appColors.textSecondary
                             )
+                            val currentUserId = viewModel.currentUserId
                             state.requests.forEach { request ->
                                 RequestCard(
                                     request = request,
+                                    currentUserId = currentUserId,
                                     onClick = { navController.navigate(Route.RequestDetailsScreen(requestId = request.id)) }
                                 )
                             }
@@ -150,8 +157,9 @@ fun RequestsScreen(
 
 
 @Composable
-private fun RequestCard(request: TransferRequest, onClick: () -> Unit) {
+private fun RequestCard(request: TransferRequest, currentUserId: String?, onClick: () -> Unit) {
     val appColors = LocalAppColors.current
+    val isSeller = request.sellerId == currentUserId
     AppCard(modifier = Modifier.clickable(onClick = onClick)) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Top) {
             Column(modifier = Modifier.weight(1f)) {
@@ -159,7 +167,11 @@ private fun RequestCard(request: TransferRequest, onClick: () -> Unit) {
                 Spacer(Modifier.height(4.dp))
                 Text("EGP ${"%.0f".format(request.price)}", style = MaterialTheme.typography.bodyMedium, color = appColors.gold, fontWeight = FontWeight.SemiBold)
                 Spacer(Modifier.height(4.dp))
-                Text("البائع: ${request.sellerName}", style = MaterialTheme.typography.bodySmall, color = appColors.textSecondary)
+                Text(
+                    text = if (isSeller) "المشتري: ${request.buyerName.ifBlank { "—" }}" else "البائع: ${request.sellerName}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = appColors.textSecondary
+                )
             }
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 StatusBadge(status = request.status.name)

@@ -28,7 +28,7 @@ class HomeViewModel @Inject constructor(
         loadUserData()
     }
 
-    private fun loadUserData() {
+    fun loadUserData() {
         viewModelScope.launch {
             val result = getUserDataUseCase()
             if (result is Result.Success) {

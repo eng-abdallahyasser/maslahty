@@ -16,9 +16,12 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.ResendVerificationEmailUseCase
 import com.abdallahyasser.maslahty.domain.requests.ApproveTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
+import com.abdallahyasser.maslahty.domain.requests.CancelTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.requests.GetBuyerRequestsUseCase
+import com.abdallahyasser.maslahty.domain.requests.GetSellerRequestsUseCase
 import com.abdallahyasser.maslahty.domain.requests.RejectTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.vehicle.usecase.GetUserVehiclesUseCase
+import com.abdallahyasser.maslahty.domain.vehicle.repo.VehicleRepository
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
 import dagger.Module
@@ -140,8 +143,23 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideApproveTransferRequestUseCase(repository: TransferRequestRepository): ApproveTransferRequestUseCase {
-        return ApproveTransferRequestUseCase(repository)
+    fun provideGetSellerRequestsUseCase(repository: TransferRequestRepository): GetSellerRequestsUseCase {
+        return GetSellerRequestsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCancelTransferRequestUseCase(repository: TransferRequestRepository): CancelTransferRequestUseCase {
+        return CancelTransferRequestUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideApproveTransferRequestUseCase(
+        repository: TransferRequestRepository,
+        vehicleRepository: VehicleRepository
+    ): ApproveTransferRequestUseCase {
+        return ApproveTransferRequestUseCase(repository, vehicleRepository)
     }
 
     @Provides

@@ -10,5 +10,6 @@ interface VehicleRepository {
     suspend fun updateVehicle(vehicle: Vehicle): Result<Vehicle>
     suspend fun getUserVehicles(userId: String): Result<List<Vehicle>>
     suspend fun deleteVehicle(id: String): Result<Unit>
+    suspend fun transferVehicleOwnership(vehicleId: String, oldOwnerId: String, newOwnerId: String): Result<Unit>
 }
 

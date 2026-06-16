@@ -68,6 +68,14 @@ class VehicleRepositoryImpl @Inject constructor(
 		}
 	}
 
+	override suspend fun transferVehicleOwnership(vehicleId: String, oldOwnerId: String, newOwnerId: String): Result<Unit> {
+		return try {
+			Result.Success(Unit)
+		} catch (e: Exception) {
+			Result.Error(e)
+		}
+	}
+
 	private fun mockVehicle(
 		id: String,
 		ownerId: String,
