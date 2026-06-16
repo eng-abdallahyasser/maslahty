@@ -107,6 +107,57 @@ fun LoginBody(navController: NavController) {
                 )
             }
 
+            if (state.isEmailNotVerified) {
+                Spacer(Modifier.height(8.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(
+                        onClick = { vm.resendVerification() },
+                        enabled = !state.isResendingVerification,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Transparent,
+                            contentColor = GoldenYellow
+                        ),
+                        modifier = Modifier.padding(top = 4.dp)
+                    ) {
+                        if (state.isResendingVerification) {
+                            CircularProgressIndicator(
+                                color = GoldenYellow,
+                                modifier = Modifier.size(20.dp)
+                            )
+                        } else {
+                            Text(
+                                text = "إعادة إرسال رابط التحقق",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+
+                    if (state.resendVerificationSuccess) {
+                        Text(
+                            text = "تم إرسال رابط التحقق بنجاح. يرجى التحقق من بريدك الإلكتروني.",
+                            color = Color(0xFF2E7D32),
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+
+                    if (state.resendVerificationError != null) {
+                        Text(
+                            text = state.resendVerificationError!!,
+                            color = Color.Red,
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
+                }
+            }
+
             Spacer(Modifier.height(24.dp))
 
             Button(

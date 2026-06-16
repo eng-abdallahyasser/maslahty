@@ -2,6 +2,7 @@ package com.abdallahyasser.maslahty.presentation.auth.registration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.abdallahyasser.maslahty.domain.auth.entity.AuthResult
 import com.abdallahyasser.maslahty.domain.auth.entity.User
 import com.abdallahyasser.maslahty.domain.auth.useCase.RegisterUserUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.sendOtpUseCase
@@ -97,15 +98,23 @@ class RegistrationViewModel @Inject constructor(
 
             val result = registerUseCase(user)
 
-            if (result.isSuccess) {
-                _state.value = _state.value.copy(isLoading = false, success = true)
-                _eventFlow.emit(RegistrationUiEvent.ShowSnackbar("تم إنشاء الحساب بنجاح!"))
-                _eventFlow.emit(RegistrationUiEvent.NavigateToLogin)
-            } else {
-                _state.value = _state.value.copy(
-                    isLoading = false,
-                    error = result.exceptionOrNull()?.message ?: "فشل إنشاء الحساب"
-                )
+            when (result) {
+                is AuthResult.Success -> {
+                    _state.value = _state.value.copy(isLoading = false, success = true)
+                    _eventFlow.emit(RegistrationUiEvent.ShowSnackbar("تم إنشاء الحساب بنجاح! يرجى التحقق من بريدك الإلكتروني لتفعيله قبل تسجيل الدخول."))
+                    _eventFlow.emit(RegistrationUiEvent.NavigateToLogin)
+                }
+                is AuthResult.EmailNotVerified -> {
+                    _state.value = _state.value.copy(isLoading = false, success = true)
+                    _eventFlow.emit(RegistrationUiEvent.ShowSnackbar("تم إنشاء الحساب. يرجى تفعيل بريدك الإلكتروني."))
+                    _eventFlow.emit(RegistrationUiEvent.NavigateToLogin)
+                }
+                is AuthResult.Error -> {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        error = result.message
+                    )
+                }
             }
         }
     }

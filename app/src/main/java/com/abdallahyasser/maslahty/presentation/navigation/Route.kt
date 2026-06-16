@@ -37,5 +37,7 @@ sealed class Route {
     data class TransferRequestRoute(val vehicleId: String)
     @Serializable
     object TransferSuccess
+    @Serializable
+    data class TransferDecisionResult(val requestId: String, val isAccepted: Boolean)
 
 }

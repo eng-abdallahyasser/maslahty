@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.abdallahyasser.maslahty.presentation.navigation.Route
 import com.abdallahyasser.maslahty.theme.LocalAppColors
 import com.example.maslahty.presentation.components.AppCard
 import com.example.maslahty.presentation.components.AppTextField
@@ -65,11 +66,28 @@ fun ApprovalScreen(
     var buyerId by remember { mutableStateOf("user2") }
     var error by remember { mutableStateOf<String?>(null) }
     val approveState by viewModel.approveRequestState.collectAsState()
+    val rejectState by viewModel.rejectRequestState.collectAsState()
 
     LaunchedEffect(approveState) {
         when (approveState) {
-            is TransferState.RequestApproved -> navController.popBackStack()
+            is TransferState.RequestApproved -> {
+                navController.navigate(Route.TransferDecisionResult(requestId = requestId, isAccepted = true)) {
+                    popUpTo(Route.RequestsScreen) { inclusive = false }
+                }
+            }
             is TransferState.Error -> error = (approveState as TransferState.Error).message
+            else -> Unit
+        }
+    }
+
+    LaunchedEffect(rejectState) {
+        when (rejectState) {
+            is TransferState.RequestRejected -> {
+                navController.navigate(Route.TransferDecisionResult(requestId = requestId, isAccepted = false)) {
+                    popUpTo(Route.RequestsScreen) { inclusive = false }
+                }
+            }
+            is TransferState.Error -> error = (rejectState as TransferState.Error).message
             else -> Unit
         }
     }
@@ -136,7 +154,9 @@ fun ApprovalScreen(
                 }
 
                 error?.let { ErrorMessage(it) }
-                if (approveState is TransferState.Loading) LoadingBox(message = "جاري اعتماد الطلب...")
+                if (approveState is TransferState.Loading || rejectState is TransferState.Loading) {
+                    LoadingBox(message = "جاري معالجة الطلب...")
+                }
 
                 PrimaryButton(
                     text = "موافق — إتمام نقل الملكية",
@@ -150,7 +170,7 @@ fun ApprovalScreen(
                 SecondaryButton(
                     text = "رفض الطلب",
                     icon = Icons.Default.Cancel,
-                    onClick = { navController.popBackStack() }
+                    onClick = { viewModel.rejectRequest(requestId = requestId) }
                 )
 
                 Spacer(Modifier.navigationBarsPadding().height(16.dp))

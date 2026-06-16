@@ -1,5 +1,6 @@
 package com.abdallahyasser.maslahty.data.auth
 
+import com.abdallahyasser.maslahty.domain.auth.entity.AuthResult
 import com.abdallahyasser.maslahty.domain.auth.entity.User
 import com.abdallahyasser.maslahty.domain.auth.repo.AuthRepository
 import com.google.firebase.FirebaseException
@@ -23,7 +24,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     private var verificationId: String? = null
 
-    override suspend fun registerUser(user: User): Result<User> {
+    override suspend fun registerUser(user: User): AuthResult<User> {
         return try {
             // Check if national ID already exists
             val query = firestoreService.collection("users")
@@ -32,19 +33,35 @@ class AuthRepositoryImpl @Inject constructor(
                 .await()
 
             if (!query.isEmpty) {
-                return Result.failure(Exception("National ID already in use"))
+                return AuthResult.Error("الرقم القومي مسجل بالفعل")
             }
 
             val result = authService.createUserWithEmailAndPassword(user.email, user.password).await()
-            val uid = result.user?.uid ?: throw Exception("Registration failed")
+            val firebaseUser = result.user ?: throw Exception("Failing to retrieve registered user")
+            val uid = firebaseUser.uid
             val updatedUser = user.copy(id = uid)
+
+            // Save user to Firestore while still signed in
             firestoreService.collection("users")
                 .document(uid)
                 .set(updatedUser)
                 .await()
-            Result.success(updatedUser)
-        } catch (e: Exception) {
-            Result.failure(e)
+
+            // Send verification email before sign out
+            try {
+                firebaseUser.sendEmailVerification().await()
+            } catch (mailEx: Throwable) {
+                authService.signOut()
+                return AuthResult.Error("تم إنشاء الحساب ولكن فشل إرسال بريد التحقق: ${mailEx.message}")
+            }
+
+            authService.signOut()
+            AuthResult.Success(updatedUser)
+        } catch (e: Throwable) {
+            try {
+                authService.signOut()
+            } catch (_: Throwable) {}
+            AuthResult.Error(e.message ?: "فشل إنشاء الحساب")
         }
     }
 
@@ -91,12 +108,33 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun login(
         nationalIdOrEmail: String,
         password: String
-    ): Result<User> {
+    ): AuthResult<User> {
         return try {
-            // Note: In Firebase Auth, we usually use email and password.
+            val email = if (!nationalIdOrEmail.contains("@")) {
+                val query = firestoreService.collection("users")
+                    .whereEqualTo("nationalId", nationalIdOrEmail)
+                    .get()
+                    .await()
+                if (query.isEmpty) {
+                    return AuthResult.Error("الرقم القومي غير مسجل")
+                }
+                query.documents.first().getString("email") ?: return AuthResult.Error("البريد الإلكتروني غير موجود")
+            } else {
+                nationalIdOrEmail
+            }
 
-            val result = authService.signInWithEmailAndPassword(nationalIdOrEmail, password).await()
-            val uid = result.user?.uid ?: throw Exception("Login failed")
+            val result = authService.signInWithEmailAndPassword(email, password).await()
+            val firebaseUser = result.user ?: throw Exception("Login failed")
+
+            // Reload user to refresh email verification status from server
+            firebaseUser.reload().await()
+
+            if (!firebaseUser.isEmailVerified) {
+                authService.signOut()
+                return AuthResult.EmailNotVerified
+            }
+
+            val uid = firebaseUser.uid
             val document = firestoreService.collection("users").document(uid).get().await()
             if (document.exists()) {
                 val user = User(
@@ -107,13 +145,16 @@ class AuthRepositoryImpl @Inject constructor(
                     phoneNumber = document.getString("phoneNumber") ?: "",
                     password = document.getString("password") ?: ""
                 )
-                Result.success(user)
+                AuthResult.Success(user)
             } else {
-                // If user exists in Auth but not Firestore, return skeleton
-                throw Exception("User data not exists")
+                authService.signOut()
+                AuthResult.Error("بيانات المستخدم غير موجودة")
             }
-        } catch (e: Exception) {
-            Result.failure(e)
+        } catch (e: Throwable) {
+            try {
+                authService.signOut()
+            } catch (_: Throwable) {}
+            AuthResult.Error(e.message ?: "فشل تسجيل الدخول")
         }
     }
 
@@ -193,4 +234,42 @@ class AuthRepositoryImpl @Inject constructor(
 //            Result.failure(e)
 //        }
 //    }
+
+    override suspend fun resendVerificationEmail(): Result<Unit> {
+        return try {
+            val user = authService.currentUser ?: throw Exception("No user currently signed in")
+            user.sendEmailVerification().await()
+            Result.success(Unit)
+        } catch (e: Throwable) {
+            Result.failure(Exception(e.message ?: "فشل إعادة إرسال البريد"))
+        }
+    }
+
+    override suspend fun resendVerificationEmail(email: String, password: String): Result<Unit> {
+        return try {
+            val resolvedEmail = if (!email.contains("@")) {
+                val query = firestoreService.collection("users")
+                    .whereEqualTo("nationalId", email)
+                    .get()
+                    .await()
+                if (query.isEmpty) {
+                    throw Exception("الرقم القومي غير مسجل")
+                }
+                query.documents.first().getString("email") ?: throw Exception("البريد الإلكتروني غير موجود")
+            } else {
+                email
+            }
+
+            val result = authService.signInWithEmailAndPassword(resolvedEmail, password).await()
+            val user = result.user ?: throw Exception("Failed to sign in for resending verification email")
+            user.sendEmailVerification().await()
+            authService.signOut()
+            Result.success(Unit)
+        } catch (e: Throwable) {
+            try {
+                authService.signOut()
+            } catch (_: Throwable) {}
+            Result.failure(Exception(e.message ?: "فشل إعادة إرسال البريد"))
+        }
+    }
 }

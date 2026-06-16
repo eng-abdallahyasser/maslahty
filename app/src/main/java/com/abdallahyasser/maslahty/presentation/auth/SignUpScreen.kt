@@ -161,7 +161,7 @@ fun SignUpBody(
                 }
                 is RegistrationUiEvent.NavigateToLogin -> {
                     scope.launch {
-                        delay(2000)
+                        delay(4000)
                         navController.navigate(Route.Login) {
                             popUpTo(Route.Registration) { inclusive = true }
                         }

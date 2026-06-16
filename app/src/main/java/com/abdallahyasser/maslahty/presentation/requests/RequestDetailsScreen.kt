@@ -58,6 +58,11 @@ import com.example.maslahty.presentation.components.SectionHeader
 import com.example.maslahty.presentation.components.StatusBadge
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
+import com.example.maslahty.presentation.components.LoadingBox
 
 @Composable
 fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
@@ -66,6 +71,22 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
     val appColors = LocalAppColors.current
     // Collect the buyer requests state
     val buyerRequestsState by viewModel.buyerRequestsState.collectAsState()
+    val rejectState by viewModel.rejectRequestState.collectAsState()
+    var error by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(rejectState) {
+        when (rejectState) {
+            is TransferState.RequestRejected -> {
+                navController.navigate(Route.TransferDecisionResult(requestId = requestId, isAccepted = false)) {
+                    popUpTo(Route.RequestsScreen) { inclusive = false }
+                }
+            }
+            is TransferState.Error -> {
+                error = (rejectState as TransferState.Error).message
+            }
+            else -> Unit
+        }
+    }
     // Find the request matching the provided requestId
     val request = when (buyerRequestsState) {
         is TransferState.RequestsLoaded -> {
@@ -172,6 +193,11 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
                         PriceWarningBox(message = it.message, percentage = it.percentage)
                     }
 
+                    error?.let { ErrorMessage(it) }
+                    if (rejectState is TransferState.Loading) {
+                        LoadingBox(message = "جاري رفض الطلب...")
+                    }
+
                     // Action buttons
                     if (request.status == TransferStatus.PENDING) {
                         PrimaryButton(
@@ -182,7 +208,7 @@ fun RequestDetailsScreen(navController: NavHostController, requestId: String) {
                         SecondaryButton(
                             text = "رفض الطلب",
                             icon = Icons.Default.Cancel,
-                            onClick = { navController.popBackStack() }
+                            onClick = { viewModel.rejectRequest(requestId = requestId) }
                         )
                     } else {
                         SecondaryButton(

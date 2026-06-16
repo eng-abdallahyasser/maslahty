@@ -13,9 +13,11 @@ import com.abdallahyasser.maslahty.domain.auth.useCase.isLoggedInUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.logoutUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.sendOtpUseCase
 import com.abdallahyasser.maslahty.domain.auth.useCase.verifyOtpUseCase
+import com.abdallahyasser.maslahty.domain.auth.useCase.ResendVerificationEmailUseCase
 import com.abdallahyasser.maslahty.domain.requests.ApproveTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.transfer.usecase.CreateTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.requests.GetBuyerRequestsUseCase
+import com.abdallahyasser.maslahty.domain.requests.RejectTransferRequestUseCase
 import com.abdallahyasser.maslahty.domain.vehicle.usecase.GetUserVehiclesUseCase
 import com.example.maslahty.domain.usecases.violation.CheckViolationsForTransferUseCase
 import com.example.maslahty.domain.usecases.violation.GetVehicleViolationsUseCase
@@ -32,7 +34,7 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideLoginUseCase(authRepository: AuthRepositoryImpl): LoginUseCase {
+    fun provideLoginUseCase(authRepository: AuthRepository): LoginUseCase {
         return LoginUseCase(authRepository)
     }
 
@@ -40,7 +42,12 @@ object UseCaseModule {
     @Singleton
     fun provideRegisterUseCase(authRepository: AuthRepository): RegisterUserUseCase {
         return RegisterUserUseCase(authRepository)
+    }
 
+    @Provides
+    @Singleton
+    fun provideResendVerificationEmailUseCase(authRepository: AuthRepository): ResendVerificationEmailUseCase {
+        return ResendVerificationEmailUseCase(authRepository)
     }
 
     @Provides
@@ -135,6 +142,12 @@ object UseCaseModule {
     @Singleton
     fun provideApproveTransferRequestUseCase(repository: TransferRequestRepository): ApproveTransferRequestUseCase {
         return ApproveTransferRequestUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRejectTransferRequestUseCase(repository: TransferRequestRepository): RejectTransferRequestUseCase {
+        return RejectTransferRequestUseCase(repository)
     }
 
     @Provides

@@ -108,8 +108,10 @@ fun HomeScreen(navController: NavHostController) {
                         // Logout
                         IconButton(
                             onClick = {
-                                navController.navigate(Route.Login) {
-                                    popUpTo(0) { inclusive = true }
+                                homeViewModel.logout {
+                                    navController.navigate(Route.Login) {
+                                        popUpTo(0) { inclusive = true }
+                                    }
                                 }
                             },
                             modifier = Modifier
