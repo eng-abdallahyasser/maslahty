@@ -275,9 +275,9 @@ fun SplashScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // App name in Arabic "مصلحتي"
+            // App name in Arabic "توثيق بلس"
             Text(
-                text = "مصلحتي",
+                text = "توثيق بلس",
                 color = GoldenYellow,
                 fontSize = 48.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -291,9 +291,9 @@ fun SplashScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // English subtitle "MASLAHATI"
+            // English subtitle "TAWTHEEQ PLUS"
             Text(
-                text = "MASLAHATI",
+                text = "TAWTHEEQ PLUS",
                 color = GrayBlue,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Normal,

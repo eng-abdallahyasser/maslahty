@@ -104,7 +104,7 @@ fun HomeScreen(navController: NavHostController) {
                                 )
                             }
                             Text(
-                                text = "مصلحتي",
+                                text = "توثيق بلس",
                                 style = MaterialTheme.typography.titleLarge,
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold

@@ -168,7 +168,7 @@ private fun OnboardingPage1(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
-                    text = "مصلحتي ",
+                    text = "توثيق بلس",
                     color = Color.White,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.ExtraBold
@@ -220,7 +220,7 @@ private fun OnboardingPage1(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "أنجز معاملاتك الحكومية بسهولة وسرعة من خلال تطبيق مصلحتي",
+                    text = "أنجز معاملاتك الحكومية بسهولة وسرعة من خلال تطبيق توثيق بلس",
                     color = TextGray,
                     fontSize = 16.sp,
                     modifier = Modifier.fillMaxWidth()
@@ -238,7 +238,7 @@ private fun OnboardingPage1(
                     )
                     FeatureCard(
                         title = "ربط مباشر",
-                        description = "التحقق عبر منصة مصلحتي\n" +
+                        description = "التحقق عبر منصة توثيق بلس\n" +
                                 "الموحدة",
                         iconResId = R.drawable.rabt
                     )
