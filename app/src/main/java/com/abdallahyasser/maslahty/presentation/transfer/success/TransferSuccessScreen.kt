@@ -54,56 +54,6 @@ fun TransferSuccessScreen(navController: NavHostController) {
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Scaffold(
-            topBar = {
-                // Header (Top Bar) as shown in the screenshot
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .background(appColors.navy)
-                        .padding(horizontal = 16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    // Right side (Start in RTL): Menu (Burger) Icon
-                    IconButton(
-                        onClick = { /* Menu Action */ },
-                        modifier = Modifier.align(Alignment.CenterStart)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "القائمة",
-                            tint = Color.White,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-
-                    // Center: Title in Yellow
-                    Text(
-                        text = "نقل ملكية المركبة",
-                        color = Color(0xFFFDC003),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp,
-                        textAlign = TextAlign.Center
-                    )
-
-                    // Left side (End in RTL): Yellow Profile Icon
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFFFDC003)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Person,
-                            contentDescription = "الملف الشخصي",
-                            tint = appColors.navy,
-                            modifier = Modifier.size(22.dp)
-                        )
-                    }
-                }
-            }
         ) { innerPadding ->
             Column(
                 modifier = Modifier
