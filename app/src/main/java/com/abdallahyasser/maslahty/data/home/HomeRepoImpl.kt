@@ -51,12 +51,12 @@ class HomeRepoImpl @Inject constructor(
 
             val activeRequests = uniqueRequests.count {
                 val status = it.getString("status") ?: ""
-                status == "PENDING" || status == "APPROVED_BY_BUYER"
+                status == "PENDING"
             }
 
             val completedRequests = uniqueRequests.count {
                 val status = it.getString("status") ?: ""
-                status == "COMPLETED"
+                status == "APPROVED_BY_BUYER" || status == "COMPLETED"
             }
 
             Result.Success(
