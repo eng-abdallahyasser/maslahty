@@ -30,17 +30,6 @@ class HomeViewModel @Inject constructor(
 
     fun loadUserData() {
         viewModelScope.launch {
-            try {
-                val db = com.google.firebase.firestore.FirebaseFirestore.getInstance()
-                db.collection("transfer_requests").get().addOnSuccessListener { snapshot ->
-                    for (doc in snapshot.documents) {
-                        doc.reference.delete()
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
             val result = getUserDataUseCase()
             if (result is Result.Success) {
                 val data = result.data
