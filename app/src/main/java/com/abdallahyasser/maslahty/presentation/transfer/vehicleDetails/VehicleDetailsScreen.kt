@@ -251,7 +251,7 @@ fun VehicleDetailsScreen(
                                 viewModel.saveVehicleDataAndNavigate(
                                     licensePlate = state.licensePlate,
                                     onNavigate = {
-                                        navController.navigate(Route.ImageUpload(state.licensePlate))
+                                        navController.navigate(Route.ImageUpload(state.vehicleId.ifEmpty { state.licensePlate }))
                                     }
                                 )
                             }

@@ -2,6 +2,7 @@ package com.abdallahyasser.maslahty.presentation.transfer.vehicleDetails
 
 sealed class VehicleState {
     data class VehicleIdentificationState(
+        val vehicleId: String = "",
         val licensePlate: String = "",
         val chassisNumber: String = "",
         val engineNumber: String = "",

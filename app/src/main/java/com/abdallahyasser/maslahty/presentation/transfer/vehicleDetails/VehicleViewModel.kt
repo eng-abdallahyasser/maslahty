@@ -46,6 +46,7 @@ class VehicleViewModel @Inject constructor(
 
     fun loadVehicleData(vehicleId: String) {
         if (vehicleId.length >= 13 && vehicleId.all { it.isDigit() }) {
+            _uiState.value = _uiState.value.copy(vehicleId = vehicleId)
             return
         }
         viewModelScope.launch {
@@ -54,6 +55,7 @@ class VehicleViewModel @Inject constructor(
                 is Result.Success -> {
                     val vehicle = result.data
                     _uiState.value = _uiState.value.copy(
+                        vehicleId = vehicle.id,
                         licensePlate = vehicle.licensePlate,
                         chassisNumber = vehicle.chassisNumber,
                         engineNumber = vehicle.engineNumber,
@@ -136,9 +138,10 @@ class VehicleViewModel @Inject constructor(
 
     fun saveVehicleDataAndNavigate(licensePlate: String, onNavigate: () -> Unit) {
         val state = _uiState.value
+        val actualVehicleId = state.vehicleId.ifEmpty { licensePlate }
 
         val vehicle = Vehicle(
-            id = licensePlate,
+            id = actualVehicleId,
             ownerId = state.ownerNationalId,
             licensePlate = licensePlate,
             chassisNumber = state.chassisNumber,
@@ -158,7 +161,7 @@ class VehicleViewModel @Inject constructor(
         )
 
         val activeId = TransferDraftStore.activeDraftId
-        val mergedVehicle = if (activeId != null && activeId != licensePlate) {
+        val mergedVehicle = if (activeId != null && activeId != actualVehicleId) {
             val prevDraft = TransferDraftStore.drafts[activeId]
             if (prevDraft != null) {
                 vehicle.copy(
@@ -182,8 +185,8 @@ class VehicleViewModel @Inject constructor(
             buyerNationalId = state.newOwnerNationalId
         )
 
-        TransferDraftStore.drafts[licensePlate] = draft
-        TransferDraftStore.activeDraftId = licensePlate
+        TransferDraftStore.drafts[actualVehicleId] = draft
+        TransferDraftStore.activeDraftId = actualVehicleId
 
         onNavigate()
     }
