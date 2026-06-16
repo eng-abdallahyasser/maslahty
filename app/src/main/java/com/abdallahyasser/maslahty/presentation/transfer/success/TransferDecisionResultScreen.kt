@@ -56,40 +56,6 @@ fun TransferDecisionResultScreen(
 
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
         Scaffold(
-            topBar = {
-                // Customized Header as shown in the screenshot
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(64.dp)
-                        .background(Color(0xFF0D1B3E)) // Dark Navy
-                        .statusBarsPadding()
-                        .padding(horizontal = 16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    // Right side in RTL (Start): Menu Icon in Yellow
-                    IconButton(
-                        onClick = { /* Menu Action */ },
-                        modifier = Modifier.align(Alignment.CenterStart)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "القائمة",
-                            tint = Color(0xFFFDC003),
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-
-                    // Left side in RTL (End): Title "توثيق بلس" in Yellow
-                    Text(
-                        text = "توثيق بلس",
-                        color = Color(0xFFFDC003),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 20.sp,
-                        modifier = Modifier.align(Alignment.CenterEnd)
-                    )
-                }
-            }
         ) { innerPadding ->
             Box(
                 modifier = Modifier
@@ -375,82 +341,28 @@ fun TransferDecisionResultScreen(
                             Spacer(modifier = Modifier.height(36.dp))
 
                             // 5. Action Buttons
-                            if (isAccepted) {
-                                // Complete transfer button (Yellow)
-                                Button(
-                                    onClick = {
-                                        navController.navigate(Route.Home) {
-                                            popUpTo(Route.Home) { inclusive = true }
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(56.dp),
-                                    shape = RoundedCornerShape(14.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(0xFFFDC003),
-                                        contentColor = Color(0xFF0D1B3E)
-                                    ),
-                                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                                ) {
-                                    Text(
-                                        text = "إتمام عملية النقل",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp,
-                                        color = Color(0xFF0D1B3E)
-                                    )
-                                }
-
-                                Spacer(modifier = Modifier.height(12.dp))
-
-                                // Return to home button (Bordered / White)
-                                OutlinedButton(
-                                    onClick = {
-                                        navController.navigate(Route.Home) {
-                                            popUpTo(Route.Home) { inclusive = true }
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(56.dp),
-                                    shape = RoundedCornerShape(14.dp),
-                                    colors = ButtonDefaults.outlinedButtonColors(
-                                        contentColor = Color(0xFF0D1B3E)
-                                    ),
-                                    border = BorderStroke(1.dp, Color(0xFFADB5CC))
-                                ) {
-                                    Text(
-                                        text = "العودة للرئيسية",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp,
-                                        color = Color(0xFF0D1B3E)
-                                    )
-                                }
-                            } else {
-                                // For refusal state: just Return to home button (Yellow)
-                                Button(
-                                    onClick = {
-                                        navController.navigate(Route.Home) {
-                                            popUpTo(Route.Home) { inclusive = true }
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(56.dp),
-                                    shape = RoundedCornerShape(14.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        containerColor = Color(0xFFFDC003),
-                                        contentColor = Color(0xFF0D1B3E)
-                                    ),
-                                    elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
-                                ) {
-                                    Text(
-                                        text = "العودة للرئيسية",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 16.sp,
-                                        color = Color(0xFF0D1B3E)
-                                    )
-                                }
+                            Button(
+                                onClick = {
+                                    navController.navigate(Route.Home) {
+                                        popUpTo(Route.Home) { inclusive = true }
+                                    }
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(56.dp),
+                                shape = RoundedCornerShape(14.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color(0xFFFDC003),
+                                    contentColor = Color(0xFF0D1B3E)
+                                ),
+                                elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
+                            ) {
+                                Text(
+                                    text = "العودة للرئيسية",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp,
+                                    color = Color(0xFF0D1B3E)
+                                )
                             }
                         }
                     }
